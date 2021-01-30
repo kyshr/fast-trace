@@ -1,6 +1,6 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import "../../assets/scss/navbar.scss";
+import React from "react"
+import { NavLink } from "react-router-dom"
+import "../../assets/scss/navbar.scss"
 
 const HomeNav = ({ setLogged, toggle }) => {
     return (
@@ -17,15 +17,15 @@ const HomeNav = ({ setLogged, toggle }) => {
             <li
                 className="side-item"
                 onClick={() => {
-                    setLogged(false);
-                    toggle();
+                    setLogged(false)
+                    toggle()
                 }}
             >
                 Logout
             </li>
         </>
-    );
-};
+    )
+}
 
 const AuthNav = ({ toggle }) => {
     return (
@@ -49,15 +49,15 @@ const AuthNav = ({ toggle }) => {
                 Signup
             </NavLink>
         </>
-    );
-};
+    )
+}
 
 const Sidebar = ({ active, toggle, logged, setLogged }) => {
     let Navigation = logged ? (
         <HomeNav setLogged={setLogged} toggle={toggle} />
     ) : (
         <AuthNav toggle={toggle} />
-    );
+    )
 
     return (
         <div
@@ -86,7 +86,7 @@ const Sidebar = ({ active, toggle, logged, setLogged }) => {
                 {Navigation}
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Sidebar;
+export default Sidebar

@@ -1,13 +1,13 @@
-import React from "react";
-import { useState } from "react";
-import NavBar from "./NavBar/navbar";
-import { Route, Switch } from "react-router-dom";
-import Home from "./Home/home";
-import Login from "./Auth/login";
-import Signup from "./Auth/signup";
+import React from "react"
+import { useState } from "react"
+import NavBar from "./NavBar/navbar"
+import { Route, Switch } from "react-router-dom"
+import Home from "./Home/home"
+import Login from "./Auth/login"
+import Signup from "./Auth/signup"
 
 const Main = () => {
-    const [logged, setLogged] = useState(true);
+    const [logged, setLogged] = useState(true)
     return (
         <>
             <NavBar logged={logged} setLogged={setLogged} />
@@ -23,7 +23,7 @@ const Main = () => {
                 </Route>
             </Switch>
         </>
-    );
-};
+    )
+}
 
-export default Main;
+export default Main

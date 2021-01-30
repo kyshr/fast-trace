@@ -1,15 +1,15 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
-import "../../assets/scss/login.scss";
-import logo from "../../assets/images/qr.jpg";
+import React from "react"
+import { Redirect } from "react-router-dom"
+import "../../assets/scss/login.scss"
+import logo from "../../assets/images/qr.jpg"
 
 const Signup = ({ logged }) => {
     if (logged) {
-        return <Redirect to="/" />;
+        return <Redirect to="/" />
     } else {
         return (
             <>
-                <div style={{ paddingTop: "80px" }}>
+                <div style={{ paddingTop: "70px" }}>
                     <div className="content d-flex align-items-center py-md-5">
                         <div className="container px-4 px-md-0">
                             <div className="row">
@@ -37,7 +37,7 @@ const Signup = ({ logged }) => {
                                                         type="text"
                                                         className="form-control"
                                                         id="username"
-                                                        placeholder='Email'
+                                                        placeholder="Email"
                                                     />
                                                 </div>
                                                 <div className="form-group">
@@ -45,7 +45,7 @@ const Signup = ({ logged }) => {
                                                         type="password"
                                                         className="form-control"
                                                         id="password"
-                                                        placeholder='Password'
+                                                        placeholder="Password"
                                                     />
                                                 </div>
                                                 <div className="form-group last mb-4">
@@ -53,7 +53,7 @@ const Signup = ({ logged }) => {
                                                         type="cpassword"
                                                         className="form-control"
                                                         id="cpassword"
-                                                        placeholder='Confirm Password'
+                                                        placeholder="Confirm Password"
                                                     />
                                                 </div>
 
@@ -71,8 +71,8 @@ const Signup = ({ logged }) => {
                     </div>
                 </div>
             </>
-        );
+        )
     }
-};
+}
 
-export default Signup;
+export default Signup

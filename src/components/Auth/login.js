@@ -1,57 +1,70 @@
-import React, {useState}from "react";
-import { Redirect } from "react-router-dom";
-import "../../assets/scss/login.scss";
-import logo from "../../assets/images/qr.jpg";
+import React, { useState } from "react"
+import { Redirect } from "react-router-dom"
+import "../../assets/scss/login.scss"
+import logo from "../../assets/images/qr.jpg"
 
 const Login = ({ logged }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState({email: '', password: ''});
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [error, setError] = useState({ email: "", password: "" })
 
     const handleChange = (event) => {
-        if(event.target.id === 'email'){
-            setError((err) => {return {...err, email: ''}});
-            setEmail(event.target.value);
-        }
-        else if(event.target.id === 'password'){
-            setError((err) => {return {...err, password: ''}});
-            setPassword(event.target.value);
+        if (event.target.id === "email") {
+            setError((err) => {
+                return { ...err, email: "" }
+            })
+            setEmail(event.target.value)
+        } else if (event.target.id === "password") {
+            setError((err) => {
+                return { ...err, password: "" }
+            })
+            setPassword(event.target.value)
         }
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
-        handleError();
-        console.log(`${email} ${password}`);
-        console.log(error);
+        event.preventDefault()
+        handleError()
+        console.log(`${email} ${password}`)
+        console.log(error)
     }
 
-    const handleError = () =>{
-        if(email === ''){
+    const handleError = () => {
+        if (email === "") {
             // setEmailErr('Email is required');
-            setError((err) => {return {...err, email: 'Email is required.'}});
-        }
-        else{
-            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            if (re.test(String(email).toLowerCase())){
-                setError((err) => {return {...err, email: ''}});
-            }
-            else{
-                setError((err) => {return {...err, email: 'Invalid email.'}});
+            setError((err) => {
+                return { ...err, email: "Email is required." }
+            })
+        } else {
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            if (re.test(String(email).toLowerCase())) {
+                setError((err) => {
+                    return { ...err, email: "" }
+                })
+            } else {
+                setError((err) => {
+                    return { ...err, email: "Invalid email." }
+                })
             }
         }
 
-        if(password === ''){
+        if (password === "") {
             // setPasswordErr('Password is required');
-            setError((err) => {return {...err, password: 'Password is required.'}});
-        }
-        else if(password.length > 0 && password.length < 8){
-            setError((err) => {return {...err, password: 'Password should be greater than 8 characters.'}});
+            setError((err) => {
+                return { ...err, password: "Password is required." }
+            })
+        } else if (password.length > 0 && password.length < 8) {
+            setError((err) => {
+                return {
+                    ...err,
+                    password: "Password should be greater than 8 characters.",
+                }
+            })
         }
     }
 
     if (logged) {
-        return <Redirect to="/" />;
+        return <Redirect to="/" />
     } else {
         return (
             <>
@@ -87,7 +100,9 @@ const Login = ({ logged }) => {
                                                         value={email}
                                                         onChange={handleChange}
                                                     />
-                                                    <p className='text-danger'>{error.email}</p>
+                                                    <p className="text-danger">
+                                                        {error.email}
+                                                    </p>
                                                 </div>
                                                 <div className="form-group last mb-4">
                                                     <input
@@ -98,7 +113,9 @@ const Login = ({ logged }) => {
                                                         value={password}
                                                         onChange={handleChange}
                                                     />
-                                                    <p className='text-danger'>{error.password}</p>
+                                                    <p className="text-danger">
+                                                        {error.password}
+                                                    </p>
                                                 </div>
 
                                                 <input
@@ -115,8 +132,8 @@ const Login = ({ logged }) => {
                     </div>
                 </div>
             </>
-        );
+        )
     }
-};
+}
 
-export default Login;
+export default Login

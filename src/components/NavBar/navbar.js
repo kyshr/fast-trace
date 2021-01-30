@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
-import "../../assets/scss/navbar.scss";
-import Sidebar from "./sidebar";
+import React, { useState, useEffect } from "react"
+import { NavLink } from "react-router-dom"
+import "../../assets/scss/navbar.scss"
+import Sidebar from "./sidebar"
 
 const HomeNav = ({ setLogged }) => {
     return (
@@ -13,8 +13,8 @@ const HomeNav = ({ setLogged }) => {
                 Logout
             </li>
         </>
-    );
-};
+    )
+}
 
 const AuthNav = () => {
     return (
@@ -36,24 +36,24 @@ const AuthNav = () => {
                 Signup
             </NavLink>
         </>
-    );
-};
+    )
+}
 
 const NavBar = ({ logged, setLogged }) => {
-    const [active, setActive] = useState(false);
-    const showSideBar = () => setActive(!active);
+    const [active, setActive] = useState(false)
+    const showSideBar = () => setActive(!active)
 
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 992) {
-                setActive(false);
+                setActive(false)
             }
-        };
+        }
 
-        window.addEventListener("resize", handleResize);
-    });
+        window.addEventListener("resize", handleResize)
+    })
 
-    let Navigation = logged ? <HomeNav setLogged={setLogged} /> : <AuthNav />;
+    let Navigation = logged ? <HomeNav setLogged={setLogged} /> : <AuthNav />
 
     return (
         <>
@@ -98,7 +98,7 @@ const NavBar = ({ logged, setLogged }) => {
                 </div>
             </nav>
         </>
-    );
-};
+    )
+}
 
-export default NavBar;
+export default NavBar
