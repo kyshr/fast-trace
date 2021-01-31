@@ -31,7 +31,6 @@ const Login = ({ logged }) => {
 
     const handleError = () => {
         if (email === "") {
-            // setEmailErr('Email is required');
             setError((err) => {
                 return { ...err, email: "Email is required." }
             })
@@ -120,7 +119,7 @@ const Login = ({ logged }) => {
 
                                                 <input
                                                     type="submit"
-                                                    value="Log In"
+                                                    value="Login"
                                                     className="btn btn-block btn-primary"
                                                 />
                                             </form>
