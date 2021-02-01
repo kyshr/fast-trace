@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { NavLink } from "react-router-dom"
 import "../../assets/scss/navbar.scss"
 import Sidebar from "./sidebar"
+import { auth } from "../../services/firebase"
 
 const HomeNav = ({ setLogged }) => {
     return (
@@ -9,7 +10,7 @@ const HomeNav = ({ setLogged }) => {
             <NavLink activeClassName="active" exact to="/" className="nav-item">
                 Home
             </NavLink>
-            <li className="nav-item" onClick={() => setLogged(false)}>
+            <li className="nav-item" onClick={() => auth.signOut()}>
                 Logout
             </li>
         </>

@@ -2,11 +2,16 @@ import React, { useState } from "react"
 import { Redirect } from "react-router-dom"
 import "../../assets/scss/login.scss"
 import logo from "../../assets/images/qr.jpg"
+import { login } from "../../services/auth"
 
 const Login = ({ logged }) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [error, setError] = useState({ email: "", password: "" })
+    const [error, setError] = useState({
+        email: "",
+        password: "",
+        loginErr: "",
+    })
 
     const handleChange = (event) => {
         if (event.target.id === "email") {
@@ -22,36 +27,50 @@ const Login = ({ logged }) => {
         }
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
-        handleError()
-        console.log(`${email} ${password}`)
-        console.log(error)
+        if (handleError()) {
+            try {
+                setError((err) => {
+                    return { ...err, loginErr: "" }
+                })
+
+                await login(email, password)
+            } catch {
+                setError((err) => {
+                    return { ...err, loginErr: "Invalid credentials." }
+                })
+            }
+        }
     }
 
     const handleError = () => {
+        var noError = true
         if (email === "") {
             setError((err) => {
                 return { ...err, email: "Email is required." }
             })
+            noError = false
         } else {
             const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             if (re.test(String(email).toLowerCase())) {
                 setError((err) => {
                     return { ...err, email: "" }
                 })
+                noError = true
             } else {
                 setError((err) => {
                     return { ...err, email: "Invalid email." }
                 })
+                noError = false
             }
         }
 
         if (password === "") {
-            // setPasswordErr('Password is required');
             setError((err) => {
                 return { ...err, password: "Password is required." }
             })
+            noError = false
         } else if (password.length > 0 && password.length < 8) {
             setError((err) => {
                 return {
@@ -59,7 +78,10 @@ const Login = ({ logged }) => {
                     password: "Password should be greater than 8 characters.",
                 }
             })
+            noError = false
         }
+
+        return noError
     }
 
     if (logged) {
@@ -116,7 +138,9 @@ const Login = ({ logged }) => {
                                                         {error.password}
                                                     </p>
                                                 </div>
-
+                                                <p className="text-danger">
+                                                    {error.loginErr}
+                                                </p>
                                                 <input
                                                     type="submit"
                                                     value="Login"

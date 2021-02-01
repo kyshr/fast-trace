@@ -2,12 +2,18 @@ import React, { useState } from "react"
 import { Redirect } from "react-router-dom"
 import "../../assets/scss/login.scss"
 import logo from "../../assets/images/qr.jpg"
+import { signup } from "../../services/auth"
 
 const Signup = ({ logged }) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirm, setConfirm] = useState("")
-    const [error, setError] = useState({ email: "", password: "", confirm: "" })
+    const [error, setError] = useState({
+        email: "",
+        password: "",
+        confirm: "",
+        signupErr: "",
+    })
 
     const handleChange = (event) => {
         if (event.target.id === "email") {
@@ -28,37 +34,50 @@ const Signup = ({ logged }) => {
         }
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
-        handleError()
-        console.log(`${email} ${password} ${confirm}`)
-        console.log(error)
+        if (handleError()) {
+            try {
+                setError((err) => {
+                    return { ...err, signupErr: "" }
+                })
+
+                await signup(email, password)
+            } catch {
+                setError((err) => {
+                    return { ...err, signupErr: "Failed to create account." }
+                })
+            }
+        }
     }
 
     const handleError = () => {
+        var noError = true
         if (email === "") {
-            // setEmailErr('Email is required');
             setError((err) => {
                 return { ...err, email: "Email is required." }
             })
+            noError = false
         } else {
             const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             if (re.test(String(email).toLowerCase())) {
                 setError((err) => {
                     return { ...err, email: "" }
                 })
+                noError = true
             } else {
                 setError((err) => {
                     return { ...err, email: "Invalid email." }
                 })
+                noError = false
             }
         }
 
         if (password === "") {
-            // setPasswordErr('Password is required');
             setError((err) => {
                 return { ...err, password: "Password is required." }
             })
+            noError = false
         } else if (password.length > 0 && password.length < 8) {
             setError((err) => {
                 return {
@@ -66,12 +85,14 @@ const Signup = ({ logged }) => {
                     password: "Password should be greater than 8 characters.",
                 }
             })
+            noError = false
         }
 
         if (confirm === "") {
             setError((err) => {
                 return { ...err, confirm: "Confirm Password is required." }
             })
+            noError = false
         } else if (password !== confirm) {
             setError((err) => {
                 return {
@@ -79,7 +100,10 @@ const Signup = ({ logged }) => {
                     confirm: "Password doesn't match.",
                 }
             })
+            noError = false
         }
+
+        return noError
     }
     if (logged) {
         return <Redirect to="/" />
@@ -148,7 +172,9 @@ const Signup = ({ logged }) => {
                                                         {error.confirm}
                                                     </p>
                                                 </div>
-
+                                                <p className="text-danger">
+                                                    {error.signupErr}
+                                                </p>
                                                 <input
                                                     type="submit"
                                                     value="Signup"
