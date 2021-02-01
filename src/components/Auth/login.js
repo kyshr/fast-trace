@@ -148,7 +148,11 @@ const Login = ({ logged }) => {
                                                 </p>
                                                 <input
                                                     type="submit"
-                                                    value="Login"
+                                                    value={
+                                                        !disable
+                                                            ? "Login"
+                                                            : "Loading..."
+                                                    }
                                                     className="btn btn-block btn-primary"
                                                     disabled={disable}
                                                 />

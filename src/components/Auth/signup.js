@@ -182,7 +182,11 @@ const Signup = ({ logged }) => {
                                                 </p>
                                                 <input
                                                     type="submit"
-                                                    value="Signup"
+                                                    value={
+                                                        !disable
+                                                            ? "Signup"
+                                                            : "Loading..."
+                                                    }
                                                     className="btn btn-block btn-primary"
                                                     disabled={disable}
                                                 />
