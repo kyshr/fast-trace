@@ -1,6 +1,7 @@
 import React from "react"
 import { NavLink } from "react-router-dom"
 import "../../assets/scss/navbar.scss"
+import { auth } from "../../services/firebase"
 
 const HomeNav = ({ setLogged, toggle }) => {
     return (
@@ -19,6 +20,7 @@ const HomeNav = ({ setLogged, toggle }) => {
                 onClick={() => {
                     setLogged(false)
                     toggle()
+                    auth.signOut()
                 }}
             >
                 Logout
