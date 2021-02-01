@@ -8,6 +8,7 @@ const Signup = ({ logged }) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirm, setConfirm] = useState("")
+    const [disable, setDisable] = useState(false)
     const [error, setError] = useState({
         email: "",
         password: "",
@@ -36,6 +37,7 @@ const Signup = ({ logged }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
+        setDisable(true)
         if (handleError()) {
             try {
                 setError((err) => {
@@ -47,7 +49,10 @@ const Signup = ({ logged }) => {
                 setError((err) => {
                     return { ...err, signupErr: "Failed to create account." }
                 })
+                setDisable(false)
             }
+        } else {
+            setDisable(false)
         }
     }
 
@@ -179,6 +184,7 @@ const Signup = ({ logged }) => {
                                                     type="submit"
                                                     value="Signup"
                                                     className="btn btn-block btn-primary"
+                                                    disabled={disable}
                                                 />
                                             </form>
                                         </div>

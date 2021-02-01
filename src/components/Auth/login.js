@@ -7,6 +7,7 @@ import { login } from "../../services/auth"
 const Login = ({ logged }) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [disable, setDisable] = useState(false)
     const [error, setError] = useState({
         email: "",
         password: "",
@@ -29,6 +30,7 @@ const Login = ({ logged }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
+        setDisable(true)
         if (handleError()) {
             try {
                 setError((err) => {
@@ -40,7 +42,10 @@ const Login = ({ logged }) => {
                 setError((err) => {
                     return { ...err, loginErr: "Invalid credentials." }
                 })
+                setDisable(false)
             }
+        } else {
+            setDisable(false)
         }
     }
 
@@ -145,6 +150,7 @@ const Login = ({ logged }) => {
                                                     type="submit"
                                                     value="Login"
                                                     className="btn btn-block btn-primary"
+                                                    disabled={disable}
                                                 />
                                             </form>
                                         </div>
