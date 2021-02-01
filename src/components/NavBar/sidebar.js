@@ -18,7 +18,6 @@ const HomeNav = ({ setLogged, toggle }) => {
             <li
                 className="side-item"
                 onClick={() => {
-                    setLogged(false)
                     toggle()
                     auth.signOut()
                 }}
