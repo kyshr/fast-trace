@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom"
 import "../../assets/scss/navbar.scss"
 import { auth } from "../../services/firebase"
 
-const HomeNav = ({ setLogged, toggle }) => {
+const HomeNav = ({ setLoading, toggle }) => {
     return (
         <>
             <NavLink
@@ -19,6 +19,7 @@ const HomeNav = ({ setLogged, toggle }) => {
                 className="side-item"
                 onClick={() => {
                     toggle()
+                    setLoading(true)
                     auth.signOut()
                 }}
             >
@@ -53,9 +54,9 @@ const AuthNav = ({ toggle }) => {
     )
 }
 
-const Sidebar = ({ active, toggle, logged, setLogged }) => {
+const Sidebar = ({ active, toggle, logged, setLoading }) => {
     let Navigation = logged ? (
-        <HomeNav setLogged={setLogged} toggle={toggle} />
+        <HomeNav setLoading={setLoading} toggle={toggle} />
     ) : (
         <AuthNav toggle={toggle} />
     )

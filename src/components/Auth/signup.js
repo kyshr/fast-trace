@@ -1,20 +1,28 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Redirect } from "react-router-dom"
 import "../../assets/scss/login.scss"
 import logo from "../../assets/images/qr.jpg"
 import { signup } from "../../services/auth"
+import Loading from "../loading"
 
 const Signup = ({ logged }) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirm, setConfirm] = useState("")
     const [disable, setDisable] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [error, setError] = useState({
         email: "",
         password: "",
         confirm: "",
         signupErr: "",
     })
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false)
+        }, 1000)
+    }, [])
 
     const handleChange = (event) => {
         if (event.target.id === "email") {
@@ -113,7 +121,9 @@ const Signup = ({ logged }) => {
     if (logged) {
         return <Redirect to="/" />
     } else {
-        return (
+        return loading ? (
+            <Loading />
+        ) : (
             <>
                 <div style={{ paddingTop: "70px" }}>
                     <div className="content d-flex align-items-center py-md-5">

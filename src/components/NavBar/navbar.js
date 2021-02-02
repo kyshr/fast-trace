@@ -4,13 +4,18 @@ import "../../assets/scss/navbar.scss"
 import Sidebar from "./sidebar"
 import { auth } from "../../services/firebase"
 
-const HomeNav = ({ setLogged }) => {
+const HomeNav = () => {
     return (
         <>
             <NavLink activeClassName="active" exact to="/" className="nav-item">
                 Home
             </NavLink>
-            <li className="nav-item" onClick={() => auth.signOut()}>
+            <li
+                className="nav-item"
+                onClick={() => {
+                    auth.signOut()
+                }}
+            >
                 Logout
             </li>
         </>
@@ -40,7 +45,7 @@ const AuthNav = () => {
     )
 }
 
-const NavBar = ({ logged, setLogged }) => {
+const NavBar = ({ logged, setLoading }) => {
     const [active, setActive] = useState(false)
     const showSideBar = () => setActive(!active)
 
@@ -54,16 +59,11 @@ const NavBar = ({ logged, setLogged }) => {
         window.addEventListener("resize", handleResize)
     })
 
-    let Navigation = logged ? <HomeNav setLogged={setLogged} /> : <AuthNav />
+    let Navigation = logged ? <HomeNav /> : <AuthNav />
 
     return (
         <>
-            <Sidebar
-                active={active}
-                toggle={showSideBar}
-                logged={logged}
-                setLogged={setLogged}
-            />
+            <Sidebar active={active} toggle={showSideBar} logged={logged} />
             <nav className="navigation d-flex align-items-center fixed-top">
                 <div className="container-fluid px-3 px-lg-5 d-flex align-items-center">
                     {/* logo */}
