@@ -21,7 +21,7 @@ const Signup = ({ logged }) => {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
-        }, 1000)
+        }, 750)
     }, [])
 
     const handleChange = (event) => {
