@@ -6,6 +6,12 @@ import "../../assets/scss/home.scss"
 
 const Home = ({ logged }) => {
     const [loading, setLoading] = useState(true)
+    const [firstname, setFirstname] = useState("")
+    const [lastname, setLastname] = useState("")
+    const [barangay, setBarangay] = useState("")
+    const [city, setCity] = useState("")
+    const [province, setProvince] = useState("")
+    const [contactnum, setContactnum] = useState("")
 
     useEffect(() => {
         setTimeout(() => {
@@ -13,11 +19,52 @@ const Home = ({ logged }) => {
         }, 750)
     }, [])
 
+    const handleChange = (e) => {
+        var error = false
+        switch (e.target.id) {
+            case "firstname":
+                setFirstname(e.target.value)
+                break
+            case "lastname":
+                setLastname(e.target.value)
+                break
+            case "barangay":
+                setBarangay(e.target.value)
+                break
+            case "city":
+                setCity(e.target.value)
+                break
+            case "province":
+                setProvince(e.target.value)
+                break
+            case "contactnum":
+                setContactnum(e.target.value)
+                break
+            default:
+                error = true
+                break
+        }
+        console.log(firstname)
+        console.log(lastname)
+        console.log(barangay)
+        console.log(city)
+        console.log(province)
+        console.log(contactnum)
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log("Submitted")
+    }
+
     if (logged) {
         return loading ? (
             <Loading />
         ) : (
-            <div style={{ paddingTop: "70px" }} className="container">
+            <div
+                style={{ paddingTop: "70px", paddingBottom: "70px" }}
+                className="container"
+            >
                 <div className="home-wrapper mx-auto">
                     <div className="home-qr-title text-center pt-4">
                         <h1>Generate QR Code</h1>
@@ -28,67 +75,85 @@ const Home = ({ logged }) => {
                             fgColor="#000000"
                             level="H"
                             style={{ width: 256 }}
-                            value="Kyle Joseph Timajo"
+                            value="Kyle Joseph Timajo, 21, F, Compol, Catarman, Camiguin, 09759418084 | Joseph Timajo (Father), Lenee Timajo (Mother)"
                         />
                     </div>
                     <div className="home-qr-form mx-5 px-lg-5 pt-3">
-                        <form>
-                            <div class="form-group">
-                                <label for="firstname">Firstname</label>
+                        <form onSubmit={handleSubmit}>
+                            <div className="form-group">
+                                <label htmlFor="firstname">Firstname</label>
                                 <input
                                     type="text"
-                                    class="form-control"
+                                    className="form-control"
                                     id="firstname"
                                     placeholder="Firstname"
+                                    onChange={handleChange}
+                                    value={firstname}
+                                    required
                                 />
                             </div>
-                            <div class="form-group">
-                                <label for="lastname">Lastname</label>
+                            <div className="form-group">
+                                <label htmlFor="lastname">Lastname</label>
                                 <input
                                     type="text"
-                                    class="form-control"
+                                    className="form-control"
                                     id="lastname"
                                     placeholder="Lastname"
+                                    onChange={handleChange}
+                                    value={lastname}
+                                    required
                                 />
                             </div>
-                            <div class="form-group">
-                                <label for="barangay">Barangay</label>
+                            <div className="form-group">
+                                <label htmlFor="barangay">Barangay</label>
                                 <input
                                     type="text"
-                                    class="form-control"
+                                    className="form-control"
                                     id="barangay"
                                     placeholder="Barangay"
+                                    onChange={handleChange}
+                                    value={barangay}
+                                    required
                                 />
                             </div>
-                            <div class="form-group">
-                                <label for="city">City/Municipality</label>
+                            <div className="form-group">
+                                <label htmlFor="city">City/Municipality</label>
                                 <input
                                     type="text"
-                                    class="form-control"
+                                    className="form-control"
                                     id="city"
                                     placeholder="City/Municipality"
+                                    onChange={handleChange}
+                                    value={city}
+                                    required
                                 />
                             </div>
-                            <div class="form-group">
-                                <label for="province">Province</label>
+                            <div className="form-group">
+                                <label htmlFor="province">Province</label>
                                 <input
                                     type="text"
-                                    class="form-control"
+                                    className="form-control"
                                     id="province"
                                     placeholder="Province"
+                                    onChange={handleChange}
+                                    value={province}
+                                    required
                                 />
                             </div>
-                            <div class="form-group">
-                                <label for="contactnum">Contact No.</label>
+                            <div className="form-group">
+                                <label htmlFor="contactnum">Contact No.</label>
                                 <input
-                                    type="text"
-                                    class="form-control"
+                                    type="number"
+                                    className="form-control"
                                     id="contactnum"
                                     placeholder="Contact No."
+                                    onChange={handleChange}
+                                    value={contactnum}
+                                    required
                                 />
                             </div>
-                            <button type="submit" class="btn btn-primary">
-                                Submit
+                            <button type="submit" className="btn btn-primary">
+                                Download
                             </button>
                         </form>
                     </div>
