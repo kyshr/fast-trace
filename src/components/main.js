@@ -1,24 +1,32 @@
-import React from "react"
-import { useState } from "react"
+import React, { useState } from "react"
 import NavBar from "./NavBar/navbar"
 import { Route, Switch } from "react-router-dom"
 import Home from "./Home/home"
 import Login from "./Auth/login"
 import Signup from "./Auth/signup"
 import { auth } from "../services/firebase"
-
+import Loading from "./loading"
 const Main = () => {
     const [logged, setLogged] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     auth.onAuthStateChanged((user) => {
         if (user) {
             setLogged(true)
+            setTimeout(() => {
+                setLoading(false)
+            }, 1000)
         } else {
             setLogged(false)
+            setTimeout(() => {
+                setLoading(false)
+            }, 1000)
         }
     })
 
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             <NavBar logged={logged} />
             <Switch>

@@ -1,26 +1,25 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { Redirect } from "react-router-dom"
-import Loading from "../loading"
 import { QRCode } from "react-qr-svg"
 import "../../assets/scss/home.scss"
 
+const saveSvgAsPng = require("save-svg-as-png")
+const imageOptions = {
+    scale: 5,
+    encoderOptions: 1,
+    backgroundColor: "white",
+}
+
 const Home = ({ logged }) => {
-    const [loading, setLoading] = useState(true)
     const [firstname, setFirstname] = useState("")
     const [lastname, setLastname] = useState("")
     const [barangay, setBarangay] = useState("")
     const [city, setCity] = useState("")
     const [province, setProvince] = useState("")
     const [contactnum, setContactnum] = useState("")
-
-    useEffect(() => {
-        setTimeout(() => {
-            setLoading(false)
-        }, 750)
-    }, [])
+    const [qrString, setQrString] = useState("")
 
     const handleChange = (e) => {
-        var error = false
         switch (e.target.id) {
             case "firstname":
                 setFirstname(e.target.value)
@@ -41,26 +40,40 @@ const Home = ({ logged }) => {
                 setContactnum(e.target.value)
                 break
             default:
-                error = true
+                console.log("This is default")
                 break
         }
-        console.log(firstname)
-        console.log(lastname)
-        console.log(barangay)
-        console.log(city)
-        console.log(province)
-        console.log(contactnum)
+
+        if (
+            firstname !== "" &&
+            lastname !== "" &&
+            barangay !== "" &&
+            city !== "" &&
+            province !== "" &&
+            contactnum !== ""
+        ) {
+            setQrString(
+                `${firstname} ${lastname}*${barangay}, ${city}, ${province}*${contactnum}`
+            )
+        } else {
+            setQrString("")
+        }
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log("Submitted")
+        if (qrString !== "") {
+            saveSvgAsPng.saveSvgAsPng(
+                document.getElementById("qr-svg"),
+                `${firstname} ${lastname} QR.png`,
+                imageOptions
+            )
+        }
     }
 
     if (logged) {
-        return loading ? (
-            <Loading />
-        ) : (
+        return (
             <div
                 style={{ paddingTop: "70px", paddingBottom: "70px" }}
                 className="container"
@@ -75,7 +88,8 @@ const Home = ({ logged }) => {
                             fgColor="#000000"
                             level="H"
                             style={{ width: 256 }}
-                            value="Kyle Joseph Timajo, 21, F, Compol, Catarman, Camiguin, 09759418084 | Joseph Timajo (Father), Lenee Timajo (Mother)"
+                            value={qrString}
+                            id="qr-svg"
                         />
                     </div>
                     <div className="home-qr-form mx-5 px-lg-5 pt-3">

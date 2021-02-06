@@ -9,6 +9,17 @@
     font-weight: bold;
 }
 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+}
+
+// #qr-svg {
+//     stroke: red;
+//     stroke-width: 5px;
+// }
+
 // Small devices (landscape phones, 576px and up)
 @media (max-width: 400px) {
     .home-qr-title h1 {
