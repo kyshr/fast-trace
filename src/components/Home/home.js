@@ -70,6 +70,12 @@ const Home = ({ logged }) => {
                 imageOptions
             )
         }
+        setFirstname("")
+        setLastname("")
+        setBarangay("")
+        setCity("")
+        setProvince("")
+        setContactnum("")
     }
 
     if (logged) {
@@ -79,97 +85,124 @@ const Home = ({ logged }) => {
                 className="container"
             >
                 <div className="home-wrapper mx-auto">
-                    <div className="home-qr-title text-center pt-4">
-                        <h1>Generate QR Code</h1>
-                    </div>
-                    <div className="home-qr-code d-flex justify-content-center pt-4">
-                        <QRCode
-                            bgColor="#FFFFFF"
-                            fgColor="#000000"
-                            level="H"
-                            style={{ width: 256 }}
-                            value={qrString}
-                            id="qr-svg"
-                        />
-                    </div>
-                    <div className="home-qr-form mx-5 px-lg-5 pt-3">
-                        <form onSubmit={handleSubmit}>
-                            <div className="form-group">
-                                <label htmlFor="firstname">Firstname</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="firstname"
-                                    placeholder="Firstname"
-                                    onChange={handleChange}
-                                    value={firstname}
-                                    required
-                                />
+                    <div className="card mt-3 mt-md-5">
+                        <div className="card-body">
+                            <div className="home-qr-title text-center">
+                                <h1>Generate QR Code</h1>
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="lastname">Lastname</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="lastname"
-                                    placeholder="Lastname"
-                                    onChange={handleChange}
-                                    value={lastname}
-                                    required
-                                />
+                            <div className="container pt-4">
+                                <div className="row">
+                                    <div className="col-12 col-lg-6">
+                                        <div className="h-100 home-qr-code d-flex justify-content-center mb-4 mb-md-0">
+                                            <QRCode
+                                                bgColor="#FFFFFF"
+                                                fgColor="#000000"
+                                                level="H"
+                                                style={{ width: 320 }}
+                                                value={qrString}
+                                                id="qr-svg"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="col-12 col-lg-6">
+                                        <div className="home-qr-form">
+                                            <form onSubmit={handleSubmit}>
+                                                <div className="form-group">
+                                                    <label htmlFor="firstname">
+                                                        Firstname
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="firstname"
+                                                        placeholder="Firstname"
+                                                        onChange={handleChange}
+                                                        value={firstname}
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="lastname">
+                                                        Lastname
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="lastname"
+                                                        placeholder="Lastname"
+                                                        onChange={handleChange}
+                                                        value={lastname}
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="barangay">
+                                                        Barangay
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="barangay"
+                                                        placeholder="Barangay"
+                                                        onChange={handleChange}
+                                                        value={barangay}
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="city">
+                                                        City/Municipality
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="city"
+                                                        placeholder="City/Municipality"
+                                                        onChange={handleChange}
+                                                        value={city}
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="province">
+                                                        Province
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="province"
+                                                        placeholder="Province"
+                                                        onChange={handleChange}
+                                                        value={province}
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="contactnum">
+                                                        Contact No.
+                                                    </label>
+                                                    <input
+                                                        type="number"
+                                                        className="form-control"
+                                                        id="contactnum"
+                                                        placeholder="Contact No."
+                                                        onChange={handleChange}
+                                                        value={contactnum}
+                                                        required
+                                                    />
+                                                </div>
+                                                <button
+                                                    type="submit"
+                                                    className="btn btn-primary"
+                                                >
+                                                    Download
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="barangay">Barangay</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="barangay"
-                                    placeholder="Barangay"
-                                    onChange={handleChange}
-                                    value={barangay}
-                                    required
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="city">City/Municipality</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="city"
-                                    placeholder="City/Municipality"
-                                    onChange={handleChange}
-                                    value={city}
-                                    required
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="province">Province</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="province"
-                                    placeholder="Province"
-                                    onChange={handleChange}
-                                    value={province}
-                                    required
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="contactnum">Contact No.</label>
-                                <input
-                                    type="number"
-                                    className="form-control"
-                                    id="contactnum"
-                                    placeholder="Contact No."
-                                    onChange={handleChange}
-                                    value={contactnum}
-                                    required
-                                />
-                            </div>
-                            <button type="submit" className="btn btn-primary">
-                                Download
-                            </button>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
