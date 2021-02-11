@@ -116,14 +116,14 @@ const Signup = ({ logged }) => {
         return (
             <>
                 <div style={{ paddingTop: "70px" }}>
-                    <div className="content d-flex align-items-center py-md-5">
-                        <div className="container px-4 px-md-0">
+                    <div className="content d-flex align-items-center py-0 py-md-4">
+                        <div className="container pt-2 pt-md-5">
                             <div className="row">
                                 <div className="col-md-6 d-flex align-items-center">
                                     <img
                                         src={logo}
                                         alt="logo"
-                                        className="img-fluid d-none d-md-block"
+                                        className="img-fluid"
                                     />
                                 </div>
                                 <div className="col-md-6 contents">

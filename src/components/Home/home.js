@@ -86,14 +86,14 @@ const Home = ({ logged }) => {
             >
                 <div className="home-wrapper mx-auto">
                     <div className="card mt-3 mt-md-5">
-                        <div className="card-body">
+                        <div className="card-body px-0">
                             <div className="home-qr-title text-center">
                                 <h1>Generate QR Code</h1>
                             </div>
                             <div className="container pt-4">
                                 <div className="row">
                                     <div className="col-12 col-lg-6">
-                                        <div className="h-100 home-qr-code d-flex justify-content-center mb-4 mb-md-0">
+                                        <div className="home-qr-code d-flex justify-content-center mb-4 mb-md-0 pt-1">
                                             <QRCode
                                                 bgColor="#FFFFFF"
                                                 fgColor="#000000"

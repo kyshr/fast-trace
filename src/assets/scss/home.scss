@@ -16,39 +16,26 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 // #qr-svg {
-//     stroke: red;
-//     stroke-width: 5px;
+//     border: 10px solid red;
 // }
 
-// // Small devices (landscape phones, 576px and up)
-// @media (max-width: 400px) {
-//     .home-qr-title h1 {
-//         font-size: 30px !important;
-//     }
-//     .home-wrapper {
-//         padding: 0px 10px;
-//     }
-//     .home-qr-form {
-//         margin: 0px 5px !important;
-//     }
-// }
-// @media (min-width: 576px) {
-//     .home-wrapper {
-//         width: 80%;
-//     }
-// }
+// Small devices (landscape phones, 576px and up)
+@media (max-width: 400px) {
+    .home-qr-title h1 {
+        font-size: 30px !important;
+    }
+}
+@media (min-width: 576px) {
+}
 
-// // Medium devices (tablets, 768px and up)
-// @media (min-width: 768px) {
-//     .home-wrapper {
-//         width: 60%;
-//     }
-// }
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+}
 
-// // Large devices (desktops, 992px and up)
-// @media (min-width: 992px) {
-// }
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+}
 
-// // Extra large devices (large desktops, 1200px and up)
-// @media (min-width: 1200px) {
-// }
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+}
