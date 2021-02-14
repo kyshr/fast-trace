@@ -2,18 +2,14 @@ import React, { useState } from "react"
 import { Redirect } from "react-router-dom"
 import "../../assets/scss/login.scss"
 import logo from "../../assets/images/qr.jpg"
-import { signup } from "../../services/auth"
+import { resetPassword } from "../../services/auth"
 
-const Signup = ({ logged }) => {
+const Forgot = ({ logged }) => {
     const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [confirm, setConfirm] = useState("")
     const [disable, setDisable] = useState(false)
     const [error, setError] = useState({
         email: "",
-        password: "",
-        confirm: "",
-        signupErr: "",
+        loginErr: "",
     })
 
     const handleChange = (event) => {
@@ -22,16 +18,6 @@ const Signup = ({ logged }) => {
                 return { ...err, email: "" }
             })
             setEmail(event.target.value)
-        } else if (event.target.id === "password") {
-            setError((err) => {
-                return { ...err, password: "" }
-            })
-            setPassword(event.target.value)
-        } else if (event.target.id === "cpassword") {
-            setError((err) => {
-                return { ...err, confirm: "" }
-            })
-            setConfirm(event.target.value)
         }
     }
 
@@ -41,13 +27,18 @@ const Signup = ({ logged }) => {
         if (handleError()) {
             try {
                 setError((err) => {
-                    return { ...err, signupErr: "" }
+                    return { ...err, loginErr: "" }
                 })
 
-                await signup(email, password)
+                await resetPassword(email)
+                setDisable(false)
+                window.alert("Reset password has been sent to your email.")
             } catch (error) {
                 setError((err) => {
-                    return { ...err, signupErr: error.message }
+                    return {
+                        ...err,
+                        loginErr: error.message,
+                    }
                 })
                 setDisable(false)
             }
@@ -77,39 +68,9 @@ const Signup = ({ logged }) => {
                 noError = false
             }
         }
-
-        if (password === "") {
-            setError((err) => {
-                return { ...err, password: "Password is required." }
-            })
-            noError = false
-        } else if (password.length > 0 && password.length < 8) {
-            setError((err) => {
-                return {
-                    ...err,
-                    password: "Password should be greater than 8 characters.",
-                }
-            })
-            noError = false
-        }
-
-        if (confirm === "") {
-            setError((err) => {
-                return { ...err, confirm: "Confirm Password is required." }
-            })
-            noError = false
-        } else if (password !== confirm) {
-            setError((err) => {
-                return {
-                    ...err,
-                    confirm: "Password doesn't match.",
-                }
-            })
-            noError = false
-        }
-
         return noError
     }
+
     if (logged) {
         return <Redirect to="/" />
     } else {
@@ -130,12 +91,7 @@ const Signup = ({ logged }) => {
                                     <div className="row justify-content-center">
                                         <div className="col-md-8">
                                             <div className="mb-4">
-                                                <h3>Signup to Fast Trace</h3>
-                                                <p className="mb-4">
-                                                    Fast Trace is an android app
-                                                    that is intended for contact
-                                                    tracing.
-                                                </p>
+                                                <h3>Forgot Password</h3>
                                             </div>
                                             <form onSubmit={handleSubmit}>
                                                 <div className="form-group first">
@@ -151,40 +107,14 @@ const Signup = ({ logged }) => {
                                                         {error.email}
                                                     </p>
                                                 </div>
-                                                <div className="form-group">
-                                                    <input
-                                                        type="password"
-                                                        className="form-control"
-                                                        id="password"
-                                                        placeholder="Password"
-                                                        value={password}
-                                                        onChange={handleChange}
-                                                    />
-                                                    <p className="text-danger">
-                                                        {error.password}
-                                                    </p>
-                                                </div>
-                                                <div className="form-group last mb-4">
-                                                    <input
-                                                        type="password"
-                                                        className="form-control"
-                                                        id="cpassword"
-                                                        placeholder="Confirm Password"
-                                                        value={confirm}
-                                                        onChange={handleChange}
-                                                    />
-                                                    <p className="text-danger">
-                                                        {error.confirm}
-                                                    </p>
-                                                </div>
                                                 <p className="text-danger">
-                                                    {error.signupErr}
+                                                    {error.loginErr}
                                                 </p>
                                                 <input
                                                     type="submit"
                                                     value={
                                                         !disable
-                                                            ? "Signup"
+                                                            ? "Reset Password"
                                                             : "Loading..."
                                                     }
                                                     className="btn btn-block btn-primary"
@@ -203,4 +133,4 @@ const Signup = ({ logged }) => {
     }
 }
 
-export default Signup
+export default Forgot

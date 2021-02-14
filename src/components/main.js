@@ -5,6 +5,7 @@ import Home from "./Home/home"
 import Login from "./Auth/login"
 import Signup from "./Auth/signup"
 import Footer from "./Footer/footer"
+import Forgot from "./ForgotPassword/forgot"
 import { auth } from "../services/firebase"
 import Loading from "./loading"
 const Main = () => {
@@ -40,6 +41,9 @@ const Main = () => {
                     </Route>
                     <Route exact path="/signup">
                         <Signup logged={logged} />
+                    </Route>
+                    <Route exact path="/forgot">
+                        <Forgot logged={logged} />
                     </Route>
                 </Switch>
                 <Footer />

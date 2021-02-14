@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Redirect } from "react-router-dom"
+import { Redirect, Link } from "react-router-dom"
 import "../../assets/scss/login.scss"
 import logo from "../../assets/images/qr.jpg"
 import { login } from "../../services/auth"
@@ -38,9 +38,9 @@ const Login = ({ logged }) => {
                 })
 
                 await login(email, password)
-            } catch {
+            } catch (error) {
                 setError((err) => {
-                    return { ...err, loginErr: "Invalid credentials." }
+                    return { ...err, loginErr: error.message }
                 })
                 setDisable(false)
             }
@@ -130,7 +130,7 @@ const Login = ({ logged }) => {
                                                         {error.email}
                                                     </p>
                                                 </div>
-                                                <div className="form-group last mb-4">
+                                                <div className="form-group last mb-2">
                                                     <input
                                                         type="password"
                                                         className="form-control"
@@ -143,7 +143,15 @@ const Login = ({ logged }) => {
                                                         {error.password}
                                                     </p>
                                                 </div>
-                                                <p className="text-danger">
+                                                <div className="forgot d-flex justify-content-end">
+                                                    <Link
+                                                        to="/forgot"
+                                                        className="forgot-link"
+                                                    >
+                                                        Forgot password?
+                                                    </Link>
+                                                </div>
+                                                <p className="text-danger mt-3">
                                                     {error.loginErr}
                                                 </p>
                                                 <input
