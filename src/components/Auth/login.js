@@ -95,7 +95,7 @@ const Login = ({ logged }) => {
         return (
             <>
                 <div style={{ paddingTop: "70px" }}>
-                    <div className="content d-flex align-items-center py-0 py-md-4">
+                    <div className="content d-flex align-items-center py-0 py-md-4 mb-5">
                         <div className="container pt-2 pt-md-5">
                             <div className="row">
                                 <div className="col-md-6 d-flex align-items-center">

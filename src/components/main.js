@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom"
 import Home from "./Home/home"
 import Login from "./Auth/login"
 import Signup from "./Auth/signup"
+import Footer from "./Footer/footer"
 import { auth } from "../services/firebase"
 import Loading from "./loading"
 const Main = () => {
@@ -29,17 +30,20 @@ const Main = () => {
     ) : (
         <>
             <NavBar logged={logged} />
-            <Switch>
-                <Route exact path="/">
-                    <Home logged={logged} />
-                </Route>
-                <Route exact path="/login">
-                    <Login logged={logged} />
-                </Route>
-                <Route exact path="/signup">
-                    <Signup logged={logged} />
-                </Route>
-            </Switch>
+            <div className="main-wrapper d-flex flex-column justify-content-between">
+                <Switch>
+                    <Route exact path="/">
+                        <Home logged={logged} />
+                    </Route>
+                    <Route exact path="/login">
+                        <Login logged={logged} />
+                    </Route>
+                    <Route exact path="/signup">
+                        <Signup logged={logged} />
+                    </Route>
+                </Switch>
+                <Footer />
+            </div>
         </>
     )
 }
