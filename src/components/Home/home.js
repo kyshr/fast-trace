@@ -1,14 +1,10 @@
 import React, { useState } from "react"
 import { Redirect } from "react-router-dom"
-import { QRCode } from "react-qr-svg"
 import "../../assets/scss/home.scss"
-
-const saveSvgAsPng = require("save-svg-as-png")
-const imageOptions = {
-    scale: 5,
-    encoderOptions: 1,
-    backgroundColor: "white",
-}
+import { QRCode } from "react-qr-svg"
+import { Button, Spinner } from "react-bootstrap"
+import domtoimage from "dom-to-image-more"
+import { saveAs } from "file-saver"
 
 const Home = ({ logged }) => {
     const [firstname, setFirstname] = useState("")
@@ -20,6 +16,7 @@ const Home = ({ logged }) => {
     const [province, setProvince] = useState("")
     const [contactnum, setContactnum] = useState("")
     const [qrString, setQrString] = useState("")
+    const [download, setDownload] = useState(false)
 
     const handleChange = (e) => {
         switch (e.target.id) {
@@ -74,14 +71,13 @@ const Home = ({ logged }) => {
         e.preventDefault()
         console.log("Submitted")
         if (qrString !== "") {
-            saveSvgAsPng
-                .saveSvgAsPng(
-                    document.getElementById("qr-svg"),
-                    `${firstname} ${lastname} QR.png`,
-                    imageOptions
-                )
-                .then(() => {
+            setDownload(true)
+            domtoimage
+                .toBlob(document.getElementById("qr-svg"))
+                .then(function (blob) {
+                    saveAs(blob, `${firstname} ${lastname} QR.png`)
                     setQrString("")
+                    setDownload(false)
                 })
         }
         resetFields()
@@ -114,14 +110,18 @@ const Home = ({ logged }) => {
                                 <div className="row">
                                     <div className="col-12 col-lg-6">
                                         <div className="home-qr-code d-flex justify-content-center mb-4 mb-md-0 pt-1">
-                                            <QRCode
-                                                bgColor="#FFFFFF"
-                                                fgColor="#000000"
-                                                level="H"
-                                                style={{ width: 320 }}
-                                                value={qrString}
+                                            <div
                                                 id="qr-svg"
-                                            />
+                                                className="d-flex justify-content-center"
+                                            >
+                                                <QRCode
+                                                    bgColor="#FFFFFF"
+                                                    fgColor="#000000"
+                                                    level="H"
+                                                    style={{ width: 320 }}
+                                                    value={qrString}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="col-12 col-lg-6">
@@ -155,12 +155,12 @@ const Home = ({ logged }) => {
                                                         required
                                                     />
                                                 </div>
-                                                <div class="form-group">
+                                                <div className="form-group">
                                                     <label htmlFor="gender">
                                                         Gender
                                                     </label>
                                                     <select
-                                                        class="form-control"
+                                                        className="form-control"
                                                         id="gender"
                                                         value={gender}
                                                         onChange={handleChange}
@@ -244,22 +244,34 @@ const Home = ({ logged }) => {
                                                     />
                                                 </div>
                                                 <div className="home-btn d-flex justify-content-end">
-                                                    <button
+                                                    <Button
+                                                        variant="danger"
                                                         type="button"
                                                         className="btn btn-danger mr-2"
                                                         onClick={() => {
                                                             resetFields()
-                                                            setQrString()
+                                                            setQrString("")
                                                         }}
                                                     >
                                                         Cancel
-                                                    </button>
-                                                    <button
+                                                    </Button>
+                                                    <Button
+                                                        variant="primary"
                                                         type="submit"
-                                                        className="btn btn-primary"
+                                                        disabled={download}
                                                     >
-                                                        Download
-                                                    </button>
+                                                        {download ? (
+                                                            <Spinner
+                                                                as="span"
+                                                                animation="border"
+                                                                size="sm"
+                                                                role="status"
+                                                                aria-hidden="true"
+                                                            />
+                                                        ) : (
+                                                            "Download"
+                                                        )}
+                                                    </Button>
                                                 </div>
                                             </form>
                                         </div>
