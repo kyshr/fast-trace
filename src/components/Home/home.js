@@ -269,6 +269,7 @@ const Home = ({ logged }) => {
                                                     <Button
                                                         variant="primary"
                                                         type="submit"
+                                                        className="download-btn"
                                                         disabled={download}
                                                     >
                                                         {download ? (
