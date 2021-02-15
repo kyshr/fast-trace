@@ -84,6 +84,7 @@ const Home = ({ logged }) => {
         setCity("")
         setProvince("")
         setContactnum("")
+        setQrString("")
     }
 
     if (logged) {
