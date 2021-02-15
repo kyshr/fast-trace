@@ -70,12 +70,17 @@ const Home = ({ logged }) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log("Submitted")
-        setDownload(true)
+
         if (qrString !== "") {
+            setDownload(true)
             domtoimage
                 .toBlob(document.getElementById("qr-svg"))
-                .then(function (blob) {
+                .then((blob) => {
                     saveAs(blob, `${firstname} ${lastname} QR.png`)
+                    setQrString("")
+                    setDownload(false)
+                })
+                .catch((error) => {
                     setQrString("")
                     setDownload(false)
                 })
