@@ -69,8 +69,6 @@ const Home = ({ logged }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log("Submitted")
-
         if (qrString !== "") {
             setDownload(true)
             domtoimage
