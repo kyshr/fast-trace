@@ -63,7 +63,7 @@ const Home = ({ logged }) => {
             contactnum !== ""
         ) {
             setQrString(
-                `${firstname}*${lastname}*${barangay}, ${city}, ${province}*${gender}*${age}*${contactnum}`
+                `${firstname}*${lastname}*${gender}*${age}*${barangay}, ${city}, ${province}*${contactnum}`
             )
         } else {
             setQrString("")
