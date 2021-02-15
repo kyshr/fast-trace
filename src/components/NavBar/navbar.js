@@ -3,20 +3,21 @@ import { NavLink } from "react-router-dom"
 import "../../assets/scss/navbar.scss"
 import Sidebar from "./sidebar"
 import { auth } from "../../services/firebase"
+import { IoExit } from "react-icons/io5"
 
 const HomeNav = () => {
     return (
         <>
             <NavLink activeClassName="active" exact to="/" className="nav-item">
-                Home
+                Generate QR
             </NavLink>
             <li
-                className="nav-item"
+                className="nav-item logout-icon d-flex align-items-center"
                 onClick={() => {
                     auth.signOut()
                 }}
             >
-                Logout
+                <IoExit />
             </li>
         </>
     )
@@ -45,7 +46,7 @@ const AuthNav = () => {
     )
 }
 
-const NavBar = ({ logged, setLoading }) => {
+const NavBar = ({ logged }) => {
     const [active, setActive] = useState(false)
     const showSideBar = () => setActive(!active)
 

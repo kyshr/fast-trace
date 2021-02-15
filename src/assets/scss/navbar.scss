@@ -37,6 +37,7 @@
 
         .nav-items {
             list-style-type: none;
+
             .nav-item {
                 text-decoration: none !important;
                 color: $text-color;
@@ -44,7 +45,6 @@
                 transition: 0.2s ease-in-out;
                 padding: 5px 10px;
                 cursor: pointer;
-
                 &:hover {
                     color: $primary-color;
                 }
@@ -108,4 +108,18 @@
 
 .side-items > .active {
     color: $primary-color !important;
+}
+
+.logout-icon {
+    font-size: 30px;
+
+    &:hover {
+        color: #ff4e4e !important;
+    }
+}
+
+.side-logout-icon {
+    &:hover {
+        color: #ff4e4e !important;
+    }
 }

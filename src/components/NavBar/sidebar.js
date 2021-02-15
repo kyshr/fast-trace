@@ -13,10 +13,10 @@ const HomeNav = ({ toggle }) => {
                 className="side-item"
                 onClick={toggle}
             >
-                Home
+                Generate QR
             </NavLink>
             <li
-                className="side-item"
+                className="side-item side-logout-icon"
                 onClick={() => {
                     toggle()
                     auth.signOut()
