@@ -70,8 +70,8 @@ const Home = ({ logged }) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log("Submitted")
+        setDownload(true)
         if (qrString !== "") {
-            setDownload(true)
             domtoimage
                 .toBlob(document.getElementById("qr-svg"))
                 .then(function (blob) {
@@ -183,6 +183,9 @@ const Home = ({ logged }) => {
                                                         id="age"
                                                         placeholder="Age"
                                                         onChange={handleChange}
+                                                        onWheel={(e) =>
+                                                            e.target.blur()
+                                                        }
                                                         value={age}
                                                         required
                                                     />
@@ -239,6 +242,9 @@ const Home = ({ logged }) => {
                                                         id="contactnum"
                                                         placeholder="Contact No."
                                                         onChange={handleChange}
+                                                        onWheel={(e) =>
+                                                            e.target.blur()
+                                                        }
                                                         value={contactnum}
                                                         required
                                                     />

@@ -15,6 +15,10 @@ input[type="number"]::-webkit-outer-spin-button {
     margin: 0;
 }
 
+input[type="number"] {
+    appearance: textfield;
+}
+
 #qr-svg {
     border: 15px solid white;
     width: 100%;
