@@ -64,15 +64,11 @@ const Home = ({ logged }) => {
         e.preventDefault()
         console.log("Submitted")
         if (qrString !== "") {
-            saveSvgAsPng
-                .saveSvgAsPng(
-                    document.getElementById("qr-svg"),
-                    `${firstname} ${lastname} QR.png`,
-                    imageOptions
-                )
-                .then(() => {
-                    setQrString("")
-                })
+            saveSvgAsPng.saveSvgAsPng(
+                document.getElementById("qr-svg"),
+                `${firstname} ${lastname} QR.png`,
+                imageOptions
+            )
         }
         resetFields()
     }
