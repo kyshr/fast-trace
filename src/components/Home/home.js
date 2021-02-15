@@ -64,11 +64,15 @@ const Home = ({ logged }) => {
         e.preventDefault()
         console.log("Submitted")
         if (qrString !== "") {
-            saveSvgAsPng.saveSvgAsPng(
-                document.getElementById("qr-svg"),
-                `${firstname} ${lastname} QR.png`,
-                imageOptions
-            )
+            saveSvgAsPng
+                .saveSvgAsPng(
+                    document.getElementById("qr-svg"),
+                    `${firstname} ${lastname} QR.png`,
+                    imageOptions
+                )
+                .then(() => {
+                    setQrString("")
+                })
         }
         resetFields()
     }
@@ -80,7 +84,6 @@ const Home = ({ logged }) => {
         setCity("")
         setProvince("")
         setContactnum("")
-        setQrString("")
     }
 
     if (logged) {
@@ -200,7 +203,10 @@ const Home = ({ logged }) => {
                                                     <button
                                                         type="button"
                                                         className="btn btn-danger mr-2"
-                                                        onClick={resetFields}
+                                                        onClick={() => {
+                                                            resetFields()
+                                                            setQrString()
+                                                        }}
                                                     >
                                                         Cancel
                                                     </button>
