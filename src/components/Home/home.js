@@ -13,6 +13,8 @@ const imageOptions = {
 const Home = ({ logged }) => {
     const [firstname, setFirstname] = useState("")
     const [lastname, setLastname] = useState("")
+    const [gender, setGender] = useState("Male")
+    const [age, setAge] = useState("")
     const [barangay, setBarangay] = useState("")
     const [city, setCity] = useState("")
     const [province, setProvince] = useState("")
@@ -26,6 +28,12 @@ const Home = ({ logged }) => {
                 break
             case "lastname":
                 setLastname(e.target.value)
+                break
+            case "gender":
+                setGender(e.target.value)
+                break
+            case "age":
+                setAge(e.target.value)
                 break
             case "barangay":
                 setBarangay(e.target.value)
@@ -47,13 +55,15 @@ const Home = ({ logged }) => {
         if (
             firstname !== "" &&
             lastname !== "" &&
+            age !== "" &&
+            gender !== "" &&
             barangay !== "" &&
             city !== "" &&
             province !== "" &&
             contactnum !== ""
         ) {
             setQrString(
-                `${firstname} ${lastname}*${barangay}, ${city}, ${province}*${contactnum}`
+                `${firstname}*${lastname}*${barangay}, ${city}, ${province}*${gender}*${age}*${contactnum}`
             )
         } else {
             setQrString("")
@@ -80,6 +90,8 @@ const Home = ({ logged }) => {
     const resetFields = (e) => {
         setFirstname("")
         setLastname("")
+        setAge("")
+        setGender("Male")
         setBarangay("")
         setCity("")
         setProvince("")
@@ -140,6 +152,38 @@ const Home = ({ logged }) => {
                                                         placeholder="Lastname"
                                                         onChange={handleChange}
                                                         value={lastname}
+                                                        required
+                                                    />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label htmlFor="gender">
+                                                        Gender
+                                                    </label>
+                                                    <select
+                                                        class="form-control"
+                                                        id="gender"
+                                                        value={gender}
+                                                        onChange={handleChange}
+                                                    >
+                                                        <option value="Male">
+                                                            Male
+                                                        </option>
+                                                        <option value="Female">
+                                                            Female
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="age">
+                                                        Age
+                                                    </label>
+                                                    <input
+                                                        type="number"
+                                                        className="form-control"
+                                                        id="age"
+                                                        placeholder="Age"
+                                                        onChange={handleChange}
+                                                        value={age}
                                                         required
                                                     />
                                                 </div>
