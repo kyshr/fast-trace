@@ -64,12 +64,20 @@ const Home = ({ logged }) => {
         e.preventDefault()
         console.log("Submitted")
         if (qrString !== "") {
-            saveSvgAsPng.saveSvgAsPng(
-                document.getElementById("qr-svg"),
-                `${firstname} ${lastname} QR.png`,
-                imageOptions
-            )
+            saveSvgAsPng
+                .saveSvgAsPng(
+                    document.getElementById("qr-svg"),
+                    `${firstname} ${lastname} QR.png`,
+                    imageOptions
+                )
+                .then(() => {
+                    setQrString("")
+                })
         }
+        resetFields()
+    }
+
+    const resetFields = (e) => {
         setFirstname("")
         setLastname("")
         setBarangay("")
@@ -191,12 +199,21 @@ const Home = ({ logged }) => {
                                                         required
                                                     />
                                                 </div>
-                                                <button
-                                                    type="submit"
-                                                    className="btn btn-primary"
-                                                >
-                                                    Download
-                                                </button>
+                                                <div className="home-btn d-flex justify-content-end">
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-danger mr-2"
+                                                        onClick={resetFields}
+                                                    >
+                                                        Cancel
+                                                    </button>
+                                                    <button
+                                                        type="submit"
+                                                        className="btn btn-primary"
+                                                    >
+                                                        Download
+                                                    </button>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
