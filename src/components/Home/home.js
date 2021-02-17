@@ -6,6 +6,15 @@ import { Button, Spinner } from "react-bootstrap"
 import domtoimage from "dom-to-image-more"
 import { saveAs } from "file-saver"
 
+let Firstname = ""
+let Lastname = ""
+let Gender = "Male"
+let Age = ""
+let Barangay = ""
+let City = ""
+let Province = ""
+let Contactnum = ""
+
 const Home = ({ logged }) => {
     const [firstname, setFirstname] = useState("")
     const [lastname, setLastname] = useState("")
@@ -22,27 +31,35 @@ const Home = ({ logged }) => {
         switch (e.target.id) {
             case "firstname":
                 setFirstname(e.target.value)
+                Firstname = e.target.value
                 break
             case "lastname":
                 setLastname(e.target.value)
+                Lastname = e.target.value
                 break
             case "gender":
                 setGender(e.target.value)
+                Gender = e.target.value
                 break
             case "age":
                 setAge(e.target.value)
+                Age = e.target.value
                 break
             case "barangay":
                 setBarangay(e.target.value)
+                Barangay = e.target.value
                 break
             case "city":
                 setCity(e.target.value)
+                City = e.target.value
                 break
             case "province":
                 setProvince(e.target.value)
+                Province = e.target.value
                 break
             case "contactnum":
                 setContactnum(e.target.value)
+                Contactnum = e.target.value
                 break
             default:
                 console.log("This is default")
@@ -50,28 +67,28 @@ const Home = ({ logged }) => {
         }
 
         if (
-            firstname !== "" &&
-            lastname !== "" &&
-            age !== "" &&
-            gender !== "" &&
-            barangay !== "" &&
-            city !== "" &&
-            province !== "" &&
-            contactnum !== ""
+            Firstname !== "" &&
+            Lastname !== "" &&
+            Age !== "" &&
+            Gender !== "" &&
+            Barangay !== "" &&
+            City !== "" &&
+            Province !== "" &&
+            Contactnum !== ""
         ) {
             setQrString(
-                `${firstname}*${lastname}*${gender}*${age}*${barangay}, ${city}, ${province}*${contactnum}`
+                `${Firstname}*${Lastname}*${Gender}*${Age}*${Barangay}, ${City}, ${Province}*${Contactnum}`
             )
         } else {
             setQrString("")
         }
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+        setDownload(true)
         if (qrString !== "") {
-            setDownload(true)
-            domtoimage
+            await domtoimage
                 .toBlob(document.getElementById("qr-svg"))
                 .then((blob) => {
                     saveAs(blob, `${firstname} ${lastname} QR.png`)
@@ -82,8 +99,10 @@ const Home = ({ logged }) => {
                     setQrString("")
                     setDownload(false)
                 })
+            resetFields()
+        } else {
+            setDownload(false)
         }
-        resetFields()
     }
 
     const resetFields = (e) => {
@@ -95,6 +114,15 @@ const Home = ({ logged }) => {
         setCity("")
         setProvince("")
         setContactnum("")
+
+        Firstname = ""
+        Lastname = ""
+        Age = ""
+        Gender = ""
+        Barangay = ""
+        City = ""
+        Province = ""
+        Contactnum = ""
     }
 
     if (logged) {
