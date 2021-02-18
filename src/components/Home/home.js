@@ -118,7 +118,7 @@ const Home = ({ logged }) => {
         Firstname = ""
         Lastname = ""
         Age = ""
-        Gender = ""
+        Gender = "Male"
         Barangay = ""
         City = ""
         Province = ""
