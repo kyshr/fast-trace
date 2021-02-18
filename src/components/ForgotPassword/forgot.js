@@ -32,6 +32,7 @@ const Forgot = ({ logged }) => {
 
                 await resetPassword(email)
                 setDisable(false)
+                setEmail("")
                 window.alert("Reset password has been sent to your email.")
             } catch (error) {
                 setError((err) => {
@@ -40,6 +41,7 @@ const Forgot = ({ logged }) => {
                         loginErr: error.message,
                     }
                 })
+                setEmail("")
                 setDisable(false)
             }
         } else {
