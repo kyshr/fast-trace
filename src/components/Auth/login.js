@@ -111,7 +111,7 @@ const Login = ({ logged }) => {
                                             <div className="mb-4">
                                                 <h3>Login to V-Trace</h3>
                                                 <p className="mb-4">
-                                                    Fast Trace is an android app
+                                                    V-Trace is an android app
                                                     that is intended for contact
                                                     tracing.
                                                 </p>
