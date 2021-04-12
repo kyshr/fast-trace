@@ -109,7 +109,7 @@ const Login = ({ logged }) => {
                                     <div className="row justify-content-center">
                                         <div className="col-md-8">
                                             <div className="mb-4">
-                                                <h3>Login to Fast Trace</h3>
+                                                <h3>Login to V-Trace</h3>
                                                 <p className="mb-4">
                                                     Fast Trace is an android app
                                                     that is intended for contact
