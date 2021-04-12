@@ -70,7 +70,7 @@ const NavBar = ({ logged }) => {
                     {/* logo */}
                     <div className="logo">
                         <NavLink exact to="/" className="logo-link">
-                            <span className="logo-name">Fast Trace</span>
+                            <span className="logo-name">V-Trace</span>
                         </NavLink>
                     </div>
 
