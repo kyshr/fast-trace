@@ -2,9 +2,9 @@ import React, { useState } from "react"
 import { Redirect, Link } from "react-router-dom"
 import "../../assets/scss/login.scss"
 import logo from "../../assets/images/qr.jpg"
-import { login } from "../../services/auth"
+import { individualLogin } from "../../services/auth"
 
-const Login = ({ logged }) => {
+const Login = ({ logged, setLogged }) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [disable, setDisable] = useState(false)
@@ -32,12 +32,18 @@ const Login = ({ logged }) => {
         event.preventDefault()
         setDisable(true)
         if (handleError()) {
+            console.log("hello world")
             try {
                 setError((err) => {
                     return { ...err, loginErr: "" }
                 })
 
-                await login(email, password)
+                var login = await individualLogin(email, password)
+                if (login.success) {
+                    setLogged(true)
+                } else {
+                    setDisable(false)
+                }
             } catch (error) {
                 setError((err) => {
                     return { ...err, loginErr: error.message }
@@ -53,22 +59,22 @@ const Login = ({ logged }) => {
         var noError = true
         if (email === "") {
             setError((err) => {
-                return { ...err, email: "Email is required." }
+                return { ...err, email: "User ID is required." }
             })
             noError = false
         } else {
-            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            if (re.test(String(email).toLowerCase())) {
-                setError((err) => {
-                    return { ...err, email: "" }
-                })
-                noError = true
-            } else {
-                setError((err) => {
-                    return { ...err, email: "Invalid email." }
-                })
-                noError = false
-            }
+            // const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            // if (re.test(String(email).toLowerCase())) {
+            //     setError((err) => {
+            //         return { ...err, email: "" }
+            //     })
+            noError = true
+            // } else {
+            //     setError((err) => {
+            //         return { ...err, email: "Invalid email." }
+            //     })
+            // noError = false
+            // }
         }
 
         if (password === "") {

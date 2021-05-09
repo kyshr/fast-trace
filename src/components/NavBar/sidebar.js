@@ -1,9 +1,9 @@
 import React from "react"
 import { NavLink } from "react-router-dom"
 import "../../assets/scss/navbar.scss"
-import { auth } from "../../services/firebase"
+import { individualLogout } from "../../services/auth"
 
-const HomeNav = ({ toggle }) => {
+const HomeNav = ({ toggle, setLogged }) => {
     return (
         <>
             <NavLink
@@ -19,7 +19,8 @@ const HomeNav = ({ toggle }) => {
                 className="side-item side-logout-icon"
                 onClick={() => {
                     toggle()
-                    auth.signOut()
+                    individualLogout()
+                    setLogged(false)
                 }}
             >
                 Logout
@@ -53,9 +54,9 @@ const AuthNav = ({ toggle }) => {
     )
 }
 
-const Sidebar = ({ active, toggle, logged, setLoading }) => {
+const Sidebar = ({ active, toggle, logged, setLogged }) => {
     let Navigation = logged ? (
-        <HomeNav toggle={toggle} />
+        <HomeNav toggle={toggle} setLogged={setLogged} />
     ) : (
         <AuthNav toggle={toggle} />
     )

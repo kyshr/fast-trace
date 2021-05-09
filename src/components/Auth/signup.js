@@ -37,23 +37,23 @@ const Signup = ({ logged }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        setDisable(true)
-        if (handleError()) {
-            try {
-                setError((err) => {
-                    return { ...err, signupErr: "" }
-                })
+        // setDisable(true)
+        // if (handleError()) {
+        //     try {
+        //         setError((err) => {
+        //             return { ...err, signupErr: "" }
+        //         })
 
-                await signup(email, password)
-            } catch (error) {
-                setError((err) => {
-                    return { ...err, signupErr: error.message }
-                })
-                setDisable(false)
-            }
-        } else {
-            setDisable(false)
-        }
+        //         await signup(email, password)
+        //     } catch (error) {
+        //         setError((err) => {
+        //             return { ...err, signupErr: error.message }
+        //         })
+        //         setDisable(false)
+        //     }
+        // } else {
+        //     setDisable(false)
+        // }
     }
 
     const handleError = () => {

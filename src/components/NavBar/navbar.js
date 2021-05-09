@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react"
 import { NavLink } from "react-router-dom"
 import "../../assets/scss/navbar.scss"
 import Sidebar from "./sidebar"
-import { auth } from "../../services/firebase"
+import { individualLogout } from "../../services/auth"
 import { IoExit } from "react-icons/io5"
 
-const HomeNav = () => {
+const HomeNav = ({ setLogged }) => {
     return (
         <>
             <NavLink activeClassName="active" exact to="/" className="nav-item">
@@ -14,7 +14,8 @@ const HomeNav = () => {
             <li
                 className="nav-item logout-icon d-flex align-items-center"
                 onClick={() => {
-                    auth.signOut()
+                    individualLogout()
+                    setLogged(false)
                 }}
             >
                 <IoExit />
@@ -46,7 +47,7 @@ const AuthNav = () => {
     )
 }
 
-const NavBar = ({ logged }) => {
+const NavBar = ({ logged, setLogged }) => {
     const [active, setActive] = useState(false)
     const showSideBar = () => setActive(!active)
 
@@ -60,11 +61,16 @@ const NavBar = ({ logged }) => {
         window.addEventListener("resize", handleResize)
     })
 
-    let Navigation = logged ? <HomeNav /> : <AuthNav />
+    let Navigation = logged ? <HomeNav setLogged={setLogged} /> : <AuthNav />
 
     return (
         <>
-            <Sidebar active={active} toggle={showSideBar} logged={logged} />
+            <Sidebar
+                active={active}
+                toggle={showSideBar}
+                logged={logged}
+                setLogged={setLogged}
+            />
             <nav className="navigation d-flex align-items-center fixed-top">
                 <div className="container-fluid px-3 px-lg-5 d-flex align-items-center">
                     {/* logo */}

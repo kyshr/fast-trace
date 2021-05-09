@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Redirect } from "react-router-dom"
 import "../../assets/scss/login.scss"
 import logo from "../../assets/images/qr.jpg"
-import { resetPassword } from "../../services/auth"
+// import { resetPassword } from "../../services/auth"
 
 const Forgot = ({ logged }) => {
     const [email, setEmail] = useState("")
@@ -30,7 +30,7 @@ const Forgot = ({ logged }) => {
                     return { ...err, loginErr: "" }
                 })
 
-                await resetPassword(email)
+                // await resetPassword(email)
                 setDisable(false)
                 setEmail("")
                 window.alert("Reset password has been sent to your email.")
