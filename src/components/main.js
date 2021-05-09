@@ -7,15 +7,31 @@ import Signup from "./Auth/signup"
 import Footer from "./Footer/footer"
 import Forgot from "./ForgotPassword/forgot"
 import Loading from "./loading"
+import { checkIndividualLoggedIn } from "../services/auth"
+
 const Main = () => {
     const [logged, setLogged] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [userId, setUserId] = useState("")
 
-    useEffect(() => {
+    const checkLoggedIn = async () => {
         setLoading(true)
+        const login = await checkIndividualLoggedIn("x", "x")
+        if (login.success) {
+            setLogged(true)
+            setUserId(login.userId)
+            console.log(login.userId)
+            setTimeout(() => {
+                setLoading(false)
+            }, 1000)
+        }
         setTimeout(() => {
             setLoading(false)
         }, 1000)
+    }
+
+    useEffect(() => {
+        checkLoggedIn()
     }, [logged])
 
     return loading ? (

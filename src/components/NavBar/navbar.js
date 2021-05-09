@@ -13,8 +13,8 @@ const HomeNav = ({ setLogged }) => {
             </NavLink>
             <li
                 className="nav-item logout-icon d-flex align-items-center"
-                onClick={() => {
-                    individualLogout()
+                onClick={async () => {
+                    await individualLogout()
                     setLogged(false)
                 }}
             >

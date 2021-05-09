@@ -17,9 +17,9 @@ const HomeNav = ({ toggle, setLogged }) => {
             </NavLink>
             <li
                 className="side-item side-logout-icon"
-                onClick={() => {
+                onClick={async () => {
                     toggle()
-                    individualLogout()
+                    await individualLogout()
                     setLogged(false)
                 }}
             >
