@@ -9,7 +9,7 @@ const HomeNav = ({ setLogged }) => {
     return (
         <>
             <NavLink activeClassName="active" exact to="/" className="nav-item">
-                Generate QR
+                Home
             </NavLink>
             <li
                 className="nav-item logout-icon d-flex align-items-center"

@@ -5,11 +5,30 @@ import logo from "../../assets/images/qr.jpg"
 import { signup } from "../../services/auth"
 
 const Signup = ({ logged }) => {
+    const [firstname, setFirstname] = useState("")
+    const [lastname, setLastname] = useState("")
+    const [birthdate, setBirthdate] = useState("")
+    const [gender, setGender] = useState("Male")
+    const [contactNumber, setContactNumber] = useState("")
+    const [address, setAddress] = useState("")
+    const [street, setStreet] = useState("")
+    const [barangay, setBarangay] = useState("")
+    const [city, setCity] = useState("")
+    const [province, setProvince] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirm, setConfirm] = useState("")
     const [disable, setDisable] = useState(false)
     const [error, setError] = useState({
+        firstname: "",
+        lastname: "",
+        birthdate: "",
+        gender: "",
+        contactNumber: "",
+        street: "",
+        barangay: "",
+        city: "",
+        province: "",
         email: "",
         password: "",
         confirm: "",
@@ -17,7 +36,52 @@ const Signup = ({ logged }) => {
     })
 
     const handleChange = (event) => {
-        if (event.target.id === "email") {
+        if (event.target.id === "firstname") {
+            setError((err) => {
+                return { ...err, firstname: "" }
+            })
+            setFirstname(event.target.value)
+        } else if (event.target.id === "lastname") {
+            setError((err) => {
+                return { ...err, lastname: "" }
+            })
+            setLastname(event.target.value)
+        } else if (event.target.id === "birthdate") {
+            setError((err) => {
+                return { ...err, birthdate: "" }
+            })
+            setBirthdate(event.target.value)
+        } else if (event.target.id === "gender") {
+            setError((err) => {
+                return { ...err, gender: "" }
+            })
+            setGender(event.target.value)
+        } else if (event.target.id === "contactNumber") {
+            setError((err) => {
+                return { ...err, contactNumber: "" }
+            })
+            setContactNumber(event.target.value)
+        } else if (event.target.id === "street") {
+            setError((err) => {
+                return { ...err, street: "" }
+            })
+            setStreet(event.target.value)
+        } else if (event.target.id === "barangay") {
+            setError((err) => {
+                return { ...err, barangay: "" }
+            })
+            setBarangay(event.target.value)
+        } else if (event.target.id === "city") {
+            setError((err) => {
+                return { ...err, city: "" }
+            })
+            setCity(event.target.value)
+        } else if (event.target.id === "province") {
+            setError((err) => {
+                return { ...err, province: "" }
+            })
+            setProvince(event.target.value)
+        } else if (event.target.id === "email") {
             setError((err) => {
                 return { ...err, email: "" }
             })
@@ -37,27 +101,81 @@ const Signup = ({ logged }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        // setDisable(true)
-        // if (handleError()) {
-        //     try {
-        //         setError((err) => {
-        //             return { ...err, signupErr: "" }
-        //         })
+        setDisable(true)
+        if (handleError()) {
+            // try {
+            //     setError((err) => {
+            //         return { ...err, signupErr: "" }
+            //     })
 
-        //         await signup(email, password)
-        //     } catch (error) {
-        //         setError((err) => {
-        //             return { ...err, signupErr: error.message }
-        //         })
-        //         setDisable(false)
-        //     }
-        // } else {
-        //     setDisable(false)
-        // }
+            //     await signup(email, password)
+            // } catch (error) {
+            //     setError((err) => {
+            //         return { ...err, signupErr: error.message }
+            //     })
+            setDisable(false)
+            // }
+        } else {
+            setDisable(false)
+        }
     }
 
     const handleError = () => {
         var noError = true
+        if (firstname === "") {
+            setError((err) => {
+                return { ...err, firstname: "Firstname is required." }
+            })
+            noError = false
+        }
+        if (lastname === "") {
+            setError((err) => {
+                return { ...err, lastname: "Lastname is required." }
+            })
+            noError = false
+        }
+        if (birthdate === "") {
+            setError((err) => {
+                return { ...err, birthdate: "Birthdate is required." }
+            })
+            noError = false
+        }
+        if (gender === "") {
+            setError((err) => {
+                return { ...err, gender: "Gender is required." }
+            })
+            noError = false
+        }
+        if (contactNumber === "") {
+            setError((err) => {
+                return { ...err, contactNumber: "Contact no. is required." }
+            })
+            noError = false
+        }
+        // if (street === "") {
+        //     setError((err) => {
+        //         return { ...err, street: "Street/Subdivision is required." }
+        //     })
+        //     noError = false
+        // }
+        if (barangay === "") {
+            setError((err) => {
+                return { ...err, barangay: "Barangay is required." }
+            })
+            noError = false
+        }
+        if (city === "") {
+            setError((err) => {
+                return { ...err, city: "City/Municipality is required." }
+            })
+            noError = false
+        }
+        if (province === "") {
+            setError((err) => {
+                return { ...err, province: "Province is required." }
+            })
+            noError = false
+        }
         if (email === "") {
             setError((err) => {
                 return { ...err, email: "Email is required." }
@@ -116,20 +234,20 @@ const Signup = ({ logged }) => {
         return (
             <>
                 <div style={{ paddingTop: "70px" }}>
-                    <div className="content d-flex align-items-center py-0 py-md-4 mb-5">
-                        <div className="container pt-2 pt-md-5">
+                    <div className="content d-flex align-items-center py-0 py-md-4 mb-4">
+                        <div className="container">
                             <div className="row">
-                                <div className="col-md-6 d-flex align-items-center">
+                                <div className="col-md-12 d-flex justify-content-center">
                                     <img
                                         src={logo}
                                         alt="logo"
                                         className="img-fluid"
                                     />
                                 </div>
-                                <div className="col-md-6 contents">
+                                <div className="col-md-12 contents">
                                     <div className="row justify-content-center">
-                                        <div className="col-md-8">
-                                            <div className="mb-4">
+                                        <div className="col-12 col-md-8">
+                                            <div className="mb-4 text-center">
                                                 <h3>Signup to V-Trace</h3>
                                                 <p className="mb-4">
                                                     V-Trace is an android app
@@ -138,6 +256,128 @@ const Signup = ({ logged }) => {
                                                 </p>
                                             </div>
                                             <form onSubmit={handleSubmit}>
+                                                <div className="form-group first">
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="firstname"
+                                                        placeholder="Firstname"
+                                                        value={firstname}
+                                                        onChange={handleChange}
+                                                    />
+                                                    <p className="text-danger">
+                                                        {error.firstname}
+                                                    </p>
+                                                </div>
+                                                <div className="form-group first">
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="lastname"
+                                                        placeholder="Lastname"
+                                                        value={lastname}
+                                                        onChange={handleChange}
+                                                    />
+                                                    <p className="text-danger">
+                                                        {error.lastname}
+                                                    </p>
+                                                </div>
+                                                <div className="form-group first">
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="birthdate"
+                                                        placeholder="Birthdate"
+                                                        value={birthdate}
+                                                        onChange={handleChange}
+                                                    />
+                                                    <p className="text-danger">
+                                                        {error.birthdate}
+                                                    </p>
+                                                </div>
+                                                <div className="form-group first">
+                                                    <select
+                                                        className="form-control"
+                                                        id="gender"
+                                                        value={gender}
+                                                        onChange={handleChange}
+                                                    >
+                                                        <option value="Male">
+                                                            Male
+                                                        </option>
+                                                        <option value="Female">
+                                                            Female
+                                                        </option>
+                                                    </select>
+                                                    <p className="text-danger">
+                                                        {error.gender}
+                                                    </p>
+                                                </div>
+                                                <div className="form-group first">
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="contactNumber"
+                                                        placeholder="Contact No."
+                                                        value={contactNumber}
+                                                        onChange={handleChange}
+                                                    />
+                                                    <p className="text-danger">
+                                                        {error.contactNumber}
+                                                    </p>
+                                                </div>
+                                                <div className="form-group first">
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="street"
+                                                        placeholder="Street/Subdivision (Optional)"
+                                                        value={street}
+                                                        onChange={handleChange}
+                                                    />
+                                                    <p className="text-danger">
+                                                        {error.street}
+                                                    </p>
+                                                </div>
+                                                <div className="form-group first">
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="barangay"
+                                                        placeholder="Barangay"
+                                                        value={barangay}
+                                                        onChange={handleChange}
+                                                    />
+                                                    <p className="text-danger">
+                                                        {error.barangay}
+                                                    </p>
+                                                </div>
+                                                <div className="form-group first">
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="city"
+                                                        placeholder="City/Municipality"
+                                                        value={address}
+                                                        onChange={handleChange}
+                                                    />
+                                                    <p className="text-danger">
+                                                        {error.city}
+                                                    </p>
+                                                </div>
+                                                <div className="form-group first">
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="province"
+                                                        placeholder="Province"
+                                                        value={province}
+                                                        onChange={handleChange}
+                                                    />
+                                                    <p className="text-danger">
+                                                        {error.province}
+                                                    </p>
+                                                </div>
                                                 <div className="form-group first">
                                                     <input
                                                         type="text"

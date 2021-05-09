@@ -5,21 +5,21 @@ import logo from "../../assets/images/qr.jpg"
 import { individualLogin } from "../../services/auth"
 
 const Login = ({ logged, setLogged }) => {
-    const [email, setEmail] = useState("")
+    const [userId, setUserId] = useState("")
     const [password, setPassword] = useState("")
     const [disable, setDisable] = useState(false)
     const [error, setError] = useState({
-        email: "",
+        userId: "",
         password: "",
         loginErr: "",
     })
 
     const handleChange = (event) => {
-        if (event.target.id === "email") {
+        if (event.target.id === "userId") {
             setError((err) => {
-                return { ...err, email: "" }
+                return { ...err, userId: "" }
             })
-            setEmail(event.target.value)
+            setUserId(event.target.value)
         } else if (event.target.id === "password") {
             setError((err) => {
                 return { ...err, password: "" }
@@ -38,10 +38,13 @@ const Login = ({ logged, setLogged }) => {
                     return { ...err, loginErr: "" }
                 })
 
-                var login = await individualLogin(email, password)
+                var login = await individualLogin(userId, password)
                 if (login.success) {
                     setLogged(true)
                 } else {
+                    setError((err) => {
+                        return { ...err, loginErr: login.message }
+                    })
                     setDisable(false)
                 }
             } catch (error) {
@@ -57,24 +60,11 @@ const Login = ({ logged, setLogged }) => {
 
     const handleError = () => {
         var noError = true
-        if (email === "") {
+        if (userId === "") {
             setError((err) => {
-                return { ...err, email: "User ID is required." }
+                return { ...err, userId: "User ID is required." }
             })
             noError = false
-        } else {
-            // const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            // if (re.test(String(email).toLowerCase())) {
-            //     setError((err) => {
-            //         return { ...err, email: "" }
-            //     })
-            noError = true
-            // } else {
-            //     setError((err) => {
-            //         return { ...err, email: "Invalid email." }
-            //     })
-            // noError = false
-            // }
         }
 
         if (password === "") {
@@ -101,8 +91,8 @@ const Login = ({ logged, setLogged }) => {
         return (
             <>
                 <div style={{ paddingTop: "70px" }}>
-                    <div className="content d-flex align-items-center py-0 py-md-4 mb-5">
-                        <div className="container pt-2 pt-md-5">
+                    <div className="auth-body login-content d-flex align-items-center py-0 py-md-4 mb-5">
+                        <div className="container custom-row">
                             <div className="row">
                                 <div className="col-md-6 d-flex align-items-center">
                                     <img
@@ -111,9 +101,9 @@ const Login = ({ logged, setLogged }) => {
                                         className="img-fluid"
                                     />
                                 </div>
-                                <div className="col-md-6 contents">
-                                    <div className="row justify-content-center">
-                                        <div className="col-md-8">
+                                <div className="col-md-6 d-flex align-items-center justify-content-center">
+                                    <div className="row">
+                                        <div className="col-md-10">
                                             <div className="mb-4">
                                                 <h3>Login to V-Trace</h3>
                                                 <p className="mb-4">
@@ -123,17 +113,17 @@ const Login = ({ logged, setLogged }) => {
                                                 </p>
                                             </div>
                                             <form onSubmit={handleSubmit}>
-                                                <div className="form-group first">
+                                                <div className="form-group">
                                                     <input
                                                         type="text"
                                                         className="form-control"
-                                                        id="email"
-                                                        placeholder="Email"
-                                                        value={email}
+                                                        id="userId"
+                                                        placeholder="User ID"
+                                                        value={userId}
                                                         onChange={handleChange}
                                                     />
                                                     <p className="text-danger">
-                                                        {error.email}
+                                                        {error.userId}
                                                     </p>
                                                 </div>
                                                 <div className="form-group last mb-2">
@@ -149,6 +139,9 @@ const Login = ({ logged, setLogged }) => {
                                                         {error.password}
                                                     </p>
                                                 </div>
+                                                <p className="text-danger mt-3 text-center">
+                                                    {error.loginErr}
+                                                </p>
                                                 <div className="forgot d-flex justify-content-end">
                                                     <Link
                                                         to="/forgot"
@@ -157,9 +150,6 @@ const Login = ({ logged, setLogged }) => {
                                                         Forgot password?
                                                     </Link>
                                                 </div>
-                                                <p className="text-danger mt-3">
-                                                    {error.loginErr}
-                                                </p>
                                                 <input
                                                     type="submit"
                                                     value={

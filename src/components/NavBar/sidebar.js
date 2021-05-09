@@ -13,7 +13,7 @@ const HomeNav = ({ toggle, setLogged }) => {
                 className="side-item"
                 onClick={toggle}
             >
-                Generate QR
+                Home
             </NavLink>
             <li
                 className="side-item side-logout-icon"
