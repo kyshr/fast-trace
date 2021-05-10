@@ -1,12 +1,47 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Redirect } from "react-router-dom"
 import "../../../assets/scss/home.scss"
 import { Button, Spinner } from "react-bootstrap"
 import html2canvas from "html2canvas"
+import { getIndividual } from "../../../services/auth"
 var QRCode = require("qrcode.react")
 
 const Home = ({ logged, userId }) => {
     const [download, setDownload] = useState(false)
+    const [individual, setIndividual] = useState({})
+    const [address, setAddress] = useState({})
+    const [loading, setLoading] = useState(true)
+
+    const loadIndividual = async () => {
+        var user = await getIndividual(userId)
+        if (user.success) {
+            if (user.user.street !== "") {
+                setAddress(
+                    user.user.street +
+                        ", " +
+                        user.user.barangay +
+                        ", " +
+                        user.user.cityMun +
+                        ", " +
+                        user.user.province
+                )
+            } else {
+                setAddress(
+                    user.user.barangay +
+                        ", " +
+                        user.user.cityMun +
+                        ", " +
+                        user.user.province
+                )
+            }
+            setIndividual(user.user)
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        loadIndividual()
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -17,7 +52,7 @@ const Home = ({ logged, userId }) => {
                     .toDataURL("image/png")
                     .replace("image/png", "image/octet-stream")
                 const a = document.createElement("a")
-                a.setAttribute("download", "my-image.png")
+                a.setAttribute("download", `${individual.userId}_QR.png`)
                 a.setAttribute("href", image)
                 a.click()
                 canvas.remove()
@@ -40,30 +75,59 @@ const Home = ({ logged, userId }) => {
                             <div className="row">
                                 <div className="col-12">
                                     <div className="home-qr-code text-center">
-                                        <div
-                                            id="qr-svg"
-                                            className="home-qr-template d-inline-block px-3 my-4 pt-4 pb-3"
-                                        >
-                                            <div className="home-qr-title text-center mb-3">
-                                                <h4>{userId}</h4>
-                                            </div>
-                                            <div className="d-flex justify-content-center mb-3">
-                                                <QRCode
-                                                    bgColor="#FFFFFF"
-                                                    fgColor="#000000"
-                                                    level="H"
-                                                    size={200}
-                                                    // style={{ width: 200 }}
-                                                    value={userId}
+                                        {!loading ? (
+                                            <>
+                                                <div className="home-qr-fullname pt-4">
+                                                    <h2>
+                                                        {individual.firstname.toUpperCase()}{" "}
+                                                        {individual.lastname.toUpperCase()}
+                                                    </h2>
+                                                </div>
+                                                <div
+                                                    id="qr-svg"
+                                                    className="home-qr-template d-inline-block px-3 my-4 pt-4 pb-3"
+                                                >
+                                                    <div className="home-qr-title text-center mb-3">
+                                                        <h4>
+                                                            {individual.userId}
+                                                        </h4>
+                                                    </div>
+                                                    <div className="d-flex justify-content-center mb-3">
+                                                        <QRCode
+                                                            bgColor="#FFFFFF"
+                                                            fgColor="#000000"
+                                                            level="H"
+                                                            size={200}
+                                                            value={
+                                                                individual.userId
+                                                            }
+                                                        />
+                                                    </div>
+                                                    <div className="home-qr-info text-center mx-auto">
+                                                        <h5>
+                                                            {
+                                                                individual.firstname
+                                                            }{" "}
+                                                            {
+                                                                individual.lastname
+                                                            }
+                                                        </h5>
+                                                        <h6>{address}</h6>
+                                                    </div>
+                                                </div>
+                                            </>
+                                        ) : (
+                                            <div className="home-qr-spinner py-5 my-5">
+                                                <Spinner
+                                                    variant="primary"
+                                                    as="span"
+                                                    animation="border"
+                                                    size="xl"
+                                                    role="status"
+                                                    aria-hidden="true"
                                                 />
                                             </div>
-                                            <div className="home-qr-info text-center mx-auto">
-                                                <h5>Kyle Joseph Timajo</h5>
-                                                <h6>
-                                                    Compol, Catarman, Camiguin
-                                                </h6>
-                                            </div>
-                                        </div>
+                                        )}
                                     </div>
                                     <div className="home-qr-download text-center mb-4">
                                         <form onSubmit={handleSubmit}>

@@ -19,6 +19,7 @@ const Main = () => {
     const checkLoggedIn = async () => {
         setLoading(true)
         const login = await checkIndividualLoggedIn("x", "x")
+        console.log(login)
         if (login.success) {
             setLogged(true)
             setUserId(login.userId)

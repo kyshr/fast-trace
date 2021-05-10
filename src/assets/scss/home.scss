@@ -9,6 +9,10 @@
         border: 2px solid $text-color;
         background: #ffffff;
     }
+    .home-qr-fullname {
+        font-family: "Fredoka One", cursive;
+        color: #3f3e3e;
+    }
     .home-qr-title {
         font-family: "Fredoka One", cursive;
         color: $primary-color;
@@ -29,6 +33,8 @@
     }
 
     .home-qr-download {
-        // background: aqua;
+        .download-btn {
+            background: $primary-color !important;
+        }
     }
 }
