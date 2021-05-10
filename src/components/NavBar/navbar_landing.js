@@ -1,58 +1,9 @@
 import React, { useState, useEffect } from "react"
 import { NavLink } from "react-router-dom"
 import "../../assets/scss/navbar.scss"
-import Sidebar from "./sidebar"
-import { individualLogout } from "../../services/auth"
-import { IoExit } from "react-icons/io5"
+import SidebarIndex from "./sidebar_landing"
 
-const HomeNav = ({ setLogged }) => {
-    return (
-        <>
-            <NavLink
-                activeClassName="active"
-                exact
-                to="/individual"
-                className="nav-item"
-            >
-                Home
-            </NavLink>
-            <li
-                className="nav-item logout-icon d-flex align-items-center"
-                onClick={async () => {
-                    await individualLogout()
-                    setLogged(false)
-                }}
-            >
-                <IoExit />
-            </li>
-        </>
-    )
-}
-
-const AuthNav = () => {
-    return (
-        <>
-            <NavLink
-                activeClassName="active"
-                exact
-                to="/individual/login"
-                className="nav-item"
-            >
-                Login
-            </NavLink>
-            <NavLink
-                activeClassName="active"
-                exact
-                to="/individual/signup"
-                className="nav-item"
-            >
-                Signup
-            </NavLink>
-        </>
-    )
-}
-
-const NavBar = ({ logged, setLogged }) => {
+const NavBarIndex = () => {
     const [active, setActive] = useState(false)
     const showSideBar = () => setActive(!active)
 
@@ -66,16 +17,9 @@ const NavBar = ({ logged, setLogged }) => {
         window.addEventListener("resize", handleResize)
     })
 
-    let Navigation = logged ? <HomeNav setLogged={setLogged} /> : <AuthNav />
-
     return (
         <>
-            <Sidebar
-                active={active}
-                toggle={showSideBar}
-                logged={logged}
-                setLogged={setLogged}
-            />
+            <SidebarIndex active={active} toggle={showSideBar} />
             <nav className="navigation d-flex align-items-center fixed-top">
                 <div className="container-fluid px-3 px-lg-5 d-flex align-items-center">
                     {/* logo */}
@@ -105,7 +49,22 @@ const NavBar = ({ logged, setLogged }) => {
                     {/* menu */}
                     <div className="nav-menu d-none d-lg-flex align-items-center ml-auto">
                         <div className="nav-items d-flex align-items-center">
-                            {Navigation}
+                            <NavLink
+                                activeClassName="active"
+                                exact
+                                to="/individual"
+                                className="nav-item"
+                            >
+                                Individual
+                            </NavLink>
+                            <NavLink
+                                activeClassName="active"
+                                exact
+                                to="/"
+                                className="nav-item"
+                            >
+                                Establishment
+                            </NavLink>
                         </div>
                     </div>
                 </div>
@@ -114,4 +73,4 @@ const NavBar = ({ logged, setLogged }) => {
     )
 }
 
-export default NavBar
+export default NavBarIndex

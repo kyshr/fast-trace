@@ -74,7 +74,7 @@ const Forgot = ({ logged }) => {
     }
 
     if (logged) {
-        return <Redirect to="/" />
+        return <Redirect to="/individual" />
     } else {
         return (
             <>

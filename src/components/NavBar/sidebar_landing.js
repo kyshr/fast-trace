@@ -1,9 +1,8 @@
 import React from "react"
 import { NavLink } from "react-router-dom"
 import "../../assets/scss/navbar.scss"
-import { individualLogout } from "../../services/auth"
 
-const HomeNav = ({ toggle, setLogged }) => {
+const HomeNav = ({ toggle }) => {
     return (
         <>
             <NavLink
@@ -13,53 +12,23 @@ const HomeNav = ({ toggle, setLogged }) => {
                 className="side-item"
                 onClick={toggle}
             >
-                Home
-            </NavLink>
-            <li
-                className="side-item side-logout-icon"
-                onClick={async () => {
-                    toggle()
-                    await individualLogout()
-                    setLogged(false)
-                }}
-            >
-                Logout
-            </li>
-        </>
-    )
-}
-
-const AuthNav = ({ toggle }) => {
-    return (
-        <>
-            <NavLink
-                activeClassName="active"
-                exact
-                to="/individual/login"
-                className="side-item"
-                onClick={toggle}
-            >
-                Login
+                Individual
             </NavLink>
             <NavLink
                 activeClassName="active"
                 exact
-                to="/individual/signup"
+                to="/"
                 className="side-item"
                 onClick={toggle}
             >
-                Signup
+                Estabslishment
             </NavLink>
         </>
     )
 }
 
-const Sidebar = ({ active, toggle, logged, setLogged }) => {
-    let Navigation = logged ? (
-        <HomeNav toggle={toggle} setLogged={setLogged} />
-    ) : (
-        <AuthNav toggle={toggle} />
-    )
+const SidebarIndex = ({ active, toggle }) => {
+    let Navigation = <HomeNav toggle={toggle} />
 
     return (
         <div
@@ -91,4 +60,4 @@ const Sidebar = ({ active, toggle, logged, setLogged }) => {
     )
 }
 
-export default Sidebar
+export default SidebarIndex

@@ -86,7 +86,7 @@ const Login = ({ logged, setLogged }) => {
     }
 
     if (logged) {
-        return <Redirect to="/" />
+        return <Redirect to="/individual" />
     } else {
         return (
             <>

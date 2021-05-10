@@ -255,7 +255,7 @@ const Signup = ({ logged, setLogged }) => {
         return noError
     }
     if (logged) {
-        return <Redirect to="/" />
+        return <Redirect to="/individual" />
     } else {
         return (
             <>

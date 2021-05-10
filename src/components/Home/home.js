@@ -322,7 +322,7 @@ const Home = ({ logged }) => {
             </div>
         )
     } else {
-        return <Redirect to="/login" />
+        return <Redirect to="/individual/login" />
     }
 }
 
