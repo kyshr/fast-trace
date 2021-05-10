@@ -3,18 +3,18 @@
 .auth-body {
     font-family: "Roboto", sans-serif;
 }
-input,
-select {
-    border: 2px solid $primary-color !important;
+.auth-body input,
+.auth-body select {
+    border: 2px solid $text-color !important;
     background: transparent !important;
 }
 
-.form-group .text-danger {
+.auth-body .form-group .text-danger {
     margin-left: 14px;
     font-size: 13px;
 }
-.btn-primary {
-    border: none;
+.auth-body .btn-primary {
+    border: none !important;
     background: $primary-color !important;
 }
 
@@ -24,7 +24,7 @@ select {
     }
 }
 
-.login-content {
+.auth-body .login-content {
     min-height: 500px;
     // background: aquamarine !important;
 }
