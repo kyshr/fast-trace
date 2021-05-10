@@ -43,7 +43,7 @@ export async function checkIndividualLoggedIn(userId, password) {
 
 export async function individualLogout() {
     try {
-        const response = await api.get("/users/logout")
+        await api.get("/users/logout")
     } catch (error) {
         console.error(error)
     }

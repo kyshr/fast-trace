@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react"
 import { NavLink } from "react-router-dom"
-import "../../assets/scss/navbar.scss"
+import "../../../assets/scss/navbar.scss"
 import Sidebar from "./sidebar"
-import { individualLogout } from "../../services/auth"
+import { individualLogout } from "../../../services/auth"
 import { IoExit } from "react-icons/io5"
 
 const HomeNav = ({ setLogged }) => {

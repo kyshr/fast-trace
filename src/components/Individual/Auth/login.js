@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { Redirect, Link } from "react-router-dom"
-import "../../assets/scss/login.scss"
-import logo from "../../assets/images/qr.jpg"
-import { individualLogin } from "../../services/auth"
+import "../../../assets/scss/login.scss"
+import logo from "../../../assets/images/qr.jpg"
+import { individualLogin } from "../../../services/auth"
 
 const Login = ({ logged, setLogged }) => {
     const [userId, setUserId] = useState("")
@@ -32,7 +32,6 @@ const Login = ({ logged, setLogged }) => {
         event.preventDefault()
         setDisable(true)
         if (handleError()) {
-            console.log("hello world")
             try {
                 setError((err) => {
                     return { ...err, loginErr: "" }

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Redirect } from "react-router-dom"
-import "../../assets/scss/home.scss"
+import "../../../assets/scss/home.scss"
 import { QRCode } from "react-qr-svg"
 import { Button, Spinner } from "react-bootstrap"
 import domtoimage from "dom-to-image-more"

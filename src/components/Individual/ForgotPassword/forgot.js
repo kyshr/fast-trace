@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Redirect } from "react-router-dom"
-import "../../assets/scss/login.scss"
-import logo from "../../assets/images/qr.jpg"
+import "../../../assets/scss/login.scss"
+import logo from "../../../assets/images/qr.jpg"
 // import { resetPassword } from "../../services/auth"
 
 const Forgot = ({ logged }) => {

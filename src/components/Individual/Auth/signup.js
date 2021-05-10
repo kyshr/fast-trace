@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { Redirect } from "react-router-dom"
-import "../../assets/scss/login.scss"
-import logo from "../../assets/images/qr.jpg"
-import { createIndividual, individualLogin } from "../../services/auth"
+import "../../../assets/scss/login.scss"
+import logo from "../../../assets/images/qr.jpg"
+import { createIndividual, individualLogin } from "../../../services/auth"
 
 const Signup = ({ logged, setLogged }) => {
     const [firstname, setFirstname] = useState("")
