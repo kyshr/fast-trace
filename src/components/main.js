@@ -47,7 +47,7 @@ const Main = () => {
                     </Route>
                     <Route exact path="/individual">
                         <NavBar logged={logged} setLogged={setLogged} />
-                        <Home logged={logged} />
+                        <Home logged={logged} userId={userId} />
                     </Route>
                     <Route exact path="/individual/login">
                         <NavBar logged={logged} setLogged={setLogged} />

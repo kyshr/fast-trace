@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+.home-wrapper {
+    width: 100%;
+    font-family: "Roboto", sans-serif;
+}
+
+.home-qr-title h1 {
+    font-weight: bold;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    appearance: textfield;
+}
+
+.download-btn {
+    width: 100px;
+    height: 40px;
+}
+
+#qr-svg {
+    border: 15px solid white;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (max-width: 400px) {
+    .home-qr-title h1 {
+        font-size: 30px !important;
+    }
+}
+@media (min-width: 430px) {
+    #qr-svg {
+        width: auto;
+    }
+}
+@media (min-width: 576px) {
+    #qr-svg {
+        width: auto;
+    }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+}

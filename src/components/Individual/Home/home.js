@@ -1,318 +1,91 @@
 import React, { useState } from "react"
 import { Redirect } from "react-router-dom"
 import "../../../assets/scss/home.scss"
-import { QRCode } from "react-qr-svg"
 import { Button, Spinner } from "react-bootstrap"
-import domtoimage from "dom-to-image-more"
-import { saveAs } from "file-saver"
+import html2canvas from "html2canvas"
+var QRCode = require("qrcode.react")
 
-let Firstname = ""
-let Lastname = ""
-let Gender = "Male"
-let Age = ""
-let Barangay = ""
-let City = ""
-let Province = ""
-let Contactnum = ""
-
-const Home = ({ logged }) => {
-    const [firstname, setFirstname] = useState("")
-    const [lastname, setLastname] = useState("")
-    const [gender, setGender] = useState("Male")
-    const [age, setAge] = useState("")
-    const [barangay, setBarangay] = useState("")
-    const [city, setCity] = useState("")
-    const [province, setProvince] = useState("")
-    const [contactnum, setContactnum] = useState("")
-    const [qrString, setQrString] = useState("")
+const Home = ({ logged, userId }) => {
     const [download, setDownload] = useState(false)
-
-    const handleChange = (e) => {
-        switch (e.target.id) {
-            case "firstname":
-                setFirstname(e.target.value)
-                Firstname = e.target.value
-                break
-            case "lastname":
-                setLastname(e.target.value)
-                Lastname = e.target.value
-                break
-            case "gender":
-                setGender(e.target.value)
-                Gender = e.target.value
-                break
-            case "age":
-                setAge(e.target.value)
-                Age = e.target.value
-                break
-            case "barangay":
-                setBarangay(e.target.value)
-                Barangay = e.target.value
-                break
-            case "city":
-                setCity(e.target.value)
-                City = e.target.value
-                break
-            case "province":
-                setProvince(e.target.value)
-                Province = e.target.value
-                break
-            case "contactnum":
-                setContactnum(e.target.value)
-                Contactnum = e.target.value
-                break
-            default:
-                console.log("This is default")
-                break
-        }
-
-        if (
-            Firstname !== "" &&
-            Lastname !== "" &&
-            Age !== "" &&
-            Gender !== "" &&
-            Barangay !== "" &&
-            City !== "" &&
-            Province !== "" &&
-            Contactnum !== ""
-        ) {
-            setQrString(
-                `${Firstname}*${Lastname}*${Gender}*${Age}*${Barangay}, ${City}, ${Province}*${Contactnum}`
-            )
-        } else {
-            setQrString("")
-        }
-    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         setDownload(true)
-        if (qrString !== "") {
-            await domtoimage
-                .toBlob(document.getElementById("qr-svg"))
-                .then((blob) => {
-                    saveAs(blob, `${firstname} ${lastname} QR.png`)
-                    setQrString("")
-                    setDownload(false)
-                })
-                .catch((error) => {
-                    setQrString("")
-                    setDownload(false)
-                })
-            resetFields()
-        } else {
-            setDownload(false)
-        }
-    }
-
-    const resetFields = (e) => {
-        setFirstname("")
-        setLastname("")
-        setAge("")
-        setGender("Male")
-        setBarangay("")
-        setCity("")
-        setProvince("")
-        setContactnum("")
-
-        Firstname = ""
-        Lastname = ""
-        Age = ""
-        Gender = "Male"
-        Barangay = ""
-        City = ""
-        Province = ""
-        Contactnum = ""
+        await html2canvas(document.getElementById("qr-svg"))
+            .then((canvas) => {
+                const image = canvas
+                    .toDataURL("image/png")
+                    .replace("image/png", "image/octet-stream")
+                const a = document.createElement("a")
+                a.setAttribute("download", "my-image.png")
+                a.setAttribute("href", image)
+                a.click()
+                canvas.remove()
+            })
+            .catch((error) => {
+                setDownload(false)
+            })
+        setDownload(false)
     }
 
     if (logged) {
         return (
             <div
                 style={{ paddingTop: "70px", paddingBottom: "70px" }}
-                className="container"
+                className="container individual-home"
             >
                 <div className="home-wrapper mx-auto">
-                    <div className="card mt-3 mt-md-5">
-                        <div className="card-body px-0">
-                            <div className="home-qr-title text-center">
-                                <h1>Generate QR Code</h1>
-                            </div>
-                            <div className="container pt-4">
-                                <div className="row">
-                                    <div className="col-12 col-lg-6">
-                                        <div className="home-qr-code d-flex justify-content-center mb-4 mb-md-0 pt-1">
-                                            <div
-                                                id="qr-svg"
-                                                className="d-flex justify-content-center"
-                                            >
+                    <div className="card mt-4">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-12">
+                                    <div className="home-qr-code text-center">
+                                        <div
+                                            id="qr-svg"
+                                            className="home-qr-template d-inline-block px-3 my-4 pt-4 pb-3"
+                                        >
+                                            <div className="home-qr-title text-center mb-3">
+                                                <h4>{userId}</h4>
+                                            </div>
+                                            <div className="d-flex justify-content-center mb-3">
                                                 <QRCode
                                                     bgColor="#FFFFFF"
                                                     fgColor="#000000"
                                                     level="H"
-                                                    style={{ width: 320 }}
-                                                    value={qrString}
+                                                    size={200}
+                                                    // style={{ width: 200 }}
+                                                    value={userId}
                                                 />
+                                            </div>
+                                            <div className="home-qr-info text-center mx-auto">
+                                                <h5>Kyle Joseph Timajo</h5>
+                                                <h6>
+                                                    Compol, Catarman, Camiguin
+                                                </h6>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-12 col-lg-6">
-                                        <div className="home-qr-form">
-                                            <form onSubmit={handleSubmit}>
-                                                <div className="form-group">
-                                                    <label htmlFor="firstname">
-                                                        Firstname
-                                                    </label>
-                                                    <input
-                                                        type="text"
-                                                        className="form-control"
-                                                        id="firstname"
-                                                        placeholder="Firstname"
-                                                        onChange={handleChange}
-                                                        value={firstname}
-                                                        required
+                                    <div className="home-qr-download text-center mb-4">
+                                        <form onSubmit={handleSubmit}>
+                                            <Button
+                                                variant="primary"
+                                                type="submit"
+                                                className="download-btn"
+                                                disabled={download}
+                                            >
+                                                {download ? (
+                                                    <Spinner
+                                                        as="span"
+                                                        animation="border"
+                                                        size="sm"
+                                                        role="status"
+                                                        aria-hidden="true"
                                                     />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="lastname">
-                                                        Lastname
-                                                    </label>
-                                                    <input
-                                                        type="text"
-                                                        className="form-control"
-                                                        id="lastname"
-                                                        placeholder="Lastname"
-                                                        onChange={handleChange}
-                                                        value={lastname}
-                                                        required
-                                                    />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="gender">
-                                                        Gender
-                                                    </label>
-                                                    <select
-                                                        className="form-control"
-                                                        id="gender"
-                                                        value={gender}
-                                                        onChange={handleChange}
-                                                    >
-                                                        <option value="Male">
-                                                            Male
-                                                        </option>
-                                                        <option value="Female">
-                                                            Female
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="age">
-                                                        Age
-                                                    </label>
-                                                    <input
-                                                        type="number"
-                                                        className="form-control"
-                                                        id="age"
-                                                        placeholder="Age"
-                                                        onChange={handleChange}
-                                                        onWheel={(e) =>
-                                                            e.target.blur()
-                                                        }
-                                                        value={age}
-                                                        required
-                                                    />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="barangay">
-                                                        Barangay
-                                                    </label>
-                                                    <input
-                                                        type="text"
-                                                        className="form-control"
-                                                        id="barangay"
-                                                        placeholder="Barangay"
-                                                        onChange={handleChange}
-                                                        value={barangay}
-                                                        required
-                                                    />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="city">
-                                                        City/Municipality
-                                                    </label>
-                                                    <input
-                                                        type="text"
-                                                        className="form-control"
-                                                        id="city"
-                                                        placeholder="City/Municipality"
-                                                        onChange={handleChange}
-                                                        value={city}
-                                                        required
-                                                    />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="province">
-                                                        Province
-                                                    </label>
-                                                    <input
-                                                        type="text"
-                                                        className="form-control"
-                                                        id="province"
-                                                        placeholder="Province"
-                                                        onChange={handleChange}
-                                                        value={province}
-                                                        required
-                                                    />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="contactnum">
-                                                        Contact No.
-                                                    </label>
-                                                    <input
-                                                        type="number"
-                                                        className="form-control"
-                                                        id="contactnum"
-                                                        placeholder="Contact No."
-                                                        onChange={handleChange}
-                                                        onWheel={(e) =>
-                                                            e.target.blur()
-                                                        }
-                                                        value={contactnum}
-                                                        required
-                                                    />
-                                                </div>
-                                                <div className="home-btn d-flex justify-content-end">
-                                                    <Button
-                                                        variant="danger"
-                                                        type="button"
-                                                        className="btn btn-danger mr-2"
-                                                        onClick={() => {
-                                                            resetFields()
-                                                            setQrString("")
-                                                        }}
-                                                    >
-                                                        Cancel
-                                                    </Button>
-                                                    <Button
-                                                        variant="primary"
-                                                        type="submit"
-                                                        className="download-btn"
-                                                        disabled={download}
-                                                    >
-                                                        {download ? (
-                                                            <Spinner
-                                                                as="span"
-                                                                animation="border"
-                                                                size="sm"
-                                                                role="status"
-                                                                aria-hidden="true"
-                                                            />
-                                                        ) : (
-                                                            "Download"
-                                                        )}
-                                                    </Button>
-                                                </div>
-                                            </form>
-                                        </div>
+                                                ) : (
+                                                    "Download"
+                                                )}
+                                            </Button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
