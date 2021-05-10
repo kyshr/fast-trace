@@ -20,7 +20,6 @@ const Main = () => {
         if (login.success) {
             setLogged(true)
             setUserId(login.userId)
-            console.log(login.userId)
             setTimeout(() => {
                 setLoading(false)
             }, 1000)
@@ -48,7 +47,7 @@ const Main = () => {
                         <Login logged={logged} setLogged={setLogged} />
                     </Route>
                     <Route exact path="/signup">
-                        <Signup logged={logged} />
+                        <Signup logged={logged} setLogged={setLogged} />
                     </Route>
                     <Route exact path="/forgot">
                         <Forgot logged={logged} />

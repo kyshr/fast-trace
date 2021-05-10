@@ -2,15 +2,15 @@ import React, { useState } from "react"
 import { Redirect } from "react-router-dom"
 import "../../assets/scss/login.scss"
 import logo from "../../assets/images/qr.jpg"
-import { signup } from "../../services/auth"
+import { createIndividual, individualLogin } from "../../services/auth"
 
-const Signup = ({ logged }) => {
+const Signup = ({ logged, setLogged }) => {
     const [firstname, setFirstname] = useState("")
     const [lastname, setLastname] = useState("")
     const [birthdate, setBirthdate] = useState("")
     const [gender, setGender] = useState("Male")
     const [contactNumber, setContactNumber] = useState("")
-    const [address, setAddress] = useState("")
+    // const [address, setAddress] = useState("")
     const [street, setStreet] = useState("")
     const [barangay, setBarangay] = useState("")
     const [city, setCity] = useState("")
@@ -103,18 +103,44 @@ const Signup = ({ logged }) => {
         event.preventDefault()
         setDisable(true)
         if (handleError()) {
-            // try {
-            //     setError((err) => {
-            //         return { ...err, signupErr: "" }
-            //     })
+            try {
+                setError((err) => {
+                    return { ...err, signupErr: "" }
+                })
 
-            //     await signup(email, password)
-            // } catch (error) {
-            //     setError((err) => {
-            //         return { ...err, signupErr: error.message }
-            //     })
-            setDisable(false)
-            // }
+                var newIndividual = await createIndividual({
+                    email: email,
+                    password: password,
+                    firstname: firstname,
+                    lastname: lastname,
+                    birthdate: birthdate,
+                    gender: gender,
+                    contactNumber: contactNumber,
+                    street: street,
+                    barangay: barangay,
+                    cityMun: city,
+                    province: province,
+                })
+
+                if (newIndividual.success) {
+                    var login = await individualLogin(
+                        newIndividual.user.userId,
+                        password
+                    )
+                    if (login.success) {
+                        setLogged(true)
+                    }
+                } else {
+                    setError((err) => {
+                        return { ...err, signupErr: newIndividual.message }
+                    })
+                }
+            } catch (error) {
+                setError((err) => {
+                    return { ...err, signupErr: newIndividual.message }
+                })
+                setDisable(false)
+            }
         } else {
             setDisable(false)
         }
@@ -234,7 +260,7 @@ const Signup = ({ logged }) => {
         return (
             <>
                 <div style={{ paddingTop: "70px" }}>
-                    <div className="content d-flex align-items-center py-0 py-md-4 mb-4">
+                    <div className="auth-body content d-flex align-items-center py-0 py-md-4 mb-4">
                         <div className="container">
                             <div className="row">
                                 <div className="col-md-12 d-flex justify-content-center">
@@ -358,7 +384,7 @@ const Signup = ({ logged }) => {
                                                         className="form-control"
                                                         id="city"
                                                         placeholder="City/Municipality"
-                                                        value={address}
+                                                        value={city}
                                                         onChange={handleChange}
                                                     />
                                                     <p className="text-danger">

@@ -5,6 +5,16 @@ const api = axios.create({
     baseURL: "http://localhost:3001/api",
 })
 
+export async function createIndividual(data) {
+    try {
+        const response = await api.post("/users/create", data)
+        return response.data
+    } catch (error) {
+        console.error(error)
+        return { success: false, message: "Failed to create user." }
+    }
+}
+
 export async function individualLogin(userId, password) {
     try {
         const response = await api.post("/users/login", {
