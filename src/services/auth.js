@@ -24,6 +24,25 @@ export async function createIndividual(data) {
         return { success: false, message: "Failed to create user." }
     }
 }
+export async function updateIndividual(data) {
+    try {
+        const response = await api.put("/users/update", data)
+        return response.data
+    } catch (error) {
+        console.error(error)
+        return { success: false, message: "Failed to create user." }
+    }
+}
+
+export async function updateIndividualPassword(data) {
+    try {
+        const response = await api.put("/users/update-password", data)
+        return response.data
+    } catch (error) {
+        console.error(error)
+        return { success: false, message: "Failed to create user." }
+    }
+}
 
 export async function individualLogin(userId, password) {
     try {
@@ -56,5 +75,18 @@ export async function individualLogout() {
         await api.get("/users/logout")
     } catch (error) {
         console.error(error)
+    }
+}
+
+export async function passwordMatched(userId, password) {
+    try {
+        const response = await api.post("/users/password-matched", {
+            userId: userId,
+            password: password,
+        })
+        return response.data
+    } catch (error) {
+        console.error(error)
+        return { success: false, message: "Failed to login." }
     }
 }

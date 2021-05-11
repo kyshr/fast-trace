@@ -93,7 +93,7 @@ const Home = ({ logged, userId }) => {
                                                 </div>
                                                 <div
                                                     id="qr-svg"
-                                                    className="home-qr-template d-inline-block mt-3 mb-4 pt-4 pb-3"
+                                                    className="home-qr-template d-inline-block px-1 mt-3 mb-4 pt-4 pb-3"
                                                 >
                                                     <div className="home-qr-title text-center mb-3">
                                                         <h4>

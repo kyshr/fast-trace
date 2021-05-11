@@ -208,12 +208,12 @@ const Signup = ({ logged, setLogged }) => {
             })
             noError = false
         } else {
-            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            const re =
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             if (re.test(String(email).toLowerCase())) {
                 setError((err) => {
                     return { ...err, email: "" }
                 })
-                noError = true
             } else {
                 setError((err) => {
                     return { ...err, email: "Invalid email." }
@@ -251,7 +251,6 @@ const Signup = ({ logged, setLogged }) => {
             })
             noError = false
         }
-
         return noError
     }
     if (logged) {
@@ -313,7 +312,7 @@ const Signup = ({ logged, setLogged }) => {
                                                         type="text"
                                                         className="form-control"
                                                         id="birthdate"
-                                                        placeholder="Birthdate"
+                                                        placeholder="Birthdate (MM/DD/YYYY)"
                                                         value={birthdate}
                                                         onChange={handleChange}
                                                     />
