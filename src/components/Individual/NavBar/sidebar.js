@@ -24,6 +24,15 @@ const HomeNav = ({ toggle, setLogged }) => {
             >
                 Profile
             </NavLink>
+            <NavLink
+                activeClassName="active"
+                exact
+                to="/individual/logs"
+                className="side-item"
+                onClick={toggle}
+            >
+                Logs
+            </NavLink>
             <li
                 className="side-item side-logout-icon"
                 onClick={async () => {

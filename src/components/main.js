@@ -11,6 +11,7 @@ import Forgot from "./Individual/ForgotPassword/forgot"
 import Loading from "./loading"
 import { checkIndividualLoggedIn } from "../services/auth"
 import Profile from "./Individual/Home/profile"
+import Logs from "./Individual/Home/logs"
 
 const Main = () => {
     const [logged, setLogged] = useState(false)
@@ -53,6 +54,10 @@ const Main = () => {
                     <Route exact path="/individual/profile">
                         <NavBar logged={logged} setLogged={setLogged} />
                         <Profile logged={logged} userId={userId} />
+                    </Route>
+                    <Route exact path="/individual/logs">
+                        <NavBar logged={logged} setLogged={setLogged} />
+                        <Logs logged={logged} userId={userId} />
                     </Route>
                     <Route exact path="/individual/login">
                         <NavBar logged={logged} setLogged={setLogged} />
