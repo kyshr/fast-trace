@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import "./constants.scss";
+
+.individual-logs {
+    .logs-title {
+        font-family: "Roboto", sans-serif;
+        font-weight: 900;
+        color: #3f3e3e;
+    }
+    .logs-date-wrapper {
+        // background: red;
+        .logs-date-box {
+            cursor: pointer;
+            border-radius: 10px;
+            color: #ffffff;
+            transition: 0.3s ease-in-out;
+            &:hover {
+                transform: scale(1.01);
+                box-shadow: -1px 3px 11px -2px rgba(0, 0, 0, 0.56);
+            }
+        }
+
+        .light {
+            background-color: $primary-color;
+        }
+
+        .dark {
+            background-color: $text-color;
+        }
+    }
+    .logs-modal {
+        height: 500px;
+        background: red;
+    }
+}
