@@ -52,6 +52,14 @@ const NavBarIndex = () => {
                             <NavLink
                                 activeClassName="active"
                                 exact
+                                to="/"
+                                className="nav-item"
+                            >
+                                Home
+                            </NavLink>
+                            <NavLink
+                                activeClassName="active"
+                                exact
                                 to="/individual"
                                 className="nav-item"
                             >

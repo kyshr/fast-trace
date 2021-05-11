@@ -10,6 +10,7 @@ import Landing from "./Individual/Landing/landing"
 import Forgot from "./Individual/ForgotPassword/forgot"
 import Loading from "./loading"
 import { checkIndividualLoggedIn } from "../services/auth"
+import Profile from "./Individual/Home/profile"
 
 const Main = () => {
     const [logged, setLogged] = useState(false)
@@ -19,7 +20,6 @@ const Main = () => {
     const checkLoggedIn = async () => {
         setLoading(true)
         const login = await checkIndividualLoggedIn("x", "x")
-        console.log(login)
         if (login.success) {
             setLogged(true)
             setUserId(login.userId)
@@ -49,6 +49,10 @@ const Main = () => {
                     <Route exact path="/individual">
                         <NavBar logged={logged} setLogged={setLogged} />
                         <Home logged={logged} userId={userId} />
+                    </Route>
+                    <Route exact path="/individual/profile">
+                        <NavBar logged={logged} setLogged={setLogged} />
+                        <Profile logged={logged} userId={userId} />
                     </Route>
                     <Route exact path="/individual/login">
                         <NavBar logged={logged} setLogged={setLogged} />

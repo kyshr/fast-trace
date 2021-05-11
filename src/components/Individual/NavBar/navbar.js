@@ -16,6 +16,14 @@ const HomeNav = ({ setLogged }) => {
             >
                 Home
             </NavLink>
+            <NavLink
+                activeClassName="active"
+                exact
+                to="/individual/profile"
+                className="nav-item"
+            >
+                Profile
+            </NavLink>
             <li
                 className="nav-item logout-icon d-flex align-items-center"
                 onClick={async () => {
@@ -32,6 +40,9 @@ const HomeNav = ({ setLogged }) => {
 const AuthNav = () => {
     return (
         <>
+            <NavLink activeClassName="active" exact to="/" className="nav-item">
+                Home
+            </NavLink>
             <NavLink
                 activeClassName="active"
                 exact

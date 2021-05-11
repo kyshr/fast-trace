@@ -5,6 +5,9 @@ import "../../../assets/scss/navbar.scss"
 const HomeNav = ({ toggle }) => {
     return (
         <>
+            <NavLink activeClassName="active" exact to="/" className="nav-item">
+                Home
+            </NavLink>
             <NavLink
                 activeClassName="active"
                 exact

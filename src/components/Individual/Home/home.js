@@ -46,6 +46,7 @@ const Home = ({ logged, userId }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setDownload(true)
+        window.scrollTo(0, 0)
         await html2canvas(document.getElementById("qr-svg"))
             .then((canvas) => {
                 const image = canvas
@@ -82,10 +83,17 @@ const Home = ({ logged, userId }) => {
                                                         {individual.firstname.toUpperCase()}{" "}
                                                         {individual.lastname.toUpperCase()}
                                                     </h2>
+                                                    <p>
+                                                        <span>
+                                                            {individual.userId}
+                                                        </span>{" "}
+                                                        served as User ID that
+                                                        will be used in login.
+                                                    </p>
                                                 </div>
                                                 <div
                                                     id="qr-svg"
-                                                    className="home-qr-template d-inline-block px-3 my-4 pt-4 pb-3"
+                                                    className="home-qr-template d-inline-block mt-3 mb-4 pt-4 pb-3"
                                                 >
                                                     <div className="home-qr-title text-center mb-3">
                                                         <h4>
@@ -97,7 +105,7 @@ const Home = ({ logged, userId }) => {
                                                             bgColor="#FFFFFF"
                                                             fgColor="#000000"
                                                             level="H"
-                                                            size={200}
+                                                            size={150}
                                                             value={
                                                                 individual.userId
                                                             }

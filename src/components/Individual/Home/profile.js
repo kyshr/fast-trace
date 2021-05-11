@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import { Redirect } from "react-router-dom"
 import "../../../assets/scss/profile.scss"
-import { QRCode } from "react-qr-svg"
+// import { QRCode } from "react-qr-svg"
 import { Button, Spinner } from "react-bootstrap"
-import domtoimage from "dom-to-image-more"
-import { saveAs } from "file-saver"
+// import domtoimage from "dom-to-image-more"
+// import { saveAs } from "file-saver"
 
 let Firstname = ""
 let Lastname = ""
@@ -15,7 +15,7 @@ let City = ""
 let Province = ""
 let Contactnum = ""
 
-const Home = ({ logged }) => {
+const Profile = ({ logged, userId }) => {
     const [firstname, setFirstname] = useState("")
     const [lastname, setLastname] = useState("")
     const [gender, setGender] = useState("Male")
@@ -86,23 +86,23 @@ const Home = ({ logged }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setDownload(true)
-        if (qrString !== "") {
-            await domtoimage
-                .toBlob(document.getElementById("qr-svg"))
-                .then((blob) => {
-                    saveAs(blob, `${firstname} ${lastname} QR.png`)
-                    setQrString("")
-                    setDownload(false)
-                })
-                .catch((error) => {
-                    setQrString("")
-                    setDownload(false)
-                })
-            resetFields()
-        } else {
-            setDownload(false)
-        }
+        // setDownload(true)
+        // if (qrString !== "") {
+        //     await domtoimage
+        //         .toBlob(document.getElementById("qr-svg"))
+        //         .then((blob) => {
+        //             saveAs(blob, `${firstname} ${lastname} QR.png`)
+        //             setQrString("")
+        //             setDownload(false)
+        //         })
+        //         .catch((error) => {
+        //             setQrString("")
+        //             setDownload(false)
+        //         })
+        //     resetFields()
+        // } else {
+        //     setDownload(false)
+        // }
     }
 
     const resetFields = (e) => {
@@ -145,13 +145,13 @@ const Home = ({ logged }) => {
                                                 id="qr-svg"
                                                 className="d-flex justify-content-center"
                                             >
-                                                <QRCode
+                                                {/* <QRCode
                                                     bgColor="#FFFFFF"
                                                     fgColor="#000000"
                                                     level="H"
                                                     style={{ width: 320 }}
                                                     value={qrString}
-                                                />
+                                                /> */}
                                             </div>
                                         </div>
                                     </div>
@@ -326,4 +326,4 @@ const Home = ({ logged }) => {
     }
 }
 
-export default Home
+export default Profile
