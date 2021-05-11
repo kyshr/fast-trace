@@ -20,6 +20,7 @@ const HomeNav = ({ toggle, setLogged }) => {
                 exact
                 to="/individual/profile"
                 className="side-item"
+                onClick={toggle}
             >
                 Profile
             </NavLink>
