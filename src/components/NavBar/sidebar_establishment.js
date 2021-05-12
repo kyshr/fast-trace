@@ -1,8 +1,53 @@
 import React from "react"
 import { NavLink } from "react-router-dom"
-import "../../../assets/scss/navbar.scss"
+import "../../assets/scss/navbar.scss"
+import { estabalishmentLogout } from "../../services/auth_establishment"
 
-const HomeNav = ({ toggle }) => {
+const HomeNav = ({ toggle, setLogged }) => {
+    return (
+        <>
+            <NavLink
+                activeClassName="active"
+                exact
+                to="/establishment"
+                className="side-item"
+                onClick={toggle}
+            >
+                Home
+            </NavLink>
+            <NavLink
+                activeClassName="active"
+                exact
+                to="/establishment/profile"
+                className="side-item"
+                onClick={toggle}
+            >
+                Profile
+            </NavLink>
+            <NavLink
+                activeClassName="active"
+                exact
+                to="/establishment/logs"
+                className="side-item"
+                onClick={toggle}
+            >
+                Logs
+            </NavLink>
+            <li
+                className="side-item side-logout-icon"
+                onClick={async () => {
+                    toggle()
+                    await estabalishmentLogout()
+                    setLogged(false)
+                }}
+            >
+                Logout
+            </li>
+        </>
+    )
+}
+
+const AuthNav = ({ toggle }) => {
     return (
         <>
             <NavLink
@@ -17,27 +62,31 @@ const HomeNav = ({ toggle }) => {
             <NavLink
                 activeClassName="active"
                 exact
-                to="/individual"
+                to="/establishment/login"
                 className="side-item"
                 onClick={toggle}
             >
-                Individual
+                Login
             </NavLink>
             <NavLink
                 activeClassName="active"
                 exact
-                to="/"
+                to="/establishment/signup"
                 className="side-item"
                 onClick={toggle}
             >
-                Estabslishment
+                Signup
             </NavLink>
         </>
     )
 }
 
-const SidebarIndex = ({ active, toggle }) => {
-    let Navigation = <HomeNav toggle={toggle} />
+const Sidebar = ({ active, toggle, logged, setLogged }) => {
+    let Navigation = logged ? (
+        <HomeNav toggle={toggle} setLogged={setLogged} />
+    ) : (
+        <AuthNav toggle={toggle} />
+    )
 
     return (
         <div
@@ -69,4 +118,4 @@ const SidebarIndex = ({ active, toggle }) => {
     )
 }
 
-export default SidebarIndex
+export default Sidebar

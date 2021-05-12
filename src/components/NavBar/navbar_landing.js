@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { NavLink } from "react-router-dom"
-import "../../../assets/scss/navbar.scss"
+import "../../assets/scss/navbar.scss"
 import SidebarIndex from "./sidebar_landing"
 
 const NavBarIndex = () => {
@@ -68,7 +68,7 @@ const NavBarIndex = () => {
                             <NavLink
                                 activeClassName="active"
                                 exact
-                                to="/"
+                                to="/establishment"
                                 className="nav-item"
                             >
                                 Establishment

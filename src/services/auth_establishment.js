@@ -5,11 +5,13 @@ const api = axios.create({
     baseURL: "http://localhost:3001/api",
 })
 
-//Individual Authentication
+//Establisment Authentication
 
-export async function getIndividual(userId) {
+export async function getEstablishment(establishmentId) {
     try {
-        const response = await api.post("/users/individual", { userId: userId })
+        const response = await api.post("/establishments/individual", {
+            establishmentId: establishmentId,
+        })
         return response.data
     } catch (error) {
         console.error(error)
@@ -17,28 +19,18 @@ export async function getIndividual(userId) {
     }
 }
 
-export async function createIndividual(data) {
+export async function createEstablishment(data) {
     try {
-        const response = await api.post("/users/create", data)
+        const response = await api.post("/establishments/create", data)
         return response.data
     } catch (error) {
         console.error(error)
         return { success: false, message: "Failed to create user." }
     }
 }
-export async function updateIndividual(data) {
+export async function updateEstablishment(data) {
     try {
-        const response = await api.put("/users/update", data)
-        return response.data
-    } catch (error) {
-        console.error(error)
-        return { success: false, message: "Failed to create user." }
-    }
-}
-
-export async function updateIndividualPassword(data) {
-    try {
-        const response = await api.put("/users/update-password", data)
+        const response = await api.put("/establishments/update", data)
         return response.data
     } catch (error) {
         console.error(error)
@@ -46,10 +38,20 @@ export async function updateIndividualPassword(data) {
     }
 }
 
-export async function individualLogin(userId, password) {
+export async function updateEstablishmentPassword(data) {
     try {
-        const response = await api.post("/users/login", {
-            userId: userId,
+        const response = await api.put("/establishments/update-password", data)
+        return response.data
+    } catch (error) {
+        console.error(error)
+        return { success: false, message: "Failed to create user." }
+    }
+}
+
+export async function establishmentLogin(establishmentId, password) {
+    try {
+        const response = await api.post("/establishments/login", {
+            establishmentId: establishmentId,
             password: password,
         })
         return response.data
@@ -59,10 +61,10 @@ export async function individualLogin(userId, password) {
     }
 }
 
-export async function checkIndividualLoggedIn(userId, password) {
+export async function checkEstablishmentLoggedIn(establishmentId, password) {
     try {
-        const response = await api.post("/users/login", {
-            userId: userId,
+        const response = await api.post("/establishments/login", {
+            establishmentId: establishmentId,
             password: password,
         })
         return response.data
@@ -72,18 +74,18 @@ export async function checkIndividualLoggedIn(userId, password) {
     }
 }
 
-export async function individualLogout() {
+export async function estabalishmentLogout() {
     try {
-        await api.get("/users/logout")
+        await api.get("/establishments/logout")
     } catch (error) {
         console.error(error)
     }
 }
 
-export async function passwordMatched(userId, password) {
+export async function passwordMatched(establishmentId, password) {
     try {
-        const response = await api.post("/users/password-matched", {
-            userId: userId,
+        const response = await api.post("/establishments/password-matched", {
+            establishmentId: establishmentId,
             password: password,
         })
         return response.data

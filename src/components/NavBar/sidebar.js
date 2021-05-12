@@ -1,7 +1,7 @@
 import React from "react"
 import { NavLink } from "react-router-dom"
-import "../../../assets/scss/navbar.scss"
-import { individualLogout } from "../../../services/auth"
+import "../../assets/scss/navbar.scss"
+import { individualLogout } from "../../services/auth"
 
 const HomeNav = ({ toggle, setLogged }) => {
     return (

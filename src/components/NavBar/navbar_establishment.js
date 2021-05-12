@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react"
 import { NavLink } from "react-router-dom"
-import "../../../assets/scss/navbar.scss"
-import Sidebar from "./sidebar"
-import { individualLogout } from "../../../services/auth"
+import "../../assets/scss/navbar.scss"
+import Sidebar from "./sidebar_establishment"
+import { estabalishmentLogout } from "../../services/auth_establishment"
 import { IoExit } from "react-icons/io5"
 
 const HomeNav = ({ setLogged }) => {
@@ -11,7 +11,7 @@ const HomeNav = ({ setLogged }) => {
             <NavLink
                 activeClassName="active"
                 exact
-                to="/individual"
+                to="/establishment"
                 className="nav-item"
             >
                 Home
@@ -19,7 +19,7 @@ const HomeNav = ({ setLogged }) => {
             <NavLink
                 activeClassName="active"
                 exact
-                to="/individual/profile"
+                to="/establishment/profile"
                 className="nav-item"
             >
                 Profile
@@ -27,7 +27,7 @@ const HomeNav = ({ setLogged }) => {
             <NavLink
                 activeClassName="active"
                 exact
-                to="/individual/logs"
+                to="/establishment/logs"
                 className="nav-item"
             >
                 Logs
@@ -35,7 +35,7 @@ const HomeNav = ({ setLogged }) => {
             <li
                 className="nav-item logout-icon d-flex align-items-center"
                 onClick={async () => {
-                    await individualLogout()
+                    await estabalishmentLogout()
                     setLogged(false)
                 }}
             >
@@ -54,7 +54,7 @@ const AuthNav = () => {
             <NavLink
                 activeClassName="active"
                 exact
-                to="/individual/login"
+                to="/establishment/login"
                 className="nav-item"
             >
                 Login
@@ -62,7 +62,7 @@ const AuthNav = () => {
             <NavLink
                 activeClassName="active"
                 exact
-                to="/individual/signup"
+                to="/establishment/signup"
                 className="nav-item"
             >
                 Signup
@@ -71,7 +71,7 @@ const AuthNav = () => {
     )
 }
 
-const NavBar = ({ logged, setLogged }) => {
+const NavBarEstablishment = ({ logged, setLogged }) => {
     const [active, setActive] = useState(false)
     const showSideBar = () => setActive(!active)
 
@@ -100,7 +100,9 @@ const NavBar = ({ logged, setLogged }) => {
                     {/* logo */}
                     <div className="logo">
                         <NavLink exact to="/" className="logo-link">
-                            <span className="logo-name">V-Trace</span>
+                            <span className="logo-name">
+                                V-Trace | Establishment
+                            </span>
                         </NavLink>
                     </div>
 
@@ -133,4 +135,4 @@ const NavBar = ({ logged, setLogged }) => {
     )
 }
 
-export default NavBar
+export default NavBarEstablishment
