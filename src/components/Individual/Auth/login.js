@@ -141,13 +141,16 @@ const Login = ({ logged, setLogged }) => {
                                                 <p className="text-danger mt-3 text-center">
                                                     {error.loginErr}
                                                 </p>
-                                                <div className="forgot d-flex justify-content-end">
-                                                    <Link
-                                                        to="/forgot"
-                                                        className="forgot-link"
-                                                    >
-                                                        Forgot password?
-                                                    </Link>
+                                                <div className="forgot d-flex justify-content-start">
+                                                    <p>
+                                                        Don't have an account?{" "}
+                                                        <Link
+                                                            to="/individual/signup"
+                                                            className="forgot-link"
+                                                        >
+                                                            Signup here.
+                                                        </Link>
+                                                    </p>
                                                 </div>
                                                 <input
                                                     type="submit"

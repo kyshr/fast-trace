@@ -50,7 +50,13 @@ const HomeNav = ({ toggle, setLogged }) => {
 const AuthNav = ({ toggle }) => {
     return (
         <>
-            <NavLink activeClassName="active" exact to="/" className="nav-item">
+            <NavLink
+                activeClassName="active"
+                exact
+                to="/"
+                className="side-item"
+                onClick={toggle}
+            >
                 Home
             </NavLink>
             <NavLink

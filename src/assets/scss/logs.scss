@@ -29,7 +29,8 @@
         }
     }
     .logs-modal {
-        height: 500px;
-        background: red;
+        p {
+            color: red !important;
+        }
     }
 }

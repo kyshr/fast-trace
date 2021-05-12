@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
+
+.logs-modal {
+    font-family: "Nunito", sans-serif;
+}
+
+.logs-modal .logs-list {
+}
+
+.logs-modal .logs-modal-header {
+    font-weight: bold;
+    background: #5253ed;
+    color: #ffffff;
+}
+
+.logs-modal .logs-list {
+    min-height: 150px;
+}
+
+.logs-modal .logs-establishment {
+    font-weight: bold;
+    color: #5253ed;
+}
+
+.logs-modal .logs-time {
+    color: #959596;
+}
