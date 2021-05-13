@@ -14,6 +14,6 @@ export async function getIndividualLogsByDate(userId, dateTime) {
         return response.data
     } catch (error) {
         console.error(error)
-        return { success: false, message: "Failed to create user." }
+        return { success: false, message: "Failed to get user logs." }
     }
 }

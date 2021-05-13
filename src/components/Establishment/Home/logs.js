@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Redirect } from "react-router-dom"
 import { Modal, Spinner } from "react-bootstrap"
-import { getIndividualLogsByDate } from "../../../services/individual_logs"
+import { getEstablishmentLogsByDate } from "../../../services/establishment_logs"
 import "../../../assets/scss/logs.scss"
 import "../../../assets/scss/logs_modal.css"
 
@@ -18,7 +18,7 @@ const DateBox = ({ dateString, date, onClick, color }) => {
     )
 }
 
-const LogsEstablishment = ({ logged, userId }) => {
+const LogsEstablishment = ({ logged, establishmentId }) => {
     const [userDates, setUserDates] = useState([])
     const [showModal, setShowModal] = useState(false)
     const [modalLoading, setModalLoading] = useState(false)
@@ -34,7 +34,7 @@ const LogsEstablishment = ({ logged, userId }) => {
         var dateNow = new Date()
         var dateList = []
         dateList.push(new Date().toISOString())
-        for (var x = 0; x < 13; x++) {
+        for (var x = 0; x < 29; x++) {
             dateList.push(
                 new Date(dateNow.setDate(dateNow.getDate() - 1)).toISOString()
             )
@@ -43,9 +43,13 @@ const LogsEstablishment = ({ logged, userId }) => {
     }
 
     const getLogs = async (dateTime) => {
-        var userLogs = await getIndividualLogsByDate(userId, dateTime)
-        if (userLogs.success) {
-            setCurrentLogs(userLogs.userLogs)
+        var establishmentLogs = await getEstablishmentLogsByDate(
+            establishmentId,
+            dateTime
+        )
+        if (establishmentLogs.success) {
+            setCurrentLogs(establishmentLogs.establishmentLogs)
+            console.log(currentLogs)
             setModalLoading(false)
         } else {
             setCurrentLogs([])
@@ -66,16 +70,16 @@ const LogsEstablishment = ({ logged, userId }) => {
         setShowModal(false)
     }
 
-    const formatAMPM = (date) => {
-        var hours = date.getUTCHours()
-        var minutes = date.getUTCMinutes()
-        var ampm = hours >= 12 ? "PM" : "AM"
-        hours = hours % 12
-        hours = hours ? hours : 12
-        minutes = minutes < 10 ? "0" + minutes : minutes
-        var strTime = hours + ":" + minutes + " " + ampm
-        return strTime
-    }
+    // const formatAMPM = (date) => {
+    //     var hours = date.getUTCHours()
+    //     var minutes = date.getUTCMinutes()
+    //     var ampm = hours >= 12 ? "PM" : "AM"
+    //     hours = hours % 12
+    //     hours = hours ? hours : 12
+    //     minutes = minutes < 10 ? "0" + minutes : minutes
+    //     var strTime = hours + ":" + minutes + " " + ampm
+    //     return strTime
+    // }
 
     return logged ? (
         <div
@@ -86,7 +90,7 @@ const LogsEstablishment = ({ logged, userId }) => {
                 <div className="card py-4 px-3">
                     <div className="logs-title">
                         <h5 className="text-center mb-4">
-                            Your logs in the last 14 days.
+                            Your establishment's logs in the last 30 days.
                         </h5>
                     </div>
 
@@ -144,21 +148,31 @@ const LogsEstablishment = ({ logged, userId }) => {
                     ) : (
                         <ul className="list-group list-group-flush">
                             {currentLogs.map((value, index) => {
-                                var timeString = formatAMPM(
-                                    new Date(value.dateTime)
-                                )
                                 return (
                                     <li key={index} className="list-group-item">
-                                        <div className="logs-history d-flex justify-content-between">
-                                            <p className="logs-establishment">
-                                                {
-                                                    value.establishment
-                                                        .establishmentName
-                                                }
-                                            </p>
-                                            <p className="logs-time">
-                                                {timeString}
-                                            </p>
+                                        <div className="logs-history row">
+                                            <div className="col-4 ">
+                                                <div className="d-flex justify-content-start">
+                                                    <p className="logs-establishment">
+                                                        {value.firstname}{" "}
+                                                        {value.lastname}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div className="col-4">
+                                                <div className="d-flex justify-content-start">
+                                                    <p className="logs-address">
+                                                        {value.address}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div className="col-4">
+                                                <div className="d-flex justify-content-end">
+                                                    <p className="logs-time">
+                                                        {value.time}
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </li>
                                 )
