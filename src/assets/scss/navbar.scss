@@ -17,7 +17,11 @@
             outline: none;
             .logo-name {
                 color: $primary-color;
-                font-size: 35px;
+                font-size: 25px;
+            }
+            .logo-type {
+                color: $text-color;
+                font-size: 20px;
             }
         }
     }

@@ -104,9 +104,9 @@ const Login = ({ logged, setLogged }) => {
                                     <div className="row">
                                         <div className="col-md-10">
                                             <div className="mb-4">
-                                                <h3>Login to V-Trace</h3>
+                                                <h3>Login to VTrace</h3>
                                                 <p className="mb-4">
-                                                    V-Trace is an android app
+                                                    VTrace is an android app
                                                     that is intended for contact
                                                     tracing.
                                                 </p>

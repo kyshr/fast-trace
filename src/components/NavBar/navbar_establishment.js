@@ -100,9 +100,8 @@ const NavBarEstablishment = ({ logged, setLogged }) => {
                     {/* logo */}
                     <div className="logo">
                         <NavLink exact to="/" className="logo-link">
-                            <span className="logo-name">
-                                V-Trace | Establishment
-                            </span>
+                            <span className="logo-name">VTrace |</span>
+                            <span className="logo-type"> Establishment</span>
                         </NavLink>
                     </div>
 

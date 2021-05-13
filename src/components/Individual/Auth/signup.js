@@ -273,9 +273,9 @@ const Signup = ({ logged, setLogged }) => {
                                     <div className="row justify-content-center">
                                         <div className="col-12 col-md-8">
                                             <div className="mb-4 text-center">
-                                                <h3>Signup to V-Trace</h3>
+                                                <h3>Signup to VTrace</h3>
                                                 <p className="mb-4">
-                                                    V-Trace is an android app
+                                                    VTrace is an android app
                                                     that is intended for contact
                                                     tracing.
                                                 </p>
