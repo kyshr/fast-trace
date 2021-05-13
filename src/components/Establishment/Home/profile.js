@@ -2,19 +2,15 @@ import React, { useState, useEffect } from "react"
 import { Redirect } from "react-router-dom"
 import "../../../assets/scss/profile.scss"
 import {
-    getIndividual,
+    getEstablishment,
     passwordMatched,
-    updateIndividual,
-    updateIndividualPassword,
-} from "../../../services/auth"
+    updateEstablishment,
+    updateEstablishmentPassword,
+} from "../../../services/auth_establishment"
 
-const ProfileEstablishment = ({ logged, userId }) => {
-    const [firstname, setFirstname] = useState("")
-    const [lastname, setLastname] = useState("")
-    const [birthdate, setBirthdate] = useState("")
-    const [gender, setGender] = useState("Male")
+const ProfileEstablishment = ({ logged, establishmentId }) => {
+    const [establishmentName, setEstablishment] = useState("Male")
     const [contactNumber, setContactNumber] = useState("")
-    // const [address, setAddress] = useState("")
     const [street, setStreet] = useState("")
     const [barangay, setBarangay] = useState("")
     const [city, setCity] = useState("")
@@ -26,10 +22,7 @@ const ProfileEstablishment = ({ logged, userId }) => {
     const [edit, setEdit] = useState(true)
     const [success, setSuccess] = useState("")
     const [error, setError] = useState({
-        firstname: "",
-        lastname: "",
-        birthdate: "",
-        gender: "",
+        establishmentName: "",
         contactNumber: "",
         street: "",
         barangay: "",
@@ -43,49 +36,31 @@ const ProfileEstablishment = ({ logged, userId }) => {
 
     var updatePassword = false
 
-    const loadIndividual = async () => {
-        var user = await getIndividual(userId)
-        if (user.success) {
-            setFirstname(user.user.firstname)
-            setLastname(user.user.lastname)
-            setBirthdate(user.user.birthdate)
-            setGender(user.user.gender)
-            setContactNumber(user.user.contactNumber)
-            setStreet(user.user.street)
-            setBarangay(user.user.barangay)
-            setCity(user.user.cityMun)
-            setProvince(user.user.province)
-            setEmail(user.user.email)
+    const loadEstablishment = async () => {
+        var establishment = await getEstablishment(establishmentId)
+        if (establishment.success) {
+            setEstablishment(establishment.establishment.establishmentName)
+            setContactNumber(establishment.establishment.contactNumber)
+            setStreet(establishment.establishment.street)
+            setBarangay(establishment.establishment.barangay)
+            setCity(establishment.establishment.cityMun)
+            setProvince(establishment.establishment.province)
+            setEmail(establishment.establishment.email)
         }
     }
 
     useEffect(() => {
-        loadIndividual()
+        loadEstablishment()
         setOldPassword("")
         setNewPassword("")
     }, [edit])
 
     const handleChange = (event) => {
-        if (event.target.id === "firstname") {
+        if (event.target.id === "establishmentName") {
             setError((err) => {
-                return { ...err, firstname: "" }
+                return { ...err, establishmentName: "" }
             })
-            setFirstname(event.target.value)
-        } else if (event.target.id === "lastname") {
-            setError((err) => {
-                return { ...err, lastname: "" }
-            })
-            setLastname(event.target.value)
-        } else if (event.target.id === "birthdate") {
-            setError((err) => {
-                return { ...err, birthdate: "" }
-            })
-            setBirthdate(event.target.value)
-        } else if (event.target.id === "gender") {
-            setError((err) => {
-                return { ...err, gender: "" }
-            })
-            setGender(event.target.value)
+            setEstablishment(event.target.value)
         } else if (event.target.id === "contactNumber") {
             setError((err) => {
                 return { ...err, contactNumber: "" }
@@ -143,7 +118,7 @@ const ProfileEstablishment = ({ logged, userId }) => {
                     })
 
                     var updateData = (updateData = {
-                        gender: gender,
+                        establishmentName: establishmentName,
                         contactNumber: contactNumber,
                         street: street,
                         barangay: barangay,
@@ -152,12 +127,14 @@ const ProfileEstablishment = ({ logged, userId }) => {
                         email: email,
                     })
                     if (updatePassword) {
-                        var updatedPassword = await updateIndividualPassword({
-                            userId: userId,
-                            updateData: {
-                                password: newPassword,
-                            },
-                        })
+                        var updatedPassword = await updateEstablishmentPassword(
+                            {
+                                establishmentId: establishmentId,
+                                updateData: {
+                                    password: newPassword,
+                                },
+                            }
+                        )
 
                         if (updatedPassword.success) {
                             setSuccess("User successfully updated.")
@@ -176,12 +153,12 @@ const ProfileEstablishment = ({ logged, userId }) => {
                     }
 
                     if (error.oldPassword === "") {
-                        var updatedUser = await updateIndividual({
-                            userId,
+                        var updatedUser = await updateEstablishment({
+                            establishmentId,
                             updateData: updateData,
                         })
                         if (updatedUser.success) {
-                            setSuccess("User successfully updated.")
+                            setSuccess("Establishment successfully updated.")
                             setEdit(true)
                         } else {
                             setError((err) => {
@@ -196,7 +173,10 @@ const ProfileEstablishment = ({ logged, userId }) => {
                     setDisable(false)
                 } catch (error) {
                     setError((err) => {
-                        return { ...err, signupErr: "Failed to update user." }
+                        return {
+                            ...err,
+                            signupErr: "Failed to update establishment.",
+                        }
                     })
                     setDisable(false)
                 }
@@ -208,9 +188,12 @@ const ProfileEstablishment = ({ logged, userId }) => {
 
     const handleError = async () => {
         var noError = true
-        if (gender === "") {
+        if (establishmentName === "") {
             setError((err) => {
-                return { ...err, gender: "Gender is required." }
+                return {
+                    ...err,
+                    establishmentName: "Establishment Name is required.",
+                }
             })
             noError = false
         }
@@ -270,7 +253,10 @@ const ProfileEstablishment = ({ logged, userId }) => {
             }
 
             if (oldPassword.length >= 8) {
-                var matched = await passwordMatched(userId, oldPassword)
+                var matched = await passwordMatched(
+                    establishmentId,
+                    oldPassword
+                )
 
                 if (matched.success) {
                     updatePassword = true
@@ -314,7 +300,7 @@ const ProfileEstablishment = ({ logged, userId }) => {
         return (
             <>
                 <div style={{ paddingTop: "70px" }}>
-                    <div className="individual-profile content d-flex align-items-center py-0 py-md-4 mb-4">
+                    <div className="individual-profile content d-flex align-items-center py-4 mb-4">
                         <div className="container">
                             <div className="card p-4">
                                 <div className="row">
@@ -322,8 +308,11 @@ const ProfileEstablishment = ({ logged, userId }) => {
                                         <div className="row justify-content-center">
                                             <div className="col-12 col-md-8">
                                                 <div className="profile-title mb-4 text-center">
-                                                    <h2>Profile Information</h2>
-                                                    <h5>{userId}</h5>
+                                                    <h2>
+                                                        Establishment
+                                                        Information
+                                                    </h2>
+                                                    <h5>{establishmentId}</h5>
                                                 </div>
                                                 <form
                                                     onSubmit={handleSubmit}
@@ -332,74 +321,25 @@ const ProfileEstablishment = ({ logged, userId }) => {
                                                     <div className="form-group first">
                                                         <input
                                                             type="text"
-                                                            className="form-control"
-                                                            id="firstname"
-                                                            placeholder="Firstname"
-                                                            value={firstname}
-                                                            onChange={
-                                                                handleChange
-                                                            }
-                                                            disabled={true}
-                                                        />
-                                                        <p className="text-danger">
-                                                            {error.firstname}
-                                                        </p>
-                                                    </div>
-                                                    <div className="form-group first">
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            id="lastname"
-                                                            placeholder="Lastname"
-                                                            value={lastname}
-                                                            onChange={
-                                                                handleChange
-                                                            }
-                                                            disabled={true}
-                                                        />
-                                                        <p className="text-danger">
-                                                            {error.lastname}
-                                                        </p>
-                                                    </div>
-                                                    <div className="form-group first">
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            id="birthdate"
-                                                            placeholder="Birthdate"
-                                                            value={birthdate}
-                                                            onChange={
-                                                                handleChange
-                                                            }
-                                                            disabled={true}
-                                                        />
-                                                        <p className="text-danger">
-                                                            {error.birthdate}
-                                                        </p>
-                                                    </div>
-                                                    <div className="form-group first">
-                                                        <select
                                                             className={`form-control ${
                                                                 edit
                                                                     ? ""
                                                                     : "input-active"
                                                             }`}
-                                                            id="gender"
-                                                            value={gender}
+                                                            id="establishmentName"
+                                                            placeholder="Establishment Name"
+                                                            value={
+                                                                establishmentName
+                                                            }
                                                             onChange={
                                                                 handleChange
                                                             }
                                                             disabled={edit}
-                                                        >
-                                                            <option value="Male">
-                                                                Male
-                                                            </option>
-                                                            <option value="Female">
-                                                                Female
-                                                            </option>
-                                                        </select>
+                                                        />
                                                         <p className="text-danger">
-                                                            {error.gender}
+                                                            {
+                                                                error.establishmentName
+                                                            }
                                                         </p>
                                                     </div>
                                                     <div className="form-group first">

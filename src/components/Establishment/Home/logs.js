@@ -117,7 +117,7 @@ const LogsEstablishment = ({ logged, userId }) => {
                 contentClassName="logs-modal"
                 show={showModal}
                 onHide={closeModal}
-                size="lg"
+                size="xl"
                 aria-labelledby="contained-modal-title-vcenter"
                 animation={false}
                 scrollable={true}

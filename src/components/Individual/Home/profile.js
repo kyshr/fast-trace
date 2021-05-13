@@ -314,7 +314,7 @@ const Profile = ({ logged, userId }) => {
         return (
             <>
                 <div style={{ paddingTop: "70px" }}>
-                    <div className="individual-profile content d-flex align-items-center py-0 py-md-4 mb-4">
+                    <div className="individual-profile content d-flex align-items-center py-4 mb-4">
                         <div className="container">
                             <div className="card p-4">
                                 <div className="row">

@@ -3,44 +3,45 @@ import { Redirect } from "react-router-dom"
 import "../../../assets/scss/home.scss"
 import { Button, Spinner } from "react-bootstrap"
 import html2canvas from "html2canvas"
-import { getIndividual } from "../../../services/auth"
-var QRCode = require("qrcode.react")
+import { getEstablishment } from "../../../services/auth_establishment"
+import company from "../../../assets/images/company.png"
+// var QRCode = require("qrcode.react")
 
-const HomeEstablishment = ({ logged, userId }) => {
+const HomeEstablishment = ({ logged, establishmentId }) => {
     const [download, setDownload] = useState(false)
-    const [individual, setIndividual] = useState({})
+    const [establishment, setEstablishment] = useState({})
     const [address, setAddress] = useState({})
     const [loading, setLoading] = useState(true)
 
-    const loadIndividual = async () => {
-        var user = await getIndividual(userId)
-        if (user.success) {
-            if (user.user.street !== "") {
+    const loadEstablishment = async () => {
+        var establishment = await getEstablishment(establishmentId)
+        if (establishment.success) {
+            if (establishment.establishment.street !== "") {
                 setAddress(
-                    user.user.street +
+                    establishment.establishment.street +
                         ", " +
-                        user.user.barangay +
+                        establishment.establishment.barangay +
                         ", " +
-                        user.user.cityMun +
+                        establishment.establishment.cityMun +
                         ", " +
-                        user.user.province
+                        establishment.establishment.province
                 )
             } else {
                 setAddress(
-                    user.user.barangay +
+                    establishment.establishment.barangay +
                         ", " +
-                        user.user.cityMun +
+                        establishment.establishment.cityMun +
                         ", " +
-                        user.user.province
+                        establishment.establishment.province
                 )
             }
-            setIndividual(user.user)
+            setEstablishment(establishment.establishment)
             setLoading(false)
         }
     }
 
     useEffect(() => {
-        loadIndividual()
+        loadEstablishment()
     }, [])
 
     const handleSubmit = async (e) => {
@@ -53,7 +54,10 @@ const HomeEstablishment = ({ logged, userId }) => {
                     .toDataURL("image/png")
                     .replace("image/png", "image/octet-stream")
                 const a = document.createElement("a")
-                a.setAttribute("download", `${individual.userId}_QR.png`)
+                a.setAttribute(
+                    "download",
+                    `${establishment.establishmentId}_QR.png`
+                )
                 a.setAttribute("href", image)
                 a.click()
                 canvas.remove()
@@ -71,24 +75,26 @@ const HomeEstablishment = ({ logged, userId }) => {
                 className="container individual-home"
             >
                 <div className="home-wrapper mx-auto">
-                    <div className="card mt-4">
+                    <div className="card mt-4 py-5">
                         <div className="container">
                             <div className="row">
                                 <div className="col-12">
                                     <div className="home-qr-code text-center">
                                         {!loading ? (
                                             <>
-                                                <div className="home-qr-fullname pt-4">
+                                                <div className="home-qr-fullname">
                                                     <h2>
-                                                        {individual.firstname.toUpperCase()}{" "}
-                                                        {individual.lastname.toUpperCase()}
+                                                        {establishment.establishmentName.toUpperCase()}
                                                     </h2>
                                                     <p>
                                                         <span>
-                                                            {individual.userId}
+                                                            {
+                                                                establishment.establishmentId
+                                                            }
                                                         </span>{" "}
-                                                        served as User ID that
-                                                        will be used in login.
+                                                        served as Establishment
+                                                        ID that will be used in
+                                                        login.
                                                     </p>
                                                 </div>
                                                 <div
@@ -97,27 +103,34 @@ const HomeEstablishment = ({ logged, userId }) => {
                                                 >
                                                     <div className="home-qr-title text-center mb-3">
                                                         <h4>
-                                                            {individual.userId}
+                                                            {
+                                                                establishment.establishmentId
+                                                            }
                                                         </h4>
                                                     </div>
                                                     <div className="d-flex justify-content-center mb-3">
-                                                        <QRCode
+                                                        {/* <QRCode
                                                             bgColor="#FFFFFF"
                                                             fgColor="#000000"
                                                             level="H"
                                                             size={150}
                                                             value={
-                                                                individual.userId
+                                                                establishment.establishmentId
                                                             }
+                                                        /> */}
+                                                        <img
+                                                            src={company}
+                                                            alt="company"
+                                                            className="img-fluid"
+                                                            style={{
+                                                                width: "150px",
+                                                            }}
                                                         />
                                                     </div>
                                                     <div className="home-qr-info text-center mx-auto">
                                                         <h5>
                                                             {
-                                                                individual.firstname
-                                                            }{" "}
-                                                            {
-                                                                individual.lastname
+                                                                establishment.establishmentName
                                                             }
                                                         </h5>
                                                         <h6>{address}</h6>

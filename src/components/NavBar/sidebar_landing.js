@@ -26,7 +26,7 @@ const HomeNav = ({ toggle }) => {
             <NavLink
                 activeClassName="active"
                 exact
-                to="/"
+                to="/establishment"
                 className="side-item"
                 onClick={toggle}
             >
