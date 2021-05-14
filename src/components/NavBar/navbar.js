@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom"
 import "../../assets/scss/navbar.scss"
 import Sidebar from "./sidebar"
 import { individualLogout } from "../../services/auth"
-import { IoExit } from "react-icons/io5"
+import { IoLogOutOutline } from "react-icons/io5"
 
 const HomeNav = ({ setLogged }) => {
     return (
@@ -39,7 +39,7 @@ const HomeNav = ({ setLogged }) => {
                     setLogged(false)
                 }}
             >
-                <IoExit />
+                <IoLogOutOutline />
             </li>
         </>
     )

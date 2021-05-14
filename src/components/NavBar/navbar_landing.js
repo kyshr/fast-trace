@@ -25,7 +25,7 @@ const NavBarIndex = () => {
                     {/* logo */}
                     <div className="logo">
                         <NavLink exact to="/" className="logo-link">
-                            <span className="logo-name">V-Trace</span>
+                            <span className="logo-name">VTrace</span>
                         </NavLink>
                     </div>
 
