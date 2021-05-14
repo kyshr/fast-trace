@@ -1,0 +1,54 @@
+@import "./constants.scss";
+
+.sidebar-wrapper {
+    .sidebar-header {
+        .sidebar-account-icon {
+            color: $primary-color;
+        }
+
+        .sidebar-username {
+            font-family: "Nunito", sans-serif;
+            font-weight: bold;
+            color: $text-color;
+        }
+    }
+
+    .sidebar-menus {
+        font-family: "Nunito", sans-serif;
+        font-weight: bold;
+        .menu {
+            color: #696969;
+            text-decoration: none;
+            // .menu-icon {
+            // }
+            .menu-title {
+                font-size: 18px;
+            }
+        }
+
+        .menu-active {
+            color: $primary-color !important;
+            border-left: 5px solid $primary-color !important;
+        }
+    }
+}
+
+.red {
+    background: red;
+}
+
+.green {
+    background: green;
+}
+
+.blue {
+    background: blue;
+}
+
+.pink {
+    background: pink;
+}
+
+.gray {
+    background: gray;
+}

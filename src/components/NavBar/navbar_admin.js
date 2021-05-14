@@ -26,7 +26,7 @@ const NavBarAdmin = ({ setLogged }) => {
     return (
         <>
             <nav className="navigation d-flex align-items-center fixed-top">
-                <div className="container-fluid px-3 px-lg-5 d-flex align-items-center">
+                <div className="container-fluid d-flex align-items-center">
                     {/* logo */}
                     <div className="logo">
                         <NavLink exact to="/" className="logo-link">

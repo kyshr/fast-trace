@@ -1,0 +1,19 @@
+.admin-wrapper {
+    height: 100vh;
+    padding-top: 70px;
+    .admin-menu {
+        width: 230px;
+        transition: 0.5s ease-in-out;
+    }
+    .admin-content {
+        background: #f0f2f5;
+    }
+
+    .narrow {
+        width: 50px;
+    }
+
+    .admin-content {
+        width: 100%;
+    }
+}
