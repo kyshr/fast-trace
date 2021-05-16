@@ -1,6 +1,26 @@
 @import "./constants.scss";
 
 .sidebar-wrapper {
+    padding-top: 70px;
+    width: 210px;
+    background: #ffffff;
+    position: absolute;
+    height: 100vh;
+    z-index: 1;
+    left: -210px;
+    transition: 0.3s ease-in-out;
+    .sidebar-menu-close {
+        cursor: pointer;
+        color: $primary-color;
+
+        .menu-close {
+            transition: 0.5s ease-in-out;
+            &:hover {
+                color: #ff4e4e !important;
+            }
+        }
+    }
+
     .sidebar-header {
         .sidebar-account-icon {
             color: $primary-color;
@@ -22,7 +42,7 @@
             // .menu-icon {
             // }
             .menu-title {
-                font-size: 18px;
+                font-size: 17px;
             }
         }
 
@@ -32,7 +52,12 @@
         }
     }
 }
-
+.sidebar-wrapper.sidebar-expand {
+    left: 0px !important;
+}
+.white {
+    background: #ffffff !important;
+}
 .red {
     background: red;
 }

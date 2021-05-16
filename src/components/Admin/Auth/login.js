@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Redirect, Link } from "react-router-dom"
+import { Redirect } from "react-router-dom"
 import "../../../assets/scss/login.scss"
 import logo from "../../../assets/images/qr.jpg"
 import { adminLogin } from "../../../services/auth_admin"

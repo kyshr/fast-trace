@@ -1,12 +1,69 @@
+@import "./constants.scss";
+
 .admin-wrapper {
     height: 100vh;
     padding-top: 70px;
-    .admin-menu {
-        width: 230px;
-        transition: 0.5s ease-in-out;
-    }
+    position: relative;
+
     .admin-content {
         background: #f0f2f5;
+        overflow-y: auto;
+        transition: 0.3s ease-in-out;
+        .admin-title {
+            font-family: "Fredoka One", cursive;
+            color: $primary-color;
+            width: 100%;
+
+            .admin-title-hamburger {
+                cursor: pointer;
+                transition: 0.3s ease-in-out;
+                &:hover {
+                    color: #4141bb;
+                }
+            }
+        }
+    }
+    .admin-content.admin-narrow {
+        padding-left: 210px !important;
+    }
+
+    .admin-dashboard {
+        .admin-recent-logins {
+            min-height: 260px;
+            font-family: "Nunito", sans-serif;
+            color: $primary-color;
+
+            h3 {
+                font-weight: bold;
+            }
+            li {
+                color: $text-color;
+            }
+        }
+
+        .admin-total-scans {
+            min-height: 260px;
+            font-family: "Nunito", sans-serif;
+            color: $primary-color;
+
+            h3 {
+                font-weight: bold;
+            }
+            .admin-scans {
+                .number-scan {
+                    font-family: "Nunito", sans-serif;
+
+                    h1 {
+                        font-size: 65px;
+                        font-weight: bold;
+                        color: $primary-color;
+                    }
+                    h4 {
+                        color: $text-color;
+                    }
+                }
+            }
+        }
     }
 
     .narrow {

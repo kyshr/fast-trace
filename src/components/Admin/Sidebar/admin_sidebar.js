@@ -2,11 +2,28 @@ import React from "react"
 import "../../../assets/scss/admin_sidebar.scss"
 import { NavLink } from "react-router-dom"
 import { IoMdPerson } from "react-icons/io"
-import { MdDashboard, MdAssignment, MdStore, MdSettings } from "react-icons/md"
+import {
+    MdDashboard,
+    MdAssignment,
+    MdStore,
+    MdSettings,
+    MdClose,
+} from "react-icons/md"
 
 const AdminSidebar = (props) => {
     return (
-        <div className="sidebar-wrapper">
+        <div
+            className={`sidebar-wrapper ${
+                props.showMenu ? "sidebar-expand" : ""
+            }`}
+        >
+            <div className="sidebar-menu-close pt-3 pr-2 d-flex justify-content-end">
+                <MdClose
+                    size={32}
+                    className="menu-close"
+                    onClick={() => props.setShowMenu(false)}
+                />
+            </div>
             <div className="sidebar-header mb-4">
                 <div className="sidebar-account-icon text-center">
                     <IoMdPerson size={120} />
