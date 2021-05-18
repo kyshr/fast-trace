@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Redirect } from "react-router-dom"
 import "../../../assets/scss/admin.scss"
 import { getAdminLogs } from "../../../services/admin_logs"
-import { MdMenu, MdClose } from "react-icons/md"
+import { MdMenu } from "react-icons/md"
 import AdminSidebar from "../Sidebar/admin_sidebar"
 import qrHome from "../../../assets/images/qr_home.PNG"
 
@@ -10,17 +10,11 @@ const AdminHome = ({ logged, username }) => {
     const [adminLogins, setAdminLogins] = useState([])
     const [showMenu, setShowMenu] = useState(true)
 
-    const getAdminLogins = async () => {
-        var adminLogs = await getAdminLogs()
-        if (adminLogs.success) {
-            setAdminLogins(adminLogs.adminLogs)
-        } else {
-            setAdminLogins([])
-        }
-    }
-
     useEffect(() => {
         getAdminLogins()
+        return () => {
+            setAdminLogins([])
+        }
     }, [])
 
     useEffect(() => {
@@ -34,6 +28,15 @@ const AdminHome = ({ logged, username }) => {
 
         window.addEventListener("resize", handleResize)
     })
+
+    const getAdminLogins = async () => {
+        var adminLogs = await getAdminLogs()
+        if (adminLogs.success) {
+            setAdminLogins(adminLogs.adminLogs)
+        } else {
+            setAdminLogins([])
+        }
+    }
     return logged ? (
         <>
             <AdminSidebar
@@ -63,7 +66,7 @@ const AdminHome = ({ logged, username }) => {
                                 <h3 className="ml-3">Dashboard</h3>
                             </div>
                         </div>
-                        <div className="row">
+                        <div className="row sample">
                             <div className="col-md-6 mb-2">
                                 <div className="admin-recent-logins py-2 px-3 white">
                                     <h3>Recent Logins</h3>
@@ -93,14 +96,14 @@ const AdminHome = ({ logged, username }) => {
                                     <h3>Total Scans</h3>
                                     <div className="admin-scans">
                                         <div className="row">
-                                            <div className="col-md-6 text-center">
+                                            <div className="col-lg-6 text-center">
                                                 <img
                                                     src={qrHome}
                                                     alt="qrImage"
                                                     className="img-fluid"
                                                 />
                                             </div>
-                                            <div className="col-md-6 d-flex align-items-center justify-content-center">
+                                            <div className="col-lg-6 d-flex align-items-center justify-content-center">
                                                 <div className="number-scan text-center">
                                                     <h1>5678</h1>
                                                     <h4>

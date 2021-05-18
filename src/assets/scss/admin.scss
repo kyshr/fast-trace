@@ -66,6 +66,45 @@
         }
     }
 
+    .admin-logs {
+        font-family: "Nunito", sans-serif;
+        .admin-logs-main {
+            width: 100%;
+            max-height: 600px;
+
+            .admin-logs-filter {
+                .filter-search {
+                    .btn-outline-primary {
+                        &:hover {
+                            background: $primary-color !important;
+                        }
+                    }
+                }
+                .filter-date {
+                    color: $primary-color;
+                    .calendar-icon {
+                        cursor: pointer;
+                        transition: 0.3s ease-in-out;
+                        &:hover {
+                            color: #4141bb;
+                        }
+                    }
+                    h5 {
+                        color: $text-color;
+                        font-weight: bold;
+                    }
+                }
+            }
+
+            .admin-logs-table {
+                .admin-logs-table-header {
+                    background: $primary-color !important;
+                    color: #ffffff;
+                }
+            }
+        }
+    }
+
     .narrow {
         width: 50px;
     }
