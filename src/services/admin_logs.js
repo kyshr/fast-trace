@@ -17,6 +17,18 @@ export async function getAdminLogs() {
     }
 }
 
+export async function getScanCount() {
+    try {
+        const response = await api.post("/admin/admin-scan-count", {
+            dateTime: new Date().toISOString(),
+        })
+        return response.data
+    } catch (error) {
+        console.error(error)
+        return { success: false, message: "No recent logins." }
+    }
+}
+
 export async function getAdminUserLogs(date, match) {
     try {
         const response = await api.post("/admin/admin-user-logs", {

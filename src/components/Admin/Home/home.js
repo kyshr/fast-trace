@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react"
 import { Redirect } from "react-router-dom"
 import "../../../assets/scss/admin.scss"
-import { getAdminLogs } from "../../../services/admin_logs"
+import { getAdminLogs, getScanCount } from "../../../services/admin_logs"
 import { MdMenu } from "react-icons/md"
 import AdminSidebar from "../Sidebar/admin_sidebar"
 import qrHome from "../../../assets/images/qr_home.PNG"
 
 const AdminHome = ({ logged, username }) => {
     const [adminLogins, setAdminLogins] = useState([])
+    const [count, setCount] = useState("0")
     const [showMenu, setShowMenu] = useState(true)
 
     useEffect(() => {
@@ -31,10 +32,15 @@ const AdminHome = ({ logged, username }) => {
 
     const getAdminLogins = async () => {
         var adminLogs = await getAdminLogs()
+        var logsCount = await getScanCount()
         if (adminLogs.success) {
             setAdminLogins(adminLogs.adminLogs)
         } else {
             setAdminLogins([])
+        }
+
+        if (logsCount.success) {
+            setCount(logsCount.count)
         }
     }
     return logged ? (
@@ -105,9 +111,9 @@ const AdminHome = ({ logged, username }) => {
                                             </div>
                                             <div className="col-lg-6 d-flex align-items-center justify-content-center">
                                                 <div className="number-scan text-center">
-                                                    <h1>5678</h1>
+                                                    <h1>{count}</h1>
                                                     <h4>
-                                                        # of scans as of now
+                                                        # of scans as of today
                                                     </h4>
                                                 </div>
                                             </div>
