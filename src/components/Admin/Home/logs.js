@@ -4,7 +4,8 @@ import "../../../assets/scss/admin.scss"
 import { getAdminLogs } from "../../../services/admin_logs"
 import { MdMenu, MdDateRange } from "react-icons/md"
 import AdminSidebar from "../Sidebar/admin_sidebar"
-import qrHome from "../../../assets/images/qr_home.PNG"
+import { makeStyles } from "@material-ui/core/styles"
+import TextField from "@material-ui/core/TextField"
 
 const AdminUserLogs = ({ logged, username }) => {
     const [showMenu, setShowMenu] = useState(true)
@@ -20,6 +21,37 @@ const AdminUserLogs = ({ logged, username }) => {
 
         window.addEventListener("resize", handleResize)
     })
+
+    const useStyles = makeStyles((theme) => ({
+        container: {
+            display: "flex",
+            flexWrap: "wrap",
+        },
+        textField: {
+            marginLeft: theme.spacing(1),
+            marginRight: theme.spacing(1),
+            width: 200,
+        },
+    }))
+
+    const DatePickers = () => {
+        const classes = useStyles()
+
+        return (
+            <form className={classes.container} noValidate>
+                <TextField
+                    id="date"
+                    label="Select Date"
+                    type="date"
+                    defaultValue={new Date().toISOString().slice(0, 10)}
+                    className={classes.textField}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                />
+            </form>
+        )
+    }
 
     return logged ? (
         <>
@@ -75,14 +107,15 @@ const AdminUserLogs = ({ logged, username }) => {
                                         </div>
                                         <div className="col-md-6">
                                             <div className="filter-date">
-                                                <div className="d-flex justify-content-center justify-content-md-end align-items-center">
-                                                    <MdDateRange
+                                                <div className="d-flex justify-content-center justify-content-md-start align-items-center">
+                                                    {/* <MdDateRange
                                                         size={38}
                                                         className="calendar-icon mr-2"
                                                     />
                                                     <h5 className="pt-2">
                                                         May 18, 2021
-                                                    </h5>
+                                                    </h5> */}
+                                                    <DatePickers />
                                                 </div>
                                             </div>
                                         </div>
@@ -94,6 +127,7 @@ const AdminUserLogs = ({ logged, username }) => {
                                             <thead className="admin-logs-table-header">
                                                 <tr>
                                                     <th scope="col">#</th>
+                                                    <th scope="col">Name</th>
                                                     <th scope="col">Time</th>
                                                     <th scope="col">
                                                         Establishment
@@ -104,17 +138,20 @@ const AdminUserLogs = ({ logged, username }) => {
                                                 <tr>
                                                     <th scope="row">1</th>
                                                     <td>Mark</td>
-                                                    <td>Otto</td>
+                                                    <td>1:45 PM</td>
+                                                    <td>Gaisano Mall</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">2</th>
                                                     <td>Jacob</td>
-                                                    <td>Thornton</td>
+                                                    <td>1:45 PM</td>
+                                                    <td>Gaisano Mall</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">3</th>
                                                     <td>Larry</td>
-                                                    <td>the Bird</td>
+                                                    <td>1:45 PM</td>
+                                                    <td>Gaisano Mall</td>
                                                 </tr>
                                             </tbody>
                                         </table>
