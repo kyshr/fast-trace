@@ -23,6 +23,7 @@ import LoginAdmin from "./Admin/Auth/login"
 import AdminHome from "./Admin/Home/home"
 import NavBarAdmin from "./NavBar/navbar_admin"
 import AdminUserLogs from "./Admin/Home/logs"
+import AdminEstablishments from "./Admin/Home/establishments"
 
 const Main = () => {
     const [logged, setLogged] = useState(false)
@@ -191,6 +192,13 @@ const Main = () => {
                     <Route exact path="/backend/logs">
                         <NavBarAdmin setLogged={setAdminLogged} />
                         <AdminUserLogs
+                            logged={adminLogged}
+                            username={username}
+                        />
+                    </Route>
+                    <Route exact path="/backend/establishments">
+                        <NavBarAdmin setLogged={setAdminLogged} />
+                        <AdminEstablishments
                             logged={adminLogged}
                             username={username}
                         />

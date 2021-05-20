@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react"
 import { Redirect } from "react-router-dom"
 import "../../../assets/scss/admin.scss"
-import { getAdminUserLogs } from "../../../services/admin_logs"
+import { getEstablishments } from "../../../services/admin_logs"
 import { MdMenu } from "react-icons/md"
 import AdminSidebar from "../Sidebar/admin_sidebar"
-import { makeStyles } from "@material-ui/core/styles"
-import TextField from "@material-ui/core/TextField"
 
-const AdminUserLogs = ({ logged, username }) => {
+const AdminEstablishments = ({ logged, username }) => {
     const [showMenu, setShowMenu] = useState(true)
     const [noLogs, setNoLogs] = useState(true)
-    const [logsDate, setLogsDate] = useState(
-        new Date().toISOString().slice(0, 10)
-    )
     const [search, setSearch] = useState("")
-    const [userLogs, setUserLogs] = useState([])
+    const [establishments, setEstablishments] = useState([])
 
     useEffect(() => {
         const handleResize = () => {
@@ -29,69 +24,24 @@ const AdminUserLogs = ({ logged, username }) => {
     })
 
     useEffect(() => {
-        loadAdminUserLogs()
-    }, [search, logsDate])
+        loadEstablishments()
+    }, [search])
 
-    const loadAdminUserLogs = async () => {
-        var logs = await getAdminUserLogs(logsDate, search)
-        if (logs.success) {
-            setUserLogs(logs.adminUserLogs)
+    const loadEstablishments = async () => {
+        var est = await getEstablishments(search)
+        if (est.success) {
+            setEstablishments(est.adminEstablishments)
             setNoLogs(false)
         } else {
-            setUserLogs([])
+            setEstablishments([])
             setNoLogs(true)
         }
     }
 
     const handleChange = (event) => {
-        if (event.target.id === "date") {
-            setLogsDate(event.target.value)
-        } else if (event.target.id === "search") {
+        if (event.target.id === "search") {
             setSearch(event.target.value)
         }
-    }
-
-    const useStyles = makeStyles((theme) => ({
-        container: {
-            display: "flex",
-            flexWrap: "wrap",
-        },
-        textField: {
-            marginLeft: theme.spacing(1),
-            marginRight: theme.spacing(1),
-            width: 200,
-        },
-    }))
-
-    const DatePicker = () => {
-        const classes = useStyles()
-
-        return (
-            <form className={classes.container} noValidate>
-                <TextField
-                    id="date"
-                    label="Select Date"
-                    type="date"
-                    defaultValue={logsDate}
-                    className={classes.textField}
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    onChange={handleChange}
-                />
-            </form>
-        )
-    }
-
-    const formatAMPM = (date) => {
-        var hours = date.getUTCHours()
-        var minutes = date.getUTCMinutes()
-        var ampm = hours >= 12 ? "PM" : "AM"
-        hours = hours % 12
-        hours = hours ? hours : 12
-        minutes = minutes < 10 ? "0" + minutes : minutes
-        var strTime = hours + ":" + minutes + " " + ampm
-        return strTime
     }
 
     return logged ? (
@@ -120,7 +70,7 @@ const AdminUserLogs = ({ logged, username }) => {
                                 />
                             </div>
                             <div>
-                                <h3 className="ml-3">Logs</h3>
+                                <h3 className="ml-3">Establishments</h3>
                             </div>
                         </div>
                         <div className="admin-logs-main py-3 mb-3 white">
@@ -135,17 +85,10 @@ const AdminUserLogs = ({ logged, username }) => {
                                                         type="text"
                                                         value={search}
                                                         className="form-control"
-                                                        placeholder="Search Person (Firstname/Lastname only)"
+                                                        placeholder="Search Establishments"
                                                         onChange={handleChange}
                                                     />
                                                     <div className="input-group-append"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="filter-date">
-                                                <div className="d-flex justify-content-center align-items-center">
-                                                    <DatePicker />
                                                 </div>
                                             </div>
                                         </div>
@@ -157,15 +100,17 @@ const AdminUserLogs = ({ logged, username }) => {
                                             <thead className="admin-logs-table-header">
                                                 <tr>
                                                     <th scope="col">#</th>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Time</th>
                                                     <th scope="col">
-                                                        Establishment
+                                                        Establishment ID
                                                     </th>
+                                                    <th scope="col">
+                                                        Establishment Name
+                                                    </th>
+                                                    <th scope="col">Address</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {userLogs.map(
+                                                {establishments.map(
                                                     (value, index) => {
                                                         return (
                                                             <tr key={index}>
@@ -174,28 +119,17 @@ const AdminUserLogs = ({ logged, username }) => {
                                                                 </th>
                                                                 <td>
                                                                     {
-                                                                        value
-                                                                            .user
-                                                                            .firstname
-                                                                    }{" "}
-                                                                    {
-                                                                        value
-                                                                            .user
-                                                                            .lastname
+                                                                        value.establishmentId
                                                                     }
                                                                 </td>
                                                                 <td>
-                                                                    {formatAMPM(
-                                                                        new Date(
-                                                                            value.dateTime
-                                                                        )
-                                                                    )}
+                                                                    {
+                                                                        value.establishmentName
+                                                                    }
                                                                 </td>
                                                                 <td>
                                                                     {
-                                                                        value
-                                                                            .establishment
-                                                                            .establishmentName
+                                                                        value.address
                                                                     }
                                                                 </td>
                                                             </tr>
@@ -209,7 +143,7 @@ const AdminUserLogs = ({ logged, username }) => {
                                                 noLogs ? "" : "d-none"
                                             }`}
                                         >
-                                            No logs in this date.
+                                            No establishments registered.
                                         </h3>
                                     </div>
                                 </div>
@@ -224,4 +158,4 @@ const AdminUserLogs = ({ logged, username }) => {
     )
 }
 
-export default AdminUserLogs
+export default AdminEstablishments

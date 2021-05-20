@@ -29,3 +29,15 @@ export async function getAdminUserLogs(date, match) {
         return { success: false, message: "No recent logins." }
     }
 }
+
+export async function getEstablishments(match) {
+    try {
+        const response = await api.post("/admin/admin-establishments", {
+            match: match,
+        })
+        return response.data
+    } catch (error) {
+        console.error(error)
+        return { success: false, message: "No recent logins." }
+    }
+}
