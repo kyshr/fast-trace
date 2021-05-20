@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react"
 import { Redirect } from "react-router-dom"
 import "../../../assets/scss/admin.scss"
-import { getAdminLogs } from "../../../services/admin_logs"
-import { MdMenu, MdDateRange } from "react-icons/md"
+import { getAdminUserLogs } from "../../../services/admin_logs"
+import { MdMenu } from "react-icons/md"
 import AdminSidebar from "../Sidebar/admin_sidebar"
 import { makeStyles } from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
 
 const AdminUserLogs = ({ logged, username }) => {
     const [showMenu, setShowMenu] = useState(true)
+    const [noLogs, setNoLogs] = useState(true)
+    const [logsDate, setLogsDate] = useState(
+        new Date().toISOString().slice(0, 10)
+    )
+    const [search, setSearch] = useState("")
+    const [userLogs, setUserLogs] = useState([])
 
     useEffect(() => {
         const handleResize = () => {
@@ -22,6 +28,29 @@ const AdminUserLogs = ({ logged, username }) => {
         window.addEventListener("resize", handleResize)
     })
 
+    useEffect(() => {
+        loadAdminUserLogs()
+    }, [search, logsDate])
+
+    const loadAdminUserLogs = async () => {
+        var logs = await getAdminUserLogs(logsDate, search)
+        if (logs.success) {
+            setUserLogs(logs.adminUserLogs)
+            setNoLogs(false)
+        } else {
+            setUserLogs([])
+            setNoLogs(true)
+        }
+    }
+
+    const handleChange = (event) => {
+        if (event.target.id === "date") {
+            setLogsDate(event.target.value)
+        } else if (event.target.id === "search") {
+            setSearch(event.target.value)
+        }
+    }
+
     const useStyles = makeStyles((theme) => ({
         container: {
             display: "flex",
@@ -34,7 +63,7 @@ const AdminUserLogs = ({ logged, username }) => {
         },
     }))
 
-    const DatePickers = () => {
+    const DatePicker = () => {
         const classes = useStyles()
 
         return (
@@ -43,14 +72,26 @@ const AdminUserLogs = ({ logged, username }) => {
                     id="date"
                     label="Select Date"
                     type="date"
-                    defaultValue={new Date().toISOString().slice(0, 10)}
+                    defaultValue={logsDate}
                     className={classes.textField}
                     InputLabelProps={{
                         shrink: true,
                     }}
+                    onChange={handleChange}
                 />
             </form>
         )
+    }
+
+    const formatAMPM = (date) => {
+        var hours = date.getUTCHours()
+        var minutes = date.getUTCMinutes()
+        var ampm = hours >= 12 ? "PM" : "AM"
+        hours = hours % 12
+        hours = hours ? hours : 12
+        minutes = minutes < 10 ? "0" + minutes : minutes
+        var strTime = hours + ":" + minutes + " " + ampm
+        return strTime
     }
 
     return logged ? (
@@ -82,17 +123,20 @@ const AdminUserLogs = ({ logged, username }) => {
                                 <h3 className="ml-3">Logs</h3>
                             </div>
                         </div>
-                        <div className="admin-logs-main py-3 white">
+                        <div className="admin-logs-main py-3 mb-3 white">
                             <div className="container-fluid h-100">
-                                <div className="admin-logs-filter py-2">
+                                <div className="admin-logs-filter py-2 mb-4">
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="filter-search">
                                                 <div className="input-group mb-2">
                                                     <input
+                                                        id="search"
                                                         type="text"
+                                                        value={search}
                                                         className="form-control"
                                                         placeholder="Search Person"
+                                                        onChange={handleChange}
                                                     />
                                                     <div className="input-group-append">
                                                         <button
@@ -107,15 +151,8 @@ const AdminUserLogs = ({ logged, username }) => {
                                         </div>
                                         <div className="col-md-6">
                                             <div className="filter-date">
-                                                <div className="d-flex justify-content-center justify-content-md-start align-items-center">
-                                                    {/* <MdDateRange
-                                                        size={38}
-                                                        className="calendar-icon mr-2"
-                                                    />
-                                                    <h5 className="pt-2">
-                                                        May 18, 2021
-                                                    </h5> */}
-                                                    <DatePickers />
+                                                <div className="d-flex justify-content-center align-items-center">
+                                                    <DatePicker />
                                                 </div>
                                             </div>
                                         </div>
@@ -135,26 +172,52 @@ const AdminUserLogs = ({ logged, username }) => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Mark</td>
-                                                    <td>1:45 PM</td>
-                                                    <td>Gaisano Mall</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>Jacob</td>
-                                                    <td>1:45 PM</td>
-                                                    <td>Gaisano Mall</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td>Larry</td>
-                                                    <td>1:45 PM</td>
-                                                    <td>Gaisano Mall</td>
-                                                </tr>
+                                                {userLogs.map(
+                                                    (value, index) => {
+                                                        return (
+                                                            <tr key={index}>
+                                                                <th scope="row">
+                                                                    {index + 1}
+                                                                </th>
+                                                                <td>
+                                                                    {
+                                                                        value
+                                                                            .user
+                                                                            .firstname
+                                                                    }{" "}
+                                                                    {
+                                                                        value
+                                                                            .user
+                                                                            .lastname
+                                                                    }
+                                                                </td>
+                                                                <td>
+                                                                    {formatAMPM(
+                                                                        new Date(
+                                                                            value.dateTime
+                                                                        )
+                                                                    )}
+                                                                </td>
+                                                                <td>
+                                                                    {
+                                                                        value
+                                                                            .establishment
+                                                                            .establishmentName
+                                                                    }
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    }
+                                                )}
                                             </tbody>
                                         </table>
+                                        <h3
+                                            className={`text-danger text-center ${
+                                                noLogs ? "" : "d-none"
+                                            }`}
+                                        >
+                                            No logs in this date.
+                                        </h3>
                                     </div>
                                 </div>
                             </div>

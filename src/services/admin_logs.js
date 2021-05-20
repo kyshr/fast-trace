@@ -16,3 +16,16 @@ export async function getAdminLogs() {
         return { success: false, message: "No recent logins." }
     }
 }
+
+export async function getAdminUserLogs(date, match) {
+    try {
+        const response = await api.post("/admin/admin-user-logs", {
+            dateTime: new Date(date).toISOString(),
+            match: match,
+        })
+        return response.data
+    } catch (error) {
+        console.error(error)
+        return { success: false, message: "No recent logins." }
+    }
+}
