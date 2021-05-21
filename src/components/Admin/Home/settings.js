@@ -8,12 +8,10 @@ import {
 } from "../../../services/admin_logs"
 import { MdMenu } from "react-icons/md"
 import AdminSidebar from "../Sidebar/admin_sidebar"
-import qrHome from "../../../assets/images/qr_home.PNG"
 
 const AdminSettings = ({ logged, username }) => {
     const [admins, setAdmins] = useState([])
     const [currentUsername, setCurentUsername] = useState("")
-    const [count, setCount] = useState("0")
     const [password, setPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
     const [passwordError, setPasswordError] = useState("")
