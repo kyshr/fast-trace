@@ -16,6 +16,40 @@ export async function getAdminLogs() {
         return { success: false, message: "No recent logins." }
     }
 }
+export async function getAdminList() {
+    try {
+        const response = await api.get("/admin/admin-list")
+        return response.data
+    } catch (error) {
+        console.error(error)
+        return { success: false, message: "No recent logins." }
+    }
+}
+
+export async function createAdmin(password) {
+    try {
+        const response = await api.post("/admin/create", {
+            password: password,
+        })
+        return response.data
+    } catch (error) {
+        console.error(error)
+        return { success: false, message: "No recent logins." }
+    }
+}
+
+export async function updateAdmin(username, password) {
+    try {
+        const response = await api.post("/admin/update", {
+            username: username,
+            password: password,
+        })
+        return response.data
+    } catch (error) {
+        console.error(error)
+        return { success: false, message: "No recent logins." }
+    }
+}
 
 export async function getScanCount() {
     try {

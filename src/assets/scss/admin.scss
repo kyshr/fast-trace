@@ -107,6 +107,58 @@
         }
     }
 
+    .admin-settings {
+        .admin-recent-logins {
+            min-height: 260px;
+            font-family: "Nunito", sans-serif;
+            color: $primary-color;
+
+            h3 {
+                font-weight: bold;
+            }
+            p {
+                color: $text-color;
+                font-weight: bold;
+            }
+        }
+
+        .admin-total-scans {
+            min-height: 260px;
+            font-family: "Nunito", sans-serif;
+            color: $primary-color;
+
+            h3 {
+                font-weight: bold;
+            }
+            .admin-scans {
+                p {
+                    font-weight: bold;
+                }
+            }
+        }
+
+        .admin-list {
+            h3 {
+                font-family: "Nunito", sans-serif;
+                color: $primary-color;
+                font-weight: bold;
+            }
+            .admin-list-table {
+                .admin-logs-table-header {
+                    background: $primary-color !important;
+                    color: #ffffff;
+                }
+                .admin-list-edit {
+                    color: $primary-color;
+                    cursor: pointer;
+                    &:hover {
+                        color: #4141bb;
+                    }
+                }
+            }
+        }
+    }
+
     .narrow {
         width: 50px;
     }
