@@ -41,7 +41,7 @@ export async function createAdmin(password) {
 export async function updateAdmin(username, password) {
     try {
         const response = await api.post("/admin/update", {
-            username: username,
+            editUsername: username,
             password: password,
         })
         return response.data

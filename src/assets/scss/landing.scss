@@ -1,11 +1,10 @@
 @import "./constants.scss";
 .landing {
-    //background-image: url(../images/landing-bg.png);
-    //background-size: cover;
-    background-attachment: fixed;
     height: 100%;
     padding-top: 70px;
     padding-bottom: 30px;
+    color: $text-color;
+    font-family: "Nunito", sans-serif;
     .landing-content {
         padding-top: 5%;
         .landing-img {
