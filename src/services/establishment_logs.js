@@ -2,7 +2,7 @@ import axios from "axios"
 
 const api = axios.create({
     withCredentials: true,
-    baseURL: "http://localhost:3001/api",
+    baseURL: "https://vtrace-backend.herokuapp.com/api",
 })
 
 export async function getEstablishmentLogsByDate(establishmentId, dateTime) {

@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import "../../../assets/scss/landing.scss"
 import logo from "../../../assets/images/4121365.png"
 
@@ -28,7 +28,7 @@ const Landing = () => {
                                         <b>Register as an</b>
                                     </p>
                                     <div className="buttons-row row">
-                                        <Link
+                                        <NavLink
                                             activeClassName="active"
                                             exact
                                             to="/individual"
@@ -37,8 +37,8 @@ const Landing = () => {
                                             <div>
                                                 <button>Individual</button>
                                             </div>
-                                        </Link>
-                                        <Link
+                                        </NavLink>
+                                        <NavLink
                                             activeClassName="active"
                                             exact
                                             to="/establishment"
@@ -47,7 +47,7 @@ const Landing = () => {
                                             <div>
                                                 <button>Establishment</button>
                                             </div>
-                                        </Link>
+                                        </NavLink>
                                     </div>
                                     <div className="technical">
                                         <p className="vtrace-description">
