@@ -101,7 +101,7 @@ const Main = () => {
                     <Route exact path="/">
                         <NavBarIndex />
                         <Landing />
-                        <Footer />
+                        {/* <Footer /> */}
                     </Route>
                     <Route exact path="/individual">
                         <NavBar logged={logged} setLogged={setLogged} />
