@@ -21,8 +21,8 @@ const Landing = () => {
                                         Welcome to VTrace
                                     </h1>
                                     <p className="vtrace-description">
-                                        VTrace is an android app that is
-                                        intended for contact tracing.
+                                        VTrace is a system that is intended for
+                                        contact tracing.
                                     </p>
                                     <p className="i-would-like">
                                         <b>Register as an</b>
