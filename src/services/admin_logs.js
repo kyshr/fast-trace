@@ -1,15 +1,22 @@
 import axios from "axios"
 
 const api = axios.create({
+    // baseURL: "https://vtrace-backend.herokuapp.com/api",
+    baseURL: "http://localhost:5000/api",
     withCredentials: true,
-    baseURL: "https://vtrace-backend.herokuapp.com/api",
 })
 
 //Establisment Authentication
 
 export async function getAdminLogs() {
     try {
-        const response = await api.get("/admin/admin-logs")
+        const response = await api({
+            url: "/admin/admin-logs",
+            method: "get",
+            headers: {
+                auth_token: localStorage.getItem("vtraceAdminToken"),
+            },
+        })
         return response.data
     } catch (error) {
         console.error(error)
@@ -18,7 +25,13 @@ export async function getAdminLogs() {
 }
 export async function getAdminList() {
     try {
-        const response = await api.get("/admin/admin-list")
+        const response = await api({
+            url: "/admin/admin-list",
+            method: "get",
+            headers: {
+                auth_token: localStorage.getItem("vtraceAdminToken"),
+            },
+        })
         return response.data
     } catch (error) {
         console.error(error)
@@ -28,8 +41,13 @@ export async function getAdminList() {
 
 export async function createAdmin(password) {
     try {
-        const response = await api.post("/admin/create", {
-            password: password,
+        const response = await api({
+            url: "/admin/create",
+            method: "post",
+            headers: {
+                auth_token: localStorage.getItem("vtraceAdminToken"),
+            },
+            data: { password: password },
         })
         return response.data
     } catch (error) {
@@ -40,9 +58,13 @@ export async function createAdmin(password) {
 
 export async function updateAdmin(username, password) {
     try {
-        const response = await api.post("/admin/update", {
-            editUsername: username,
-            password: password,
+        const response = await api({
+            url: "/admin/update",
+            method: "post",
+            headers: {
+                auth_token: localStorage.getItem("vtraceAdminToken"),
+            },
+            data: { editUsername: username, password: password },
         })
         return response.data
     } catch (error) {
@@ -53,8 +75,13 @@ export async function updateAdmin(username, password) {
 
 export async function getScanCount() {
     try {
-        const response = await api.post("/admin/admin-scan-count", {
-            dateTime: new Date().toISOString(),
+        const response = await api({
+            url: "/admin/admin-scan-count",
+            method: "post",
+            headers: {
+                auth_token: localStorage.getItem("vtraceAdminToken"),
+            },
+            data: { dateTime: new Date().toISOString() },
         })
         return response.data
     } catch (error) {
@@ -65,9 +92,13 @@ export async function getScanCount() {
 
 export async function getAdminUserLogs(date, match) {
     try {
-        const response = await api.post("/admin/admin-user-logs", {
-            dateTime: new Date(date).toISOString(),
-            match: match,
+        const response = await api({
+            url: "/admin/admin-user-logs",
+            method: "post",
+            headers: {
+                auth_token: localStorage.getItem("vtraceAdminToken"),
+            },
+            data: { dateTime: new Date(date).toISOString(), match: match },
         })
         return response.data
     } catch (error) {
@@ -78,8 +109,13 @@ export async function getAdminUserLogs(date, match) {
 
 export async function getEstablishments(match) {
     try {
-        const response = await api.post("/admin/admin-establishments", {
-            match: match,
+        const response = await api({
+            url: "/admin/admin-establishments",
+            method: "post",
+            headers: {
+                auth_token: localStorage.getItem("vtraceAdminToken"),
+            },
+            data: { match: match },
         })
         return response.data
     } catch (error) {

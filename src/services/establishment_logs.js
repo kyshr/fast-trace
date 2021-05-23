@@ -1,15 +1,20 @@
 import axios from "axios"
 
 const api = axios.create({
+    // baseURL: "https://vtrace-backend.herokuapp.com/api",
+    baseURL: "http://localhost:5000/api",
     withCredentials: true,
-    baseURL: "https://vtrace-backend.herokuapp.com/api",
 })
 
 export async function getEstablishmentLogsByDate(establishmentId, dateTime) {
     try {
-        const response = await api.post("/logs/establishment-logs", {
-            establishmentId: establishmentId,
-            dateTime: dateTime,
+        const response = await api({
+            url: "/logs/establishment-logs",
+            method: "post",
+            headers: {
+                auth_token: localStorage.getItem("vtraceEstToken"),
+            },
+            data: { establishmentId: establishmentId, dateTime: dateTime },
         })
         return response.data
     } catch (error) {

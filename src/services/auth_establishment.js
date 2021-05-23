@@ -1,16 +1,21 @@
 import axios from "axios"
 
 const api = axios.create({
+    // baseURL: "https://vtrace-backend.herokuapp.com/api",
+    baseURL: "http://localhost:5000/api",
     withCredentials: true,
-    baseURL: "https://vtrace-backend.herokuapp.com/api",
 })
 
 //Establisment Authentication
-
 export async function getEstablishment(establishmentId) {
     try {
-        const response = await api.post("/establishments/individual", {
-            establishmentId: establishmentId,
+        const response = await api({
+            url: "/establishments/individual",
+            method: "post",
+            headers: {
+                auth_token: localStorage.getItem("vtraceEstToken"),
+            },
+            data: { establishmentId: establishmentId },
         })
         return response.data
     } catch (error) {
@@ -30,7 +35,14 @@ export async function createEstablishment(data) {
 }
 export async function updateEstablishment(data) {
     try {
-        const response = await api.put("/establishments/update", data)
+        const response = await api({
+            url: "/establishments/update",
+            method: "put",
+            headers: {
+                auth_token: localStorage.getItem("vtraceEstToken"),
+            },
+            data: data,
+        })
         return response.data
     } catch (error) {
         console.error(error)
@@ -40,7 +52,14 @@ export async function updateEstablishment(data) {
 
 export async function updateEstablishmentPassword(data) {
     try {
-        const response = await api.put("/establishments/update-password", data)
+        const response = await api({
+            url: "/establishments/update-password",
+            method: "put",
+            headers: {
+                auth_token: localStorage.getItem("vtraceEstToken"),
+            },
+            data: data,
+        })
         return response.data
     } catch (error) {
         console.error(error)
@@ -50,10 +69,19 @@ export async function updateEstablishmentPassword(data) {
 
 export async function establishmentLogin(establishmentId, password) {
     try {
-        const response = await api.post("/establishments/login", {
-            establishmentId: establishmentId,
-            password: password,
+        const response = await api({
+            url: "/establishments/login",
+            method: "post",
+            headers: {
+                auth_token: localStorage.getItem("vtraceEstToken"),
+            },
+            data: { establishmentId: establishmentId, password: password },
         })
+
+        if (response.data.success) {
+            localStorage.setItem("vtraceEstToken", response.data.token)
+        }
+
         return response.data
     } catch (error) {
         console.error(error)
@@ -63,9 +91,13 @@ export async function establishmentLogin(establishmentId, password) {
 
 export async function checkEstablishmentLoggedIn(establishmentId, password) {
     try {
-        const response = await api.post("/establishments/login", {
-            establishmentId: establishmentId,
-            password: password,
+        const response = await api({
+            url: "/establishments/login",
+            method: "post",
+            headers: {
+                auth_token: localStorage.getItem("vtraceEstToken"),
+            },
+            data: { establishmentId: establishmentId, password: password },
         })
         return response.data
     } catch (error) {
@@ -76,7 +108,7 @@ export async function checkEstablishmentLoggedIn(establishmentId, password) {
 
 export async function estabalishmentLogout() {
     try {
-        await api.get("/establishments/logout")
+        await localStorage.removeItem("vtraceEstToken")
     } catch (error) {
         console.error(error)
     }
@@ -84,9 +116,13 @@ export async function estabalishmentLogout() {
 
 export async function passwordMatched(establishmentId, password) {
     try {
-        const response = await api.post("/establishments/password-matched", {
-            establishmentId: establishmentId,
-            password: password,
+        const response = await api({
+            url: "/establishments/password-matched",
+            method: "post",
+            headers: {
+                auth_token: localStorage.getItem("vtraceEstToken"),
+            },
+            data: { establishmentId: establishmentId, password: password },
         })
         return response.data
     } catch (error) {

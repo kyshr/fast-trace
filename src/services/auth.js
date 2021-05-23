@@ -1,15 +1,23 @@
 import axios from "axios"
 
 const api = axios.create({
+    // baseURL: "https://vtrace-backend.herokuapp.com/api",
+    baseURL: "http://localhost:5000/api",
     withCredentials: true,
-    baseURL: "https://vtrace-backend.herokuapp.com/api",
 })
 
 //Individual Authentication
 
 export async function getIndividual(userId) {
     try {
-        const response = await api.post("/users/individual", { userId: userId })
+        const response = await api({
+            url: "/users/individual",
+            method: "post",
+            headers: {
+                auth_token: localStorage.getItem("vtraceToken"),
+            },
+            data: { userId: userId },
+        })
         return response.data
     } catch (error) {
         console.error(error)
@@ -28,7 +36,14 @@ export async function createIndividual(data) {
 }
 export async function updateIndividual(data) {
     try {
-        const response = await api.put("/users/update", data)
+        const response = await api({
+            url: "/users/update",
+            method: "put",
+            headers: {
+                auth_token: localStorage.getItem("vtraceToken"),
+            },
+            data: data,
+        })
         return response.data
     } catch (error) {
         console.error(error)
@@ -38,7 +53,14 @@ export async function updateIndividual(data) {
 
 export async function updateIndividualPassword(data) {
     try {
-        const response = await api.put("/users/update-password", data)
+        const response = await api({
+            url: "/users/update-password",
+            method: "put",
+            headers: {
+                auth_token: localStorage.getItem("vtraceToken"),
+            },
+            data: data,
+        })
         return response.data
     } catch (error) {
         console.error(error)
@@ -48,10 +70,17 @@ export async function updateIndividualPassword(data) {
 
 export async function individualLogin(userId, password) {
     try {
-        const response = await api.post("/users/login", {
-            userId: userId,
-            password: password,
+        const response = await api({
+            url: "/users/login",
+            method: "post",
+            headers: {
+                auth_token: localStorage.getItem("vtraceToken"),
+            },
+            data: { userId: userId, password: password },
         })
+        if (response.data.success) {
+            localStorage.setItem("vtraceToken", response.data.token)
+        }
         return response.data
     } catch (error) {
         console.error(error)
@@ -61,10 +90,15 @@ export async function individualLogin(userId, password) {
 
 export async function checkIndividualLoggedIn(userId, password) {
     try {
-        const response = await api.post("/users/login", {
-            userId: userId,
-            password: password,
+        const response = await api({
+            url: "/users/login",
+            method: "post",
+            headers: {
+                auth_token: localStorage.getItem("vtraceToken"),
+            },
+            data: { userId: userId, password: password },
         })
+
         return response.data
     } catch (error) {
         console.error(error)
@@ -74,7 +108,8 @@ export async function checkIndividualLoggedIn(userId, password) {
 
 export async function individualLogout() {
     try {
-        await api.get("/users/logout")
+        await localStorage.removeItem("vtraceToken")
+        // await api.get("/users/logout")
     } catch (error) {
         console.error(error)
     }
@@ -82,9 +117,13 @@ export async function individualLogout() {
 
 export async function passwordMatched(userId, password) {
     try {
-        const response = await api.post("/users/password-matched", {
-            userId: userId,
-            password: password,
+        const response = await api({
+            url: "/users/password-matched",
+            method: "post",
+            headers: {
+                auth_token: localStorage.getItem("vtraceToken"),
+            },
+            data: { userId: userId, password: password },
         })
         return response.data
     } catch (error) {
