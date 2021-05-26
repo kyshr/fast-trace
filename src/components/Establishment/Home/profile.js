@@ -9,7 +9,7 @@ import {
 } from "../../../services/auth_establishment"
 
 const ProfileEstablishment = ({ logged, establishmentId }) => {
-    const [establishmentName, setEstablishment] = useState("Male")
+    const [establishmentName, setEstablishment] = useState("")
     const [contactNumber, setContactNumber] = useState("")
     const [street, setStreet] = useState("")
     const [barangay, setBarangay] = useState("")
